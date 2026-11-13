@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Hotel Rhino - Authentic Nepali Thakali Khana Set & Himalayan Kitchen{% endblock %}</title>
+  <meta name="description" content="Experience authentic Nepali Thakali Khana Sets at Hotel Rhino. Prepared with pure mountain ingredients, Jimbu, and rich Himalayan tradition.">
+  <meta name="theme-color" content="#3B2418">
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/static/images/rhino_logo.svg">
+
+  <!-- Google Fonts: Playfair Display, Poppins, Noto Sans Devanagari -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN for reactive layout -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepBrown: '#3B2418',
+            darkEspresso: '#24160F',
+            terracotta: '#B66A36',
+            warmSand: '#D8BD96',
+            tradBeige: '#E9D9BC',
+            creamBg: '#F8F4EA',
+            mutedOlive: '#68734A',
+            successGreen: '#25834A',
+            warningAmber: '#D68B27',
+            errorRed: '#C64C43',
+          },
+          fontFamily: {
+            heading: ['"Playfair Display"', 'serif'],
+            body: ['"Poppins"', 'sans-serif'],
+            nepali: ['"Noto Sans Devanagari"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Feather / Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-creamBg text-darkEspresso flex flex-col min-h-screen">
+
+  <!-- Heritage Top Bar -->
+  <div class="bg-darkEspresso text-tradBeige text-xs py-2 px-4 border-b border-terracotta/30">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-4">
+        <span><i data-lucide="map-pin" class="w-3.5 h-3.5 inline text-terracotta mr-1"></i>{{ RESTAURANT_LOCATION }}</span>
+        <span><i data-lucide="clock" class="w-3.5 h-3.5 inline text-terracotta mr-1"></i>10:00 AM – 10:30 PM (Daily)</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="tel:{{ RESTAURANT_PHONE }}" class="hover:text-white transition flex items-center gap-1">
+          <i data-lucide="phone" class="w-3.5 h-3.5 text-terracotta"></i>{{ RESTAURANT_PHONE }}
+        </a>
+        <a href="/staff/dashboard/" class="bg-terracotta/20 hover:bg-terracotta text-white px-2.5 py-0.5 rounded text-[11px] font-semibold transition border border-terracotta/40">
+          Staff RMS Portal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 bg-creamBg/95 backdrop-blur-md border-b border-tradBeige/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="/static/images/rhino_logo.svg" alt="Hotel Rhino Logo" class="h-12 w-12 drop-shadow-sm">
+        <div>
+          <span class="font-heading font-extrabold text-2xl tracking-wide text-deepBrown block leading-tight">HOTEL RHINO</span>
+          <span class="text-xs tracking-widest uppercase font-semibold text-terracotta block">Nepali Thakali Kitchen</span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-darkEspresso">
+        <a href="/" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'home' %}text-terracotta font-semibold{% endif %}">Home</a>
+        <a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'khana_sets' %}text-terracotta font-semibold{% endif %}">Khana Sets</a>
+        <a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'whats_inside_thali' %}text-terracotta font-semibold{% endif %}">What's Inside</a>
+        <a href="{% url 'our_story' %}" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'our_story' %}text-terracotta font-semibold{% endif %}">Our Story</a>
+        <a href="{% url 'gallery' %}" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'gallery' %}text-terracotta font-semibold{% endif %}">Gallery</a>
+        <a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'guest_experiences' %}text-terracotta font-semibold{% endif %}">Experiences</a>
+        <a href="{% url 'visit_us' %}" class="hover:text-terracotta transition {% if request.resolver_match.url_name == 'visit_us' %}text-terracotta font-semibold{% endif %}">Visit Us</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="{% url 'visit_us' %}" class="btn-primary text-sm shadow-md">
+          <i data-lucide="utensils" class="w-4 h-4"></i> Reserve Table
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-deepBrown hover:bg-tradBeige/50" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden bg-creamBg border-b border-tradBeige px-4 pt-3 pb-6 space-y-3">
+      <a href="/" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Home</a>
+      <a href="{% url 'khana_sets' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Khana Sets</a>
+      <a href="{% url 'whats_inside_thali' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">What's Inside Your Thali</a>
+      <a href="{% url 'our_story' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Our Story</a>
+      <a href="{% url 'gallery' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Gallery</a>
+      <a href="{% url 'guest_experiences' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Guest Experiences</a>
+      <a href="{% url 'visit_us' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Visit Us / Reserve</a>
+      <a href="{% url 'visit_us' %}" class="btn-primary w-full text-center mt-3">Reserve Table</a>
+    </div>
+  </header>
+
+  <!-- Alert Messages -->
+  {% if messages %}
+  <div class="max-w-7xl mx-auto px-4 mt-4 w-full">
+    {% for message in messages %}
+    <div class="p-4 rounded-xl flex items-center justify-between gap-3 text-sm font-medium {% if message.tags == 'error' %}bg-errorRed/10 text-errorRed border border-errorRed/30{% else %}bg-successGreen/10 text-successGreen border border-successGreen/30{% endif %}">
+      <span>{{ message }}</span>
+      <button onclick="this.parentElement.remove()" class="text-xs opacity-75 hover:opacity-100">&times;</button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Main Content -->
+  <main class="flex-grow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-darkEspresso text-tradBeige mt-20 border-t-4 border-terracotta">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
+      <!-- Col 1 -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <img src="/static/images/rhino_logo.svg" alt="Hotel Rhino" class="h-10 w-10">
+          <span class="font-heading font-bold text-xl text-white">HOTEL RHINO</span>
+        </div>
+        <p class="text-xs text-tradBeige/80 leading-relaxed">
+          Celebrating Nepal's rich Thakali heritage from the high valleys of Mustang. Dedicated exclusively to serving authentic traditional Thakali Khana Sets cooked in brass cookware with Himalayan Jimbu and pure mountain ghee.
+        </p>
+        <div class="flex space-x-3 text-terracotta pt-2">
+          <a href="#" class="p-2 bg-deepBrown rounded-full hover:text-white transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+          <a href="#" class="p-2 bg-deepBrown rounded-full hover:text-white transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+          <a href="https://wa.me/{{ RESTAURANT_WHATSAPP }}" class="p-2 bg-deepBrown rounded-full hover:text-white transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links -->
+      <div>
+        <h4 class="font-heading text-lg text-white mb-4 border-b border-terracotta/30 pb-2">Experience</h4>
+        <ul class="space-y-2 text-xs">
+          <li><a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition">Authentic Thakali Sets</a></li>
+          <li><a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition">Inside Your Thali</a></li>
+          <li><a href="{% url 'our_story' %}" class="hover:text-terracotta transition">Mustang Heritage & Philosophy</a></li>
+          <li><a href="{% url 'gallery' %}" class="hover:text-terracotta transition">Atmosphere & Food Gallery</a></li>
+          <li><a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition">Guest Reviews & Ratings</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Hours & Timing -->
+      <div>
+        <h4 class="font-heading text-lg text-white mb-4 border-b border-terracotta/30 pb-2">Kitchen Hours</h4>
+        <div class="space-y-2 text-xs">
+          <p class="flex justify-between"><span>Sunday – Thursday:</span> <span class="font-semibold text-white">10:00 AM – 10:00 PM</span></p>
+          <p class="flex justify-between"><span>Friday – Saturday:</span> <span class="font-semibold text-white">10:00 AM – 10:30 PM</span></p>
+          <p class="text-terracotta pt-2 text-[11px]"><i data-lucide="check-circle" class="w-3.5 h-3.5 inline mr-1"></i>Unlimited Dal, Bhat & Tarkari Refills</p>
+          <p class="text-[11px] text-mutedOlive font-medium">Fresh local supplies delivered daily from Mustang and Chitwan.</p>
+        </div>
+      </div>
+
+      <!-- Col 4: Location & Contact -->
+      <div>
+        <h4 class="font-heading text-lg text-white mb-4 border-b border-terracotta/30 pb-2">Visit Hotel Rhino</h4>
+        <div class="space-y-3 text-xs">
+          <p class="flex items-start gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-terracotta shrink-0 mt-0.5"></i>
+            <span>{{ RESTAURANT_LOCATION }}</span>
+          </p>
+          <p class="flex items-center gap-2">
+            <i data-lucide="phone-call" class="w-4 h-4 text-terracotta shrink-0"></i>
+            <span>{{ RESTAURANT_PHONE }}</span>
+          </p>
+          <p class="flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4 text-terracotta shrink-0"></i>
+            <span>{{ RESTAURANT_EMAIL }}</span>
+          </p>
+          <div class="pt-2">
+            <a href="{% url 'visit_us' %}" class="btn-primary text-xs py-2 px-4 w-full text-center">Get Directions & Table</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-deepBrown/80 py-4 px-4 text-center text-xs text-tradBeige/60">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p>© 2026 Hotel Rhino - Authentic Thakali Kitchen & RMS. All rights reserved.</p>
+        <p class="flex items-center gap-2">
+          <span>Himalayan Taste Guaranteed</span> • 
+          <a href="/staff/login/" class="hover:text-terracotta underline">Staff POS Login</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+
+    // Register PWA service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/js/sw.js').catch(err => console.log('SW register failed: ', err));
+      });
+    }
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+

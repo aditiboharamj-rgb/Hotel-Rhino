@@ -1,0 +1,48 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Customers - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Guest & Patron Directory{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between text-xs">
+    <div>
+      <h3 class="font-heading font-bold text-base text-deepBrown">Guest Directory</h3>
+      <p class="text-darkEspresso/70">Voluntarily provided contact details and cumulative dining history.</p>
+    </div>
+    <span class="text-xs text-mutedOlive font-semibold">{{ customers|length }} Patrons Registered</span>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-tradBeige shadow-sm overflow-hidden text-xs">
+    <table class="w-full text-left">
+      <thead class="bg-creamBg border-b border-tradBeige text-deepBrown font-heading">
+        <tr>
+          <th class="p-4">Customer Name</th>
+          <th class="p-4">Phone Number</th>
+          <th class="p-4">Total Visits</th>
+          <th class="p-4">Total Spent (NPR)</th>
+          <th class="p-4">Last Visit</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-creamBg">
+        {% for c in customers %}
+        <tr class="hover:bg-creamBg/40 transition">
+          <td class="p-4 font-bold text-deepBrown">{{ c.name|default:"Dine-in Guest" }}</td>
+          <td class="p-4">{{ c.phone|default:"-" }}</td>
+          <td class="p-4"><span class="bg-mutedOlive/20 text-mutedOlive px-2.5 py-0.5 rounded-full font-bold">{{ c.visit_count }}</span></td>
+          <td class="p-4 font-bold text-terracotta">NPR {{ c.total_spent_npr|floatformat:2 }}</td>
+          <td class="p-4 text-darkEspresso/70">{{ c.last_visit|date:"M d, Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="p-8 text-center text-darkEspresso/50">Customer records are auto-captured on voluntary POS and QR entries.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
+

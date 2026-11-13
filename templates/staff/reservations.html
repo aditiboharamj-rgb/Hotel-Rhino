@@ -1,0 +1,52 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Reservations - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Table Reservations{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between text-xs">
+    <div>
+      <h3 class="font-heading font-bold text-base text-deepBrown">Guest Booking Inquiries</h3>
+      <p class="text-darkEspresso/70">Submitted through the public website reservation form.</p>
+    </div>
+    <span class="text-xs text-mutedOlive font-semibold">{{ reservations|length }} Bookings Total</span>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-tradBeige shadow-sm overflow-hidden text-xs">
+    <table class="w-full text-left">
+      <thead class="bg-creamBg border-b border-tradBeige text-deepBrown font-heading">
+        <tr>
+          <th class="p-4">Guest Name</th>
+          <th class="p-4">Contact</th>
+          <th class="p-4">Guests</th>
+          <th class="p-4">Date & Time</th>
+          <th class="p-4">Special Requests</th>
+          <th class="p-4">Status</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-creamBg">
+        {% for r in reservations %}
+        <tr class="hover:bg-creamBg/40 transition">
+          <td class="p-4 font-bold text-deepBrown">{{ r.name }}</td>
+          <td class="p-4">{{ r.phone }}</td>
+          <td class="p-4"><span class="bg-terracotta/20 text-terracotta px-2 py-0.5 rounded-full font-bold">{{ r.guest_count }}</span></td>
+          <td class="p-4 font-semibold text-deepBrown">{{ r.reservation_date }} at {{ r.reservation_time }}</td>
+          <td class="p-4 text-darkEspresso/70">{{ r.special_requests|default:"None" }}</td>
+          <td class="p-4">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-warningAmber/20 text-warningAmber">{{ r.get_status_display }}</span>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6" class="p-8 text-center text-darkEspresso/50">No reservations placed yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
+

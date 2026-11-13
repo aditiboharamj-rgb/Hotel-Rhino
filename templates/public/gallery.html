@@ -1,0 +1,87 @@
+{% extends 'public/base.html' %}
+
+{% block title %}Atmosphere & Culinary Gallery - Hotel Rhino{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-creamBg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <span class="text-xs uppercase tracking-widest font-semibold text-terracotta">Visual Journey</span>
+      <h1 class="text-4xl font-heading font-bold text-deepBrown">Hotel Rhino Gallery</h1>
+      <p class="text-sm text-darkEspresso/70">A glimpse into our authentic Himalayan thali sets, heritage dining room, and kitchen artistry.</p>
+    </div>
+
+    <!-- Gallery Grid with Lightbox Preview -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      
+      <div class="relative group overflow-hidden rounded-2xl shadow-sm border border-tradBeige bg-white">
+        <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80" alt="Authentic Thakali Set" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-darkEspresso/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+          <div class="text-white">
+            <h4 class="font-heading font-bold text-lg">Mustang Thakali Thali</h4>
+            <p class="text-xs text-tradBeige/80">Served in traditional bell-metal brassware</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group overflow-hidden rounded-2xl shadow-sm border border-tradBeige bg-white">
+        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80" alt="Dal Bhat Celebration" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-darkEspresso/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+          <div class="text-white">
+            <h4 class="font-heading font-bold text-lg">Steaming Basmati & Ghee</h4>
+            <p class="text-xs text-tradBeige/80">Unlimited aromatic refills at your table</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group overflow-hidden rounded-2xl shadow-sm border border-tradBeige bg-white">
+        <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80" alt="Mountain Spices & Jimbu" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-darkEspresso/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+          <div class="text-white">
+            <h4 class="font-heading font-bold text-lg">Jimbu & Stone-Ground Timur</h4>
+            <p class="text-xs text-tradBeige/80">Wild spices sourced directly from Upper Mustang</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group overflow-hidden rounded-2xl shadow-sm border border-tradBeige bg-white">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Restaurant Ambiance" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-darkEspresso/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+          <div class="text-white">
+            <h4 class="font-heading font-bold text-lg">Heritage Dining Hall</h4>
+            <p class="text-xs text-tradBeige/80">Spacious, warm Himalayan wood and terracotta finishes</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group overflow-hidden rounded-2xl shadow-sm border border-tradBeige bg-white">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Kitchen Service" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-darkEspresso/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+          <div class="text-white">
+            <h4 class="font-heading font-bold text-lg">Master Kitchen Team</h4>
+            <p class="text-xs text-tradBeige/80">Precision cooking supervised by native Thakali chefs</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group overflow-hidden rounded-2xl shadow-sm border border-tradBeige bg-white">
+        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80" alt="Mustang Valley Inspiration" class="w-full h-72 object-cover group-hover:scale-105 transition duration-500">
+        <div class="absolute inset-0 bg-darkEspresso/60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+          <div class="text-white">
+            <h4 class="font-heading font-bold text-lg">The Sacred Thak Khola Valley</h4>
+            <p class="text-xs text-tradBeige/80">The eternal birthplace of authentic Thakali food</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center pt-8">
+      <a href="{% url 'visit_us' %}" class="btn-primary text-sm py-3 px-8">Visit Us in Person</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+

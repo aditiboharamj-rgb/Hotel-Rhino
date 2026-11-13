@@ -1,0 +1,129 @@
+{% extends 'public/base.html' %}
+
+{% block title %}Authentic Thakali Khana Sets - Hotel Rhino{% endblock %}
+
+{% block content %}
+<div class="py-12 bg-creamBg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Title Banner -->
+    <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+      <span class="text-xs uppercase tracking-widest font-semibold text-terracotta">Himalayan Heritage Menu</span>
+      <h1 class="text-4xl font-heading font-bold text-deepBrown">Authentic Thakali Khana Sets</h1>
+      <p class="text-sm text-darkEspresso/70">
+        Our kitchen honors traditional Nepali gastronomy without compromises. Each set is served in solid bell-metal brass cookware accompanied by authentic Mustang condiments and complimentary refills.
+      </p>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <button onclick="filterMenu('ALL')" class="category-filter active px-5 py-2 rounded-full text-xs font-semibold bg-terracotta text-white shadow-sm transition">All Sets</button>
+      <button onclick="filterMenu('VEG')" class="category-filter px-5 py-2 rounded-full text-xs font-semibold bg-white border border-tradBeige text-deepBrown hover:bg-terracotta hover:text-white transition">Vegetarian</button>
+      <button onclick="filterMenu('CHICKEN')" class="category-filter px-5 py-2 rounded-full text-xs font-semibold bg-white border border-tradBeige text-deepBrown hover:bg-terracotta hover:text-white transition">Local Chicken</button>
+      <button onclick="filterMenu('MUTTON')" class="category-filter px-5 py-2 rounded-full text-xs font-semibold bg-white border border-tradBeige text-deepBrown hover:bg-terracotta hover:text-white transition">Himalayan Khasi (Mutton)</button>
+      <button onclick="filterMenu('FISH')" class="category-filter px-5 py-2 rounded-full text-xs font-semibold bg-white border border-tradBeige text-deepBrown hover:bg-terracotta hover:text-white transition">Mountain River Fish</button>
+    </div>
+
+    <!-- Menu Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for item in khana_sets %}
+      <div class="menu-card card-heritage flex flex-col justify-between" data-category="{{ item.category }}">
+        <div>
+          <!-- Image -->
+          <div class="relative h-64 overflow-hidden bg-tradBeige/40">
+            {% if item.image %}
+              <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-full h-full object-cover">
+            {% elif item.image_url %}
+              <img src="{{ item.image_url }}" alt="{{ item.name }}" class="w-full h-full object-cover">
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80" alt="{{ item.name }}" class="w-full h-full object-cover">
+            {% endif %}
+            
+            <div class="absolute top-3 right-3 bg-darkEspresso/85 text-warmSand px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-sm">
+              NPR {{ item.price_npr }}
+            </div>
+            
+            <div class="absolute top-3 left-3">
+              {% if item.category == 'VEG' %}
+                <span class="bg-successGreen text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold">Vegetarian</span>
+              {% else %}
+                <span class="bg-terracotta text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold">Non-Vegetarian</span>
+              {% endif %}
+            </div>
+
+            {% if not item.is_available %}
+            <div class="absolute inset-0 bg-darkEspresso/70 backdrop-blur-sm flex items-center justify-center">
+              <span class="bg-errorRed text-white px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider">Currently Sold Out</span>
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Content -->
+          <div class="p-6 space-y-4">
+            <div class="flex justify-between items-start gap-2">
+              <h3 class="font-heading text-xl font-bold text-deepBrown leading-tight">{{ item.name }}</h3>
+            </div>
+            
+            <p class="text-xs text-darkEspresso/80 leading-relaxed">{{ item.description }}</p>
+
+            <!-- Traditional Items Included -->
+            <div class="bg-creamBg p-3.5 rounded-xl border border-tradBeige/80 text-xs">
+              <span class="font-bold text-terracotta block mb-1">What's Included:</span>
+              <p class="text-darkEspresso/70 text-[11px] leading-relaxed">{{ item.traditional_items }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 pt-0">
+          <div class="border-t border-tradBeige/60 pt-4 flex items-center justify-between">
+            <span class="text-xs text-mutedOlive font-medium flex items-center gap-1">
+              <i data-lucide="infinity" class="w-3.5 h-3.5 text-terracotta"></i> Unlimited Refills
+            </span>
+            <a href="{% url 'visit_us' %}" class="btn-primary text-xs py-2 px-5">
+              Dine In / Reserve
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Note on Thakali Dining Etiquette -->
+    <div class="mt-16 bg-white p-8 rounded-3xl border border-tradBeige shadow-sm max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-6">
+      <div class="p-4 bg-terracotta/10 text-terracotta rounded-2xl shrink-0">
+        <i data-lucide="sparkles" class="w-10 h-10"></i>
+      </div>
+      <div class="space-y-2 text-center sm:text-left">
+        <h4 class="font-heading font-bold text-lg text-deepBrown">The Thakali Dining Tradition at Hotel Rhino</h4>
+        <p class="text-xs text-darkEspresso/80 leading-relaxed">
+          In keeping with Mustang tradition, all our Thali sets are accompanied by hot ghee poured generously over your rice at table-side. Dal, Bhat, seasonal tarkari, and saag are continually replenished by our attentive servers until you are completely satisfied.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function filterMenu(cat) {
+    const cards = document.querySelectorAll('.menu-card');
+    const buttons = document.querySelectorAll('.category-filter');
+    
+    buttons.forEach(btn => {
+      btn.classList.remove('bg-terracotta', 'text-white');
+      btn.classList.add('bg-white', 'text-deepBrown');
+    });
+    event.target.classList.add('bg-terracotta', 'text-white');
+    event.target.classList.remove('bg-white', 'text-deepBrown');
+
+    cards.forEach(card => {
+      if (cat === 'ALL' || card.dataset.category === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+{% endblock %}
+

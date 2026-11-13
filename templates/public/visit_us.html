@@ -1,0 +1,136 @@
+{% extends 'public/base.html' %}
+
+{% block title %}Visit Us & Table Reservations - Hotel Rhino{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-creamBg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <span class="text-xs uppercase tracking-widest font-semibold text-terracotta">Himalayan Hospitality Awaits</span>
+      <h1 class="text-4xl font-heading font-bold text-deepBrown">Visit Hotel Rhino</h1>
+      <p class="text-sm text-darkEspresso/70">Reserve your table or drop by for an unforgettable authentic Thakali dining experience.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Contact & Map Details -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="bg-white p-8 rounded-3xl border border-tradBeige shadow-sm space-y-6">
+          <h3 class="font-heading text-2xl font-bold text-deepBrown">Location & Hours</h3>
+          
+          <div class="space-y-4 text-xs">
+            <div class="flex items-start gap-3">
+              <div class="p-2.5 bg-terracotta/10 text-terracotta rounded-xl shrink-0">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <strong class="block text-deepBrown font-semibold text-sm">Restaurant Address</strong>
+                <p class="text-darkEspresso/80">{{ RESTAURANT_LOCATION }}</p>
+                <p class="text-mutedOlive text-[11px] mt-0.5">Ample parking available for guests</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <div class="p-2.5 bg-terracotta/10 text-terracotta rounded-xl shrink-0">
+                <i data-lucide="clock" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <strong class="block text-deepBrown font-semibold text-sm">Opening Hours</strong>
+                <p class="text-darkEspresso/80">Monday – Sunday: 10:00 AM – 10:30 PM</p>
+                <p class="text-mutedOlive text-[11px] mt-0.5">Kitchen orders accepted until 10:00 PM</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <div class="p-2.5 bg-terracotta/10 text-terracotta rounded-xl shrink-0">
+                <i data-lucide="phone-call" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <strong class="block text-deepBrown font-semibold text-sm">Direct Phone & WhatsApp</strong>
+                <p class="text-darkEspresso/80">{{ RESTAURANT_PHONE }}</p>
+                <a href="https://wa.me/{{ RESTAURANT_WHATSAPP }}" target="_blank" class="text-successGreen font-semibold text-[11px] inline-flex items-center gap-1 mt-0.5 hover:underline">
+                  <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> Chat on WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-tradBeige/80">
+            <!-- Simulated Google Maps Frame -->
+            <div class="w-full h-48 rounded-2xl bg-tradBeige/40 border border-tradBeige flex flex-col items-center justify-center text-center p-4">
+              <i data-lucide="map" class="w-8 h-8 text-terracotta mb-2"></i>
+              <span class="font-bold text-xs text-deepBrown">Interactive Google Maps View</span>
+              <p class="text-[11px] text-darkEspresso/70 mt-1">{{ RESTAURANT_LOCATION }}</p>
+              <a href="https://maps.google.com/?q={{ RESTAURANT_LOCATION|urlencode }}" target="_blank" class="mt-2 text-xs text-terracotta font-semibold underline">
+                Open in Google Maps App
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Reservation Form -->
+      <div class="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-tradBeige shadow-sm space-y-6">
+        <div>
+          <span class="text-xs uppercase tracking-wider font-semibold text-terracotta">Advance Booking</span>
+          <h3 class="font-heading text-2xl font-bold text-deepBrown">Reserve Your Dining Table</h3>
+          <p class="text-xs text-darkEspresso/70 mt-1">Book ahead to ensure immediate seating for your family or gathering.</p>
+        </div>
+
+        <form method="POST" action="{% url 'visit_us' %}" class="space-y-4 text-xs">
+          {% csrf_token %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">Full Name *</label>
+              <input type="text" name="name" required placeholder="Aayush Shrestha" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+            </div>
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">Contact Phone (Nepal) *</label>
+              <input type="tel" name="phone" required placeholder="98XXXXXXXX" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">Guest Count *</label>
+              <select name="guests" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="6">6 Guests</option>
+                <option value="8">8+ Guests (Large Family)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">Date *</label>
+              <input type="date" name="date" required class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+            </div>
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">Preferred Time *</label>
+              <input type="time" name="time" required value="19:00" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-medium text-deepBrown mb-1">Email Address (Optional)</label>
+            <input type="email" name="email" placeholder="guest@example.com" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+          </div>
+
+          <div>
+            <label class="block font-medium text-deepBrown mb-1">Special Dietary / Seating Requests</label>
+            <textarea name="special_requests" rows="3" placeholder="High chair required, spice level preferences, celebration..." class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary w-full py-3.5 justify-center text-sm font-semibold shadow-md">
+            Confirm Table Reservation Request
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+

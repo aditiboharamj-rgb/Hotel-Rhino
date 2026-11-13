@@ -1,0 +1,89 @@
+{% extends 'public/base.html' %}
+
+{% block title %}Guest Experiences - Hotel Rhino Thakali{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-creamBg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <span class="text-xs uppercase tracking-widest font-semibold text-terracotta">Patron Stories</span>
+      <h1 class="text-4xl font-heading font-bold text-deepBrown">Guest Experiences & Reviews</h1>
+      <p class="text-sm text-darkEspresso/70">Read candid reflections from local guests and international travelers who dine at Hotel Rhino.</p>
+    </div>
+
+    <!-- Review Submission Form & Summary -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      
+      <!-- Reviews Display -->
+      <div class="lg:col-span-7 space-y-6">
+        <h3 class="font-heading text-2xl font-bold text-deepBrown">Recent Reviews ({{ reviews|length }})</h3>
+        
+        <div class="space-y-4">
+          {% for r in reviews %}
+          <div class="bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-heading font-bold text-base text-deepBrown">{{ r.name }}</h4>
+                <span class="text-[11px] text-mutedOlive">{{ r.city }} • {{ r.created_at|date:"M d, Y" }}</span>
+              </div>
+              <div class="text-warningAmber text-sm">
+                {% for _ in "x"|rjust:r.rating %}★{% endfor %}
+              </div>
+            </div>
+            <p class="text-xs text-darkEspresso/80 leading-relaxed italic">"{{ r.comment }}"</p>
+          </div>
+          {% empty %}
+          <div class="bg-white p-8 rounded-2xl text-center text-xs text-darkEspresso/60">
+            No reviews yet. Be the first to share your experience below!
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Add Review Card -->
+      <div class="lg:col-span-5 bg-white p-8 rounded-3xl border border-tradBeige shadow-sm space-y-6">
+        <div class="space-y-2">
+          <span class="text-xs uppercase tracking-wider font-semibold text-terracotta">Share Your Visit</span>
+          <h3 class="font-heading text-xl font-bold text-deepBrown">Leave a Review</h3>
+          <p class="text-xs text-darkEspresso/70">Tell us how you enjoyed the Jimbu dal, tender mutton, or attentive refills!</p>
+        </div>
+
+        <form method="POST" action="{% url 'guest_experiences' %}" class="space-y-4 text-xs">
+          {% csrf_token %}
+          <div>
+            <label class="block font-medium text-deepBrown mb-1">Your Full Name *</label>
+            <input type="text" name="name" required class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">City / Country</label>
+              <input type="text" name="city" placeholder="Kathmandu, Nepal" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+            </div>
+            <div>
+              <label class="block font-medium text-deepBrown mb-1">Rating *</label>
+              <select name="rating" class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta">
+                <option value="5">★★★★★ (5 Stars)</option>
+                <option value="4">★★★★☆ (4 Stars)</option>
+                <option value="3">★★★☆☆ (3 Stars)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-medium text-deepBrown mb-1">Your Feedback / Review *</label>
+            <textarea name="comment" rows="4" required placeholder="Describe your experience with our Thakali thali..." class="w-full px-4 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 focus:outline-none focus:border-terracotta"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary w-full py-3 justify-center text-xs">
+            Submit Review
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Sales Analytics & Reports - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Financial Analytics & Reports{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Export Banner -->
+  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs">
+    <div>
+      <h3 class="font-heading font-bold text-base text-deepBrown">Verified Settlement Reports</h3>
+      <p class="text-darkEspresso/70">Calculated strictly from audited database payment records.</p>
+    </div>
+    <div class="flex gap-2">
+      <a href="?export=csv" class="btn-primary text-xs py-2 px-4">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Report (CSV)
+      </a>
+    </div>
+  </div>
+
+  <!-- Metric Totals -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm">
+      <span class="text-xs text-darkEspresso/60 font-medium block">Total Realized Revenue</span>
+      <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">NPR {{ total_revenue|floatformat:2 }}</h3>
+      <span class="text-[11px] text-successGreen font-semibold">Audited Transactions</span>
+    </div>
+
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm">
+      <span class="text-xs text-darkEspresso/60 font-medium block">Completed Food Orders</span>
+      <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">{{ total_orders }}</h3>
+      <span class="text-[11px] text-mutedOlive font-semibold">Excluding {{ cancelled_orders }} Cancelled</span>
+    </div>
+
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm">
+      <span class="text-xs text-darkEspresso/60 font-medium block">Veg Thakali Sets Served</span>
+      <h3 class="text-2xl font-bold font-heading text-successGreen mt-1">{{ veg_count }}</h3>
+      <span class="text-[11px] text-mutedOlive font-semibold">Pure Himalayan Vegetarian</span>
+    </div>
+
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm">
+      <span class="text-xs text-darkEspresso/60 font-medium block">Non-Veg Thakali Sets</span>
+      <h3 class="text-2xl font-bold font-heading text-terracotta mt-1">{{ non_veg_count }}</h3>
+      <span class="text-[11px] text-mutedOlive font-semibold">Chicken, Mutton & River Fish</span>
+    </div>
+  </div>
+
+  <!-- Payment Methods Breakdown -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <h3 class="font-heading font-bold text-base text-deepBrown">Payment Channel Breakdown</h3>
+      <div class="space-y-3 text-xs">
+        {% for pm in payment_methods %}
+        <div class="flex items-center justify-between p-3 rounded-xl bg-creamBg border border-tradBeige/80">
+          <div>
+            <span class="font-bold text-deepBrown block text-sm">{{ pm.payment_method }}</span>
+            <span class="text-[10px] text-darkEspresso/60">{{ pm.cnt }} Transactions</span>
+          </div>
+          <span class="font-bold text-terracotta text-sm">NPR {{ pm.total|floatformat:2 }}</span>
+        </div>
+        {% empty %}
+        <p class="text-xs text-darkEspresso/50 py-4 text-center">No payment transactions recorded yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <h3 class="font-heading font-bold text-base text-deepBrown">Tax & Surcharge Summary (NPR)</h3>
+      <div class="p-4 rounded-xl bg-creamBg border border-tradBeige/80 space-y-3 text-xs">
+        <div class="flex justify-between">
+          <span class="text-darkEspresso/70">Standard VAT (13%):</span>
+          <span class="font-bold text-deepBrown">Government Statutory</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-darkEspresso/70">Restaurant Service Charge (10%):</span>
+          <span class="font-bold text-deepBrown">Staff Welfare Fund</span>
+        </div>
+        <div class="pt-3 border-t border-tradBeige text-[11px] text-mutedOlive">
+          All tax reports are fully formatted for IRD (Inland Revenue Department) audit and compliance.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+

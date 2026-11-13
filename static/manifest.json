@@ -1,0 +1,22 @@
+{
+  "name": "Hotel Rhino Thakali RMS",
+  "short_name": "Hotel Rhino",
+  "description": "Authentic Himalayan Thakali Restaurant & Management System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F4EA",
+  "theme_color": "#3B2418",
+  "icons": [
+    {
+      "src": "/static/images/rhino_logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/static/images/rhino_logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+

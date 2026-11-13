@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Staff RMS | Hotel Rhino{% endblock %}</title>
+  <meta name="theme-color" content="#3B2418">
+  <link rel="icon" type="image/svg+xml" href="/static/images/rhino_logo.svg">
+  <link rel="manifest" href="/static/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepBrown: '#3B2418',
+            darkEspresso: '#24160F',
+            terracotta: '#B66A36',
+            warmSand: '#D8BD96',
+            tradBeige: '#E9D9BC',
+            creamBg: '#F8F4EA',
+            mutedOlive: '#68734A',
+            successGreen: '#25834A',
+            warningAmber: '#D68B27',
+            errorRed: '#C64C43',
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-creamBg text-darkEspresso min-h-screen flex flex-col md:flex-row font-body">
+
+  <!-- Sidebar Navigation -->
+  <aside class="w-full md:w-64 bg-darkEspresso text-tradBeige flex-shrink-0 flex flex-col justify-between border-r border-terracotta/30">
+    <div>
+      <!-- Brand Header -->
+      <div class="p-5 border-b border-deepBrown/80 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="/static/images/rhino_logo.svg" alt="Hotel Rhino" class="w-9 h-9">
+          <div>
+            <h1 class="font-heading font-bold text-white text-base tracking-wide">HOTEL RHINO</h1>
+            <span class="text-[10px] text-terracotta tracking-wider uppercase font-semibold">RMS Terminal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Info Badge -->
+      <div class="p-4 bg-deepBrown/50 mx-3 my-3 rounded-2xl border border-terracotta/20 flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-terracotta text-white flex items-center justify-center font-bold text-xs">
+          {{ request.user.username|slice:":2"|upper }}
+        </div>
+        <div class="overflow-hidden">
+          <p class="text-xs font-bold text-white truncate">{{ request.user.get_full_name|default:request.user.username }}</p>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-terracotta/30 text-warmSand font-semibold uppercase">
+            {{ STAFF_ROLE|default:"ADMIN" }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="px-3 py-2 space-y-1 text-xs">
+        <a href="{% url 'staff_dashboard' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_dashboard' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+        </a>
+        <a href="{% url 'staff_tables' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_tables' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="grid" class="w-4 h-4"></i> Table Management
+        </a>
+        <a href="{% url 'staff_pos' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_pos' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="clipboard-list" class="w-4 h-4"></i> Orders / POS
+        </a>
+        <a href="{% url 'staff_kitchen' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_kitchen' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="chef-hat" class="w-4 h-4"></i> Kitchen Display (KDS)
+          <span id="badgeUnservedOrders" class="ml-auto bg-errorRed text-white text-[10px] px-2 py-0.5 rounded-full hidden">0</span>
+        </a>
+        <a href="{% url 'staff_billing' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_billing' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="credit-card" class="w-4 h-4"></i> Billing & Payments
+        </a>
+        <a href="{% url 'staff_customers' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_customers' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="users" class="w-4 h-4"></i> Customers
+        </a>
+        <a href="{% url 'staff_reports' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_reports' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Sales & Reports
+        </a>
+        <a href="{% url 'staff_khana_sets' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_khana_sets' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="utensils" class="w-4 h-4"></i> Khana Set Menu
+        </a>
+        <a href="{% url 'staff_members' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_members' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="user-check" class="w-4 h-4"></i> Staff Management
+        </a>
+        <a href="{% url 'staff_reservations' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_reservations' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="calendar" class="w-4 h-4"></i> Reservations
+        </a>
+        <a href="{% url 'staff_settings' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_settings' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="settings" class="w-4 h-4"></i> System Settings
+        </a>
+        <a href="/admin/" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-deepBrown text-tradBeige/80 hover:text-white transition">
+          <i data-lucide="shield" class="w-4 h-4 text-warmSand"></i> Unfold Admin Panel
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="p-4 border-t border-deepBrown/80 space-y-2 text-xs">
+      <a href="/" target="_blank" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-deepBrown/80 text-tradBeige hover:text-white transition">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Customer Website
+      </a>
+      <a href="{% url 'staff_logout' %}" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-errorRed/20 hover:bg-errorRed text-white transition font-medium">
+        <i data-lucide="log-out" class="w-3.5 h-3.5"></i> Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-grow flex flex-col min-w-0">
+    <!-- Top System Bar -->
+    <header class="bg-white border-b border-tradBeige px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <h2 class="font-heading font-bold text-xl text-deepBrown">{% block header_title %}Operations Dashboard{% endblock %}</h2>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-creamBg border border-tradBeige text-mutedOlive font-medium">
+          <span class="w-2 h-2 rounded-full bg-successGreen animate-ping"></span>
+          <span>Live Sync Active (NPT)</span>
+        </div>
+        <div id="liveClock" class="font-bold text-deepBrown px-3 py-1.5 bg-creamBg rounded-xl border border-tradBeige">
+          --:--:--
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="p-6 flex-grow">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <div id="toast" class="toast-container"></div>
+
+  <script>
+    lucide.createIcons();
+
+    function showToast(msg) {
+      const container = document.getElementById('toast');
+      const div = document.createElement('div');
+      div.className = 'toast-msg';
+      div.innerText = msg;
+      container.appendChild(div);
+      setTimeout(() => div.remove(), 4000);
+    }
+
+    // Live Clock (Nepal Time)
+    function updateClock() {
+      const now = new Date();
+      const el = document.getElementById('liveClock');
+      if (el) {
+        el.innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kathmandu', hour12: true });
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Background poll for order alerts without page jitter
+    async function syncSystem() {
+      try {
+        const res = await fetch('/api/live-sync/');
+        const data = await res.json();
+        const badge = document.getElementById('badgeUnservedOrders');
+        if (badge) {
+          if (data.unserved_orders > 0) {
+            badge.innerText = data.unserved_orders;
+            badge.classList.remove('hidden');
+          } else {
+            badge.classList.add('hidden');
+          }
+        }
+      } catch (e) {}
+    }
+    setInterval(syncSystem, 8000);
+    syncSystem();
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+

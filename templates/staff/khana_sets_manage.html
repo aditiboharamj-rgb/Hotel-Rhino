@@ -1,0 +1,76 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Khana Set Menu Management - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Thakali Khana Sets Management{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Info Notice -->
+  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between text-xs">
+    <div>
+      <h3 class="font-heading font-bold text-base text-deepBrown">Authentic Himalayan Thakali Sets Catalog</h3>
+      <p class="text-darkEspresso/70">Update prices, toggle instant availability, or manage kitchen portions.</p>
+    </div>
+    <span class="px-3 py-1 bg-terracotta/20 text-terracotta rounded-full font-bold">
+      Thakali Cuisine Only
+    </span>
+  </div>
+
+  <!-- Items Table -->
+  <div class="bg-white rounded-2xl border border-tradBeige shadow-sm overflow-hidden">
+    <table class="w-full text-left text-xs">
+      <thead class="bg-creamBg border-b border-tradBeige text-deepBrown font-heading">
+        <tr>
+          <th class="p-4">Khana Set</th>
+          <th class="p-4">Category</th>
+          <th class="p-4">Price (NPR)</th>
+          <th class="p-4">Status</th>
+          <th class="p-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-creamBg">
+        {% for ks in khana_sets %}
+        <tr class="hover:bg-creamBg/50 transition">
+          <td class="p-4">
+            <span class="font-bold text-deepBrown block text-sm">{{ ks.name }}</span>
+            <span class="text-[11px] text-darkEspresso/60 line-clamp-1">{{ ks.portion_info }}</span>
+          </td>
+          <td class="p-4 font-semibold text-mutedOlive">
+            {{ ks.get_category_display }}
+          </td>
+          <td class="p-4">
+            <form method="POST" class="flex items-center gap-2">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="update_price">
+              <input type="hidden" name="set_id" value="{{ ks.id }}">
+              <input type="number" step="10" name="price" value="{{ ks.price_npr }}" class="w-24 px-2 py-1 rounded-lg border border-tradBeige text-xs font-bold text-deepBrown">
+              <button type="submit" class="px-2.5 py-1 bg-deepBrown text-white rounded-lg text-[10px] font-semibold hover:bg-terracotta transition">Update</button>
+            </form>
+          </td>
+          <td class="p-4">
+            {% if ks.is_available %}
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-successGreen/20 text-successGreen">Available</span>
+            {% else %}
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-errorRed/20 text-errorRed">Sold Out</span>
+            {% endif %}
+          </td>
+          <td class="p-4 text-right">
+            <form method="POST" class="inline">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="toggle_availability">
+              <input type="hidden" name="set_id" value="{{ ks.id }}">
+              <button type="submit" class="btn-outline text-[11px] py-1 px-3">
+                {% if ks.is_available %}Mark Unavailable{% else %}Mark Available{% endif %}
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
+

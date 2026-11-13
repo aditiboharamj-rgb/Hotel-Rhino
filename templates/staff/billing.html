@@ -1,0 +1,200 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Billing & Payment Checkout - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Billing & Settlements{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+  <!-- Left: Select Table Session to Bill -->
+  <div class="lg:col-span-5 space-y-4">
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <h3 class="font-heading font-bold text-base text-deepBrown">Active Table Checkout</h3>
+      <p class="text-xs text-darkEspresso/70">Select an occupied dining session to retrieve all consolidated orders and generate tax invoice.</p>
+
+      <div class="space-y-3">
+        {% for session in sessions %}
+        <div onclick="loadSessionBill({{ session.id }})" class="p-3.5 rounded-xl border border-tradBeige bg-creamBg hover:border-terracotta cursor-pointer transition flex items-center justify-between text-xs">
+          <div>
+            <span class="font-bold text-deepBrown block text-sm">Table {{ session.table.table_number }}</span>
+            <span class="text-mutedOlive text-[11px]">{{ session.customer_count }} Guests • {{ session.opened_at|date:"h:i A" }}</span>
+          </div>
+          <div class="text-right">
+            <span class="font-bold text-terracotta block">NPR {{ session.total_bill_amount|floatformat:2 }}</span>
+            <span class="text-[10px] text-deepBrown font-medium">Click to Load &rarr;</span>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-xs text-darkEspresso/50 text-center py-6">No tables awaiting billing right now.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Recent Settled Bills -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm space-y-3">
+      <h3 class="font-heading font-bold text-base text-deepBrown">Recent Invoices</h3>
+      <div class="space-y-2 max-h-60 overflow-y-auto pr-1 text-xs">
+        {% for b in recent_bills %}
+        <div class="p-2.5 rounded-xl bg-creamBg/60 border border-tradBeige/80 flex justify-between items-center">
+          <div>
+            <span class="font-semibold text-deepBrown block">{{ b.receipt_number }}</span>
+            <span class="text-[10px] text-darkEspresso/60">Table {{ b.table_session.table.table_number }} • {{ b.created_at|date:"M d, H:i" }}</span>
+          </div>
+          <div class="text-right flex items-center gap-2">
+            <span class="font-bold text-xs text-deepBrown">NPR {{ b.grand_total }}</span>
+            <a href="{% url 'receipt_pdf' b.id %}" target="_blank" class="p-1 text-terracotta hover:bg-terracotta/10 rounded" title="Download PDF">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Bill Details & Payment Processing Station -->
+  <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex items-center justify-between pb-3 border-b border-tradBeige">
+      <div>
+        <h3 class="font-heading font-bold text-lg text-deepBrown" id="displayReceipt">Select Table to Generate Bill</h3>
+        <span class="text-xs text-mutedOlive" id="displayTableNum">Table: Not selected</span>
+      </div>
+      <div id="pdfDownloadBtnContainer" class="hidden">
+        <a id="btnPdfDownload" href="#" target="_blank" class="btn-outline text-xs py-1.5 px-3">
+          <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Download PDF
+        </a>
+      </div>
+    </div>
+
+    <!-- Invoice Summary Box -->
+    <div class="bg-creamBg p-4 rounded-xl border border-tradBeige/80 space-y-2 text-xs">
+      <div class="flex justify-between text-darkEspresso/80">
+        <span>Food Subtotal:</span>
+        <span id="billSubtotal">NPR 0.00</span>
+      </div>
+      <div class="flex justify-between text-darkEspresso/80">
+        <span>Service Charge (10%):</span>
+        <span id="billServiceCharge">NPR 0.00</span>
+      </div>
+      <div class="flex justify-between text-darkEspresso/80">
+        <span>Value Added Tax - VAT (13%):</span>
+        <span id="billVat">NPR 0.00</span>
+      </div>
+      <div class="flex justify-between text-base font-bold text-deepBrown pt-2 border-t border-tradBeige">
+        <span>Grand Total:</span>
+        <span id="billGrandTotal" class="text-terracotta font-heading text-lg">NPR 0.00</span>
+      </div>
+      <div class="flex justify-between text-xs font-semibold text-mutedOlive pt-1">
+        <span>Remaining Balance Due:</span>
+        <span id="billBalance" class="text-errorRed">NPR 0.00</span>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="space-y-4 pt-2">
+      <h4 class="font-heading font-bold text-sm text-deepBrown">Record Verified Settlement</h4>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div>
+          <label class="block font-medium text-deepBrown mb-1">Payment Method *</label>
+          <select id="payMethod" class="w-full px-3 py-2 rounded-xl border border-tradBeige bg-white focus:outline-none focus:border-terracotta">
+            <option value="CASH">Cash Settlement</option>
+            <option value="FONEPAY_QR">Fonepay / Mobile Banking QR</option>
+            <option value="CARD">Debit / Credit Card POS</option>
+            <option value="ESEWA">eSewa Mobile Wallet</option>
+            <option value="KHALTI">Khalti Digital Wallet</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-deepBrown mb-1">Amount to Settle (NPR) *</label>
+          <input type="number" step="0.01" id="payAmount" class="w-full px-3 py-2 rounded-xl border border-tradBeige bg-white font-bold text-deepBrown focus:outline-none focus:border-terracotta">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+        <div>
+          <label class="block font-medium text-deepBrown mb-1">Transaction Ref / Cheque / Bank Note</label>
+          <input type="text" id="payRef" placeholder="e.g. FONEPAY-981245 / Card Auth No" class="w-full px-3 py-2 rounded-xl border border-tradBeige bg-white focus:outline-none focus:border-terracotta">
+        </div>
+        <div>
+          <label class="block font-medium text-deepBrown mb-1">Cashier Memo</label>
+          <input type="text" id="payNotes" placeholder="Optional notes" class="w-full px-3 py-2 rounded-xl border border-tradBeige bg-white focus:outline-none focus:border-terracotta">
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button onclick="confirmPayment()" id="btnProcessPayment" class="btn-primary w-full py-3.5 justify-center text-xs font-semibold shadow-md opacity-50 cursor-not-allowed" disabled>
+          <i data-lucide="check-check" class="w-4 h-4"></i> Verify & Close Table Session
+        </button>
+      </div>
+
+      <p class="text-[11px] text-mutedOlive text-center">
+        * As per policy, Fonepay and card payments must be verified by the cashier prior to closing the table session.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  let activeBillId = null;
+
+  async function loadSessionBill(sessionId) {
+    try {
+      const res = await fetch(`/api/billing/generate/${sessionId}/`);
+      const data = await res.json();
+      if (data.status === 'success') {
+        activeBillId = data.bill_id;
+        document.getElementById('displayReceipt').innerText = `Receipt: ${data.receipt_number}`;
+        document.getElementById('displayTableNum').innerText = `Table: Table ${data.table_number}`;
+        document.getElementById('billSubtotal').innerText = `NPR ${data.subtotal.toFixed(2)}`;
+        document.getElementById('billServiceCharge').innerText = `NPR ${data.service_charge.toFixed(2)}`;
+        document.getElementById('billVat').innerText = `NPR ${data.vat_amount.toFixed(2)}`;
+        document.getElementById('billGrandTotal').innerText = `NPR ${data.grand_total.toFixed(2)}`;
+        document.getElementById('billBalance').innerText = `NPR ${data.balance.toFixed(2)}`;
+        document.getElementById('payAmount').value = data.balance.toFixed(2);
+
+        const btn = document.getElementById('btnProcessPayment');
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        const pdfCont = document.getElementById('pdfDownloadBtnContainer');
+        pdfCont.classList.remove('hidden');
+        document.getElementById('btnPdfDownload').href = `/staff/billing/receipt/${data.bill_id}/pdf/`;
+      }
+    } catch (e) {
+      showToast('Error generating bill');
+    }
+  }
+
+  async function confirmPayment() {
+    if (!activeBillId) return;
+    const amount = document.getElementById('payAmount').value;
+    const method = document.getElementById('payMethod').value;
+    const ref = document.getElementById('payRef').value;
+    const notes = document.getElementById('payNotes').value;
+
+    try {
+      const res = await fetch(`/api/billing/pay/${activeBillId}/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, method, reference: ref, notes })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        showToast('Payment verified and table session successfully closed!');
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        showToast(data.message || 'Error recording payment');
+      }
+    } catch (e) {
+      showToast('Network error processing payment.');
+    }
+  }
+</script>
+{% endblock %}
+

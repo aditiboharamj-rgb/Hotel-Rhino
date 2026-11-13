@@ -1,0 +1,51 @@
+{% extends 'public/base.html' %}
+
+{% block title %}Our Story - Hotel Rhino Thakali{% endblock %}
+
+{% block content %}
+<div class="py-16 bg-creamBg">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    
+    <div class="text-center space-y-3">
+      <span class="text-xs uppercase tracking-widest font-semibold text-terracotta">Himalayan Heritage & Origin</span>
+      <h1 class="text-4xl sm:text-5xl font-heading font-bold text-deepBrown">The Story of Hotel Rhino</h1>
+      <p class="text-sm text-darkEspresso/70">From the dry winds of Thak Khola to the warm hearts of our dining room.</p>
+    </div>
+
+    <div class="rounded-3xl overflow-hidden shadow-xl border-4 border-white max-h-96">
+      <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80" alt="Himalayas and Mustang" class="w-full h-full object-cover">
+    </div>
+
+    <div class="space-y-6 text-sm text-darkEspresso/85 leading-relaxed bg-white p-8 sm:p-12 rounded-3xl border border-tradBeige shadow-sm">
+      <h2 class="font-heading text-2xl font-bold text-deepBrown">The Himalayan Salt Route Tradition</h2>
+      <p>
+        Centuries ago, along the rugged Kali Gandaki gorge dividing the majestic Annapurna and Dhaulagiri mountain massifs, the indigenous Thakali people of Mustang managed the bustling trade between Tibet and the southern plains of Nepal. 
+      </p>
+      <p>
+        To nourish weary caravans, traders, and pilgrims, Thakali mothers and innkeepers developed an exceptional culinary mastery: a complete, impeccably balanced thali designed to restore vitality after long mountain journeys. They elevated simple ingredients — mountain buckwheat, black lentils, wild Jimbu herb, and locally pressed mustard oil — into Nepal’s most beloved gastronomic triumph.
+      </p>
+
+      <h2 class="font-heading text-2xl font-bold text-deepBrown pt-4">Our Commitment at Hotel Rhino</h2>
+      <p>
+        Hotel Rhino was born with a singular, uncompromising purpose: <strong>to preserve and honor authentic Thakali cuisine without dilution or shortcuts.</strong>
+      </p>
+      <ul class="list-disc pl-5 space-y-2 text-xs text-darkEspresso/80">
+        <li><strong>No artificial colors, MSG, or processed preservatives:</strong> Only pure spices ground on traditional stone Silauto.</li>
+        <li><strong>True Mustang Jimbu:</strong> Hand-picked in the sub-alpine regions of Upper Mustang.</li>
+        <li><strong>Authentic Brassware:</strong> Solid hand-cast bell-metal Kansa sets that maintain heat and celebrate dining as an auspicious ritual.</li>
+        <li><strong>Unconditional Hospitality:</strong> The Nepali spirit of "Atithi Devo Bhava" (The guest is god) with endless hot refills of rice, dal, and greens.</li>
+      </ul>
+
+      <div class="pt-6 border-t border-tradBeige/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 class="font-heading font-bold text-deepBrown">The Founders & Kitchen Family</h4>
+          <span class="text-xs text-mutedOlive">Hotel Rhino Thakali Kitchen</span>
+        </div>
+        <a href="{% url 'khana_sets' %}" class="btn-primary text-xs py-2.5 px-6">Explore Our Menu</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+

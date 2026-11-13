@@ -1,0 +1,46 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Staff Management - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Staff Roles & Personnel{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between text-xs">
+    <div>
+      <h3 class="font-heading font-bold text-base text-deepBrown">Active Staff Roster</h3>
+      <p class="text-darkEspresso/70">Role-based security controls POS billing, table assignment, and KDS access.</p>
+    </div>
+    <a href="/admin/thakali_app/staffprofile/add/" target="_blank" class="btn-primary text-xs py-2 px-4">
+      <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> Add New Staff Member
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {% for prof in profiles %}
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <div class="flex items-start justify-between">
+        <div class="w-12 h-12 rounded-2xl bg-creamBg border border-tradBeige flex items-center justify-center font-bold text-terracotta text-lg">
+          {{ prof.user.username|slice:":2"|upper }}
+        </div>
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold {% if prof.role == 'ADMIN' %}bg-errorRed/20 text-errorRed{% elif prof.role == 'CASHIER' %}bg-blue-100 text-blue-700{% elif prof.role == 'WAITER' %}bg-successGreen/20 text-successGreen{% else %}bg-warningAmber/20 text-warningAmber{% endif %}">
+          {{ prof.get_role_display }}
+        </span>
+      </div>
+
+      <div>
+        <h4 class="font-heading font-bold text-base text-deepBrown">{{ prof.user.get_full_name|default:prof.user.username }}</h4>
+        <span class="text-xs text-mutedOlive">@{{ prof.user.username }}</span>
+      </div>
+
+      <div class="text-[11px] text-darkEspresso/70 space-y-1 pt-2 border-t border-tradBeige/60">
+        <p><i data-lucide="phone" class="w-3 h-3 inline mr-1 text-terracotta"></i>{{ prof.phone|default:"No direct phone" }}</p>
+        <p><i data-lucide="shield-check" class="w-3 h-3 inline mr-1 text-terracotta"></i>Duty Status: Active</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+

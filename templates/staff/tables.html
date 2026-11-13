@@ -1,0 +1,189 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Floor & Table Management - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Floor & Table Management{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Status Legend -->
+  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex flex-wrap items-center justify-between gap-4 text-xs">
+    <div class="flex flex-wrap items-center gap-4">
+      <span class="font-bold text-deepBrown">Status Guide:</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-successGreen"></span> Available</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-warningAmber"></span> Occupied</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-500"></span> Bill Requested</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-orange-500"></span> Payment Pending</span>
+      <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-gray-400"></span> Cleaning Required</span>
+    </div>
+    <div>
+      <a href="{% url 'staff_pos' %}" class="btn-primary text-xs py-2 px-4">
+        <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Open POS Order
+      </a>
+    </div>
+  </div>
+
+  <!-- Tables Visual Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {% for table in tables %}
+    <div class="bg-white rounded-2xl border-2 shadow-sm p-5 flex flex-col justify-between space-y-4 {% if table.status == 'AVAILABLE' %}border-successGreen/40{% elif table.status == 'OCCUPIED' %}border-warningAmber/60{% elif table.status == 'BILL_REQUESTED' %}border-blue-400{% elif table.status == 'PAYMENT_PENDING' %}border-orange-400{% else %}border-gray-300{% endif %}">
+      
+      <!-- Table Header -->
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-darkEspresso/50 block">Dining Table</span>
+          <h3 class="font-heading font-extrabold text-2xl text-deepBrown">Table {{ table.table_number }}</h3>
+          <span class="text-xs text-mutedOlive font-medium">{{ table.capacity }} Seats • {{ table.name|default:"Main Hall" }}</span>
+        </div>
+
+        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold text-white {% if table.status == 'AVAILABLE' %}bg-successGreen{% elif table.status == 'OCCUPIED' %}bg-warningAmber{% elif table.status == 'BILL_REQUESTED' %}bg-blue-500{% elif table.status == 'PAYMENT_PENDING' %}bg-orange-500{% else %}bg-gray-400{% endif %}">
+          {{ table.get_status_display }}
+        </span>
+      </div>
+
+      <!-- Current Session Info -->
+      <div class="bg-creamBg p-3 rounded-xl border border-tradBeige/80 text-xs space-y-1">
+        {% if table.current_session %}
+          <div class="flex justify-between font-semibold text-deepBrown">
+            <span>Guests: {{ table.current_session.customer_count }}</span>
+            <span class="text-terracotta">NPR {{ table.current_session.total_bill_amount|floatformat:2 }}</span>
+          </div>
+          <p class="text-[11px] text-darkEspresso/70">
+            Waiter: {{ table.current_session.assigned_waiter.username|default:"General" }}
+          </p>
+          <p class="text-[10px] text-darkEspresso/50">
+            Occupied: {{ table.current_session.opened_at|date:"h:i A" }}
+          </p>
+        {% else %}
+          <p class="text-darkEspresso/50 text-center py-2">No active session</p>
+        {% endif %}
+      </div>
+
+      <!-- Actions -->
+      <div class="space-y-2 pt-2 border-t border-tradBeige/60">
+        {% if table.status == 'AVAILABLE' %}
+        <button onclick="promptOpenSession({{ table.id }}, '{{ table.table_number }}')" class="btn-primary w-full text-xs py-2 justify-center">
+          Seat Customers
+        </button>
+        {% elif table.status == 'CLEANING_REQUIRED' %}
+        <button onclick="updateTableStatus({{ table.id }}, 'AVAILABLE')" class="btn-outline w-full text-xs py-1.5 justify-center border-successGreen text-successGreen hover:bg-successGreen hover:text-white">
+          Mark as Cleaned
+        </button>
+        {% else %}
+        <div class="grid grid-cols-2 gap-2">
+          <a href="{% url 'staff_pos' %}?table_id={{ table.id }}" class="btn-primary text-[11px] py-1.5 px-2 text-center justify-center">
+            POS Order
+          </a>
+          <button onclick="requestTableBill({{ table.id }})" class="btn-outline text-[11px] py-1.5 px-2 text-center justify-center border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white">
+            Generate Bill
+          </button>
+        </div>
+        {% endif %}
+
+        <!-- Customer QR Link Preview -->
+        <div class="text-center pt-1">
+          <a href="{% url 'qr_table_order' table.qr_code_token %}" target="_blank" class="text-[10px] text-terracotta hover:underline inline-flex items-center gap-1">
+            <i data-lucide="qr-code" class="w-3 h-3"></i> View Customer QR Page
+          </a>
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+<!-- Modal for Opening Table Session -->
+<div id="openSessionModal" class="hidden fixed inset-0 bg-darkEspresso/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl border border-tradBeige shadow-2xl p-6 max-w-sm w-full space-y-4">
+    <div class="flex justify-between items-center">
+      <h3 class="font-heading font-bold text-lg text-deepBrown" id="modalTableTitle">Seat Customers</h3>
+      <button onclick="closeModal()" class="text-gray-400 hover:text-darkEspresso">&times;</button>
+    </div>
+
+    <div class="space-y-3 text-xs">
+      <div>
+        <label class="block font-medium text-deepBrown mb-1">Guest Count</label>
+        <input type="number" id="modalGuestCount" min="1" max="20" value="2" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:outline-none focus:border-terracotta">
+      </div>
+
+      <div>
+        <label class="block font-medium text-deepBrown mb-1">Assign Waiter</label>
+        <select id="modalWaiterId" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:outline-none focus:border-terracotta">
+          {% for st in staff_members %}
+          <option value="{{ st.id }}">{{ st.user.username }} ({{ st.get_role_display }})</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="flex gap-2 pt-2">
+      <button onclick="closeModal()" class="btn-outline w-1/2 text-xs py-2 justify-center">Cancel</button>
+      <button onclick="confirmOpenSession()" class="btn-primary w-1/2 text-xs py-2 justify-center">Open Table</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  let targetTableId = null;
+
+  function promptOpenSession(tableId, tableNum) {
+    targetTableId = tableId;
+    document.getElementById('modalTableTitle').innerText = `Seat Customers on Table ${tableNum}`;
+    document.getElementById('openSessionModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('openSessionModal').classList.add('hidden');
+    targetTableId = null;
+  }
+
+  async function confirmOpenSession() {
+    if (!targetTableId) return;
+    const guests = document.getElementById('modalGuestCount').value;
+    const waiterId = document.getElementById('modalWaiterId').value;
+
+    try {
+      const res = await fetch(`/api/table/${targetTableId}/open-session/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customer_count: guests, waiter_id: waiterId })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        showToast('Table opened successfully!');
+        setTimeout(() => window.location.reload(), 600);
+      } else {
+        showToast(data.message || 'Error opening table');
+      }
+    } catch (e) {
+      showToast('Network error');
+    }
+  }
+
+  async function updateTableStatus(tableId, status) {
+    try {
+      const res = await fetch(`/api/table/${tableId}/update-status/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        showToast('Status updated');
+        setTimeout(() => window.location.reload(), 500);
+      }
+    } catch (e) {
+      showToast('Network error');
+    }
+  }
+
+  function requestTableBill(tableId) {
+    window.location.href = `{% url 'staff_billing' %}?table_id=${tableId}`;
+  }
+</script>
+{% endblock %}
+

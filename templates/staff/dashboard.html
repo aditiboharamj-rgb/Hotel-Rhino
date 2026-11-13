@@ -1,0 +1,196 @@
+{% extends 'staff/base_staff.html' %}
+
+{% block title %}Dashboard Overview - Hotel Rhino RMS{% endblock %}
+{% block header_title %}Operations Overview{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Metrics Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    
+    <!-- Today Revenue -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
+      <div>
+        <span class="text-xs text-darkEspresso/60 font-medium block">Today's Total Revenue</span>
+        <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">NPR {{ today_revenue|floatformat:2 }}</h3>
+        <span class="text-[11px] text-successGreen font-semibold">Verified Receipts</span>
+      </div>
+      <div class="p-3 bg-terracotta/10 text-terracotta rounded-2xl">
+        <i data-lucide="banknote" class="w-6 h-6"></i>
+      </div>
+    </div>
+
+    <!-- Total Orders -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
+      <div>
+        <span class="text-xs text-darkEspresso/60 font-medium block">Today's Orders</span>
+        <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">{{ today_order_count }}</h3>
+        <span class="text-[11px] text-mutedOlive font-semibold">{{ cancelled_orders }} Cancelled</span>
+      </div>
+      <div class="p-3 bg-mutedOlive/10 text-mutedOlive rounded-2xl">
+        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+      </div>
+    </div>
+
+    <!-- Table Status Summary -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
+      <div>
+        <span class="text-xs text-darkEspresso/60 font-medium block">Tables Occupancy</span>
+        <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">{{ active_tables }} / {{ total_tables }}</h3>
+        <span class="text-[11px] text-successGreen font-semibold">{{ available_tables }} Available Now</span>
+      </div>
+      <div class="p-3 bg-warmSand/30 text-deepBrown rounded-2xl">
+        <i data-lucide="layout-grid" class="w-6 h-6"></i>
+      </div>
+    </div>
+
+    <!-- Pending Bills -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
+      <div>
+        <span class="text-xs text-darkEspresso/60 font-medium block">Pending Checkout Bills</span>
+        <h3 class="text-2xl font-bold font-heading text-warningAmber mt-1">{{ pending_bills }}</h3>
+        <a href="{% url 'staff_billing' %}" class="text-[11px] text-terracotta font-semibold hover:underline">Process Bills &rarr;</a>
+      </div>
+      <div class="p-3 bg-warningAmber/10 text-warningAmber rounded-2xl">
+        <i data-lucide="receipt" class="w-6 h-6"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Real-Time Customer Service Alerts -->
+  {% if pending_requests %}
+  <div class="bg-warningAmber/10 border-2 border-warningAmber/40 p-4 rounded-2xl">
+    <div class="flex items-center justify-between mb-2">
+      <span class="font-bold text-xs text-warningAmber uppercase tracking-wider flex items-center gap-1.5">
+        <i data-lucide="bell" class="w-4 h-4"></i> Active Customer Service Requests
+      </span>
+      <span class="text-xs font-semibold text-deepBrown">{{ pending_requests|length }} Pending</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+      {% for req in pending_requests %}
+      <div class="bg-white p-3 rounded-xl border border-tradBeige shadow-sm flex justify-between items-center text-xs">
+        <div>
+          <span class="font-bold text-deepBrown block">Table {{ req.table.table_number }}</span>
+          <span class="text-terracotta font-medium">{{ req.get_request_type_display }}</span>
+          <span class="text-[10px] text-darkEspresso/60 block">{{ req.created_at|date:"h:i A" }}</span>
+        </div>
+        <button onclick="resolveRequest({{ req.id }})" class="btn-primary text-[11px] py-1.5 px-3">
+          Attended
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Active Floor Status & Weekly Chart -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- Sales Chart -->
+    <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-heading font-bold text-base text-deepBrown">7-Day Revenue Trend (NPR)</h3>
+        <span class="text-xs text-mutedOlive font-medium">Actual Settled Payments</span>
+      </div>
+      <div class="h-64">
+        <canvas id="salesChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Active Table Sessions -->
+    <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-heading font-bold text-base text-deepBrown">Active Dining Sessions</h3>
+        <a href="{% url 'staff_tables' %}" class="text-xs text-terracotta font-semibold hover:underline">Manage Tables</a>
+      </div>
+
+      <div class="space-y-3 max-h-64 overflow-y-auto pr-1 text-xs">
+        {% for session in active_sessions %}
+        <div class="p-3 bg-creamBg rounded-xl border border-tradBeige flex justify-between items-center">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-deepBrown">Table {{ session.table.table_number }}</span>
+              <span class="text-[10px] bg-terracotta/20 text-terracotta px-2 py-0.5 rounded-full font-semibold">{{ session.customer_count }} Guests</span>
+            </div>
+            <p class="text-[11px] text-darkEspresso/70 mt-0.5">
+              Waiter: {{ session.assigned_waiter.username|default:"Unassigned" }} • {{ session.opened_at|date:"h:i A" }}
+            </p>
+          </div>
+          <div class="text-right">
+            <span class="font-bold text-terracotta block">NPR {{ session.total_bill_amount|floatformat:2 }}</span>
+            <a href="{% url 'staff_pos' %}" class="text-[10px] text-deepBrown hover:underline">+ Add Orders</a>
+          </div>
+        </div>
+        {% empty %}
+        <div class="p-6 text-center text-xs text-darkEspresso/50">
+          No dining sessions currently active. Open a table in Table Management to begin.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const labels = {{ sales_chart_labels_json|safe }};
+  const dataValues = {{ sales_chart_data_json|safe }};
+
+  const ctx = document.getElementById('salesChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Revenue (NPR)',
+        data: dataValues,
+        borderColor: '#B66A36',
+        backgroundColor: 'rgba(182, 106, 54, 0.12)',
+        borderWidth: 2.5,
+        fill: true,
+        tension: 0.35,
+        pointBackgroundColor: '#3B2418',
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: '#E9D9BC' }
+        },
+        x: {
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  async function resolveRequest(reqId) {
+    try {
+      const res = await fetch(`/api/service-request/${reqId}/resolve/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      if (data.status === 'success') {
+        showToast('Request resolved.');
+        setTimeout(() => window.location.reload(), 800);
+      }
+    } catch (e) {
+      showToast('Error updating status');
+    }
+  }
+</script>
+{% endblock %}
+

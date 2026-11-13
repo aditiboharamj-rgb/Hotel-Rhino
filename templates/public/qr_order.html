@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Table {{ table.table_number }} | Hotel Rhino Self-Order & Service</title>
+  <meta name="theme-color" content="#3B2418">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepBrown: '#3B2418',
+            darkEspresso: '#24160F',
+            terracotta: '#B66A36',
+            warmSand: '#D8BD96',
+            tradBeige: '#E9D9BC',
+            creamBg: '#F8F4EA',
+            mutedOlive: '#68734A',
+            successGreen: '#25834A',
+            warningAmber: '#D68B27',
+            errorRed: '#C64C43',
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-creamBg text-darkEspresso min-h-screen pb-28">
+
+  <!-- Fixed Top Header -->
+  <header class="bg-darkEspresso text-white px-4 py-3 sticky top-0 z-40 shadow-md">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <img src="/static/images/rhino_logo.svg" alt="Hotel Rhino" class="w-8 h-8">
+        <div>
+          <span class="font-heading font-bold text-sm block leading-none">HOTEL RHINO</span>
+          <span class="text-[10px] text-warmSand">Thakali Table Service</span>
+        </div>
+      </div>
+      <div class="bg-terracotta px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+        Table {{ table.table_number }}
+      </div>
+    </div>
+  </header>
+
+  <!-- Service Buttons Quick Actions -->
+  <div class="max-w-md mx-auto px-4 mt-4">
+    <div class="bg-white p-3.5 rounded-2xl border border-tradBeige shadow-sm">
+      <span class="text-[11px] font-bold text-deepBrown uppercase tracking-wider block mb-2">Need Quick Table Assistance?</span>
+      <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-semibold text-deepBrown">
+        <button onclick="callService('WAITER')" class="p-2 rounded-xl bg-creamBg hover:bg-terracotta hover:text-white transition border border-tradBeige flex flex-col items-center gap-1">
+          <i data-lucide="bell" class="w-4 h-4 text-terracotta"></i>
+          <span>Waiter</span>
+        </button>
+        <button onclick="callService('WATER')" class="p-2 rounded-xl bg-creamBg hover:bg-terracotta hover:text-white transition border border-tradBeige flex flex-col items-center gap-1">
+          <i data-lucide="droplet" class="w-4 h-4 text-terracotta"></i>
+          <span>Water Refill</span>
+        </button>
+        <button onclick="callService('BILL')" class="p-2 rounded-xl bg-creamBg hover:bg-terracotta hover:text-white transition border border-tradBeige flex flex-col items-center gap-1">
+          <i data-lucide="receipt" class="w-4 h-4 text-terracotta"></i>
+          <span>Request Bill</span>
+        </button>
+        <button onclick="callService('ASSISTANCE')" class="p-2 rounded-xl bg-creamBg hover:bg-terracotta hover:text-white transition border border-tradBeige flex flex-col items-center gap-1">
+          <i data-lucide="help-circle" class="w-4 h-4 text-terracotta"></i>
+          <span>Help</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thakali Khana Menu -->
+  <main class="max-w-md mx-auto px-4 mt-6 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-heading font-bold text-lg text-deepBrown">Select Thakali Khana Sets</h2>
+      <span class="text-[11px] text-mutedOlive font-medium">Authentic & Unlimited Refills</span>
+    </div>
+
+    <div class="space-y-4">
+      {% for set in available_sets %}
+      <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex gap-4 items-center">
+        <div class="w-20 h-20 rounded-xl overflow-hidden bg-tradBeige/40 shrink-0">
+          {% if set.image %}
+            <img src="{{ set.image.url }}" alt="{{ set.name }}" class="w-full h-full object-cover">
+          {% elif set.image_url %}
+            <img src="{{ set.image_url }}" alt="{{ set.name }}" class="w-full h-full object-cover">
+          {% else %}
+            <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=300&q=80" alt="{{ set.name }}" class="w-full h-full object-cover">
+          {% endif %}
+        </div>
+
+        <div class="flex-grow space-y-1">
+          <div class="flex justify-between items-start">
+            <h4 class="font-heading font-bold text-xs text-deepBrown">{{ set.name }}</h4>
+            <span class="text-xs font-bold text-terracotta">NPR {{ set.price_npr }}</span>
+          </div>
+          <p class="text-[10px] text-darkEspresso/70 line-clamp-2">{{ set.traditional_items }}</p>
+          
+          <div class="flex items-center justify-between pt-2">
+            <span class="text-[10px] text-mutedOlive font-semibold">{{ set.get_category_display }}</span>
+            <div class="flex items-center gap-2 bg-creamBg border border-tradBeige rounded-full px-2 py-0.5">
+              <button onclick="decrementItem({{ set.id }}, '{{ set.name }}', {{ set.price_npr }})" class="text-xs font-bold px-1 text-deepBrown hover:text-terracotta">-</button>
+              <span id="qty-{{ set.id }}" class="text-xs font-semibold w-4 text-center">0</span>
+              <button onclick="incrementItem({{ set.id }}, '{{ set.name }}', {{ set.price_npr }})" class="text-xs font-bold px-1 text-deepBrown hover:text-terracotta">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Special Request Notes -->
+    <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm space-y-2 mt-4 text-xs">
+      <label class="font-bold text-deepBrown block">Special Preparation Instructions</label>
+      <input type="text" id="specialNotes" placeholder="e.g. Less spicy Jimbu dal, extra papad..." class="w-full px-3 py-2 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta">
+    </div>
+
+    <!-- Active Orders placed on this table -->
+    {% if recent_orders %}
+    <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm space-y-3 mt-6">
+      <h3 class="font-heading font-bold text-sm text-deepBrown">Your Placed Orders on Table {{ table.table_number }}</h3>
+      <div class="space-y-2 text-xs">
+        {% for o in recent_orders %}
+        <div class="p-2.5 rounded-xl bg-creamBg/60 border border-tradBeige/80 flex justify-between items-center">
+          <div>
+            <span class="font-semibold text-deepBrown block">{{ o.order_number }}</span>
+            <span class="text-[10px] text-darkEspresso/70">{{ o.created_at|date:"h:i A" }} • {{ o.items.count }} items</span>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {% if o.status == 'NEW' %}bg-warningAmber/20 text-warningAmber{% elif o.status == 'PREPARING' %}bg-terracotta/20 text-terracotta{% elif o.status == 'READY' %}bg-successGreen/20 text-successGreen{% else %}bg-mutedOlive/20 text-mutedOlive{% endif %}">
+            {{ o.get_status_display }}
+          </span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </main>
+
+  <!-- Sticky Bottom Cart Bar -->
+  <div class="fixed bottom-0 left-0 right-0 bg-darkEspresso text-white p-4 border-t border-terracotta shadow-2xl z-50">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div>
+        <span class="text-[10px] text-tradBeige block">Table {{ table.table_number }} Bill Total</span>
+        <span class="text-base font-bold text-warmSand" id="cartTotal">NPR 0.00</span>
+      </div>
+      <button onclick="submitCustomerOrder()" id="btnSubmitOrder" class="btn-primary text-xs py-2.5 px-6 opacity-50 cursor-not-allowed" disabled>
+        Send Order to Kitchen
+      </button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast-container"></div>
+
+  <script>
+    lucide.createIcons();
+    const tableToken = '{{ table.qr_code_token }}';
+    let cart = {};
+
+    function showToast(msg) {
+      const container = document.getElementById('toast');
+      const div = document.createElement('div');
+      div.className = 'toast-msg';
+      div.innerText = msg;
+      container.appendChild(div);
+      setTimeout(() => div.remove(), 4000);
+    }
+
+    function incrementItem(id, name, price) {
+      if (!cart[id]) cart[id] = { id, name, price, quantity: 0 };
+      cart[id].quantity += 1;
+      updateUI();
+    }
+
+    function decrementItem(id, name, price) {
+      if (cart[id] && cart[id].quantity > 0) {
+        cart[id].quantity -= 1;
+        if (cart[id].quantity === 0) delete cart[id];
+      }
+      updateUI();
+    }
+
+    function updateUI() {
+      let total = 0;
+      let count = 0;
+      document.querySelectorAll('[id^="qty-"]').forEach(el => el.innerText = '0');
+      
+      for (let id in cart) {
+        const item = cart[id];
+        const el = document.getElementById(`qty-${id}`);
+        if (el) el.innerText = item.quantity;
+        total += item.price * item.quantity;
+        count += item.quantity;
+      }
+      document.getElementById('cartTotal').innerText = `NPR ${total.toFixed(2)}`;
+      
+      const btn = document.getElementById('btnSubmitOrder');
+      if (count > 0) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      } else {
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    async function submitCustomerOrder() {
+      const items = Object.values(cart).map(i => ({ id: i.id, quantity: i.quantity }));
+      const special = document.getElementById('specialNotes').value;
+
+      try {
+        const res = await fetch(`/api/qr/${tableToken}/order/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items, special_instructions: special })
+        });
+        const data = await res.json();
+        if (data.status === 'success') {
+          showToast(`Order Placed! #${data.order_number}`);
+          setTimeout(() => window.location.reload(), 1500);
+        } else {
+          showToast(data.message || 'Error sending order');
+        }
+      } catch (err) {
+        showToast('Network error, please alert your waiter.');
+      }
+    }
+
+    async function callService(type) {
+      try {
+        const res = await fetch(`/api/qr/${tableToken}/service-request/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ request_type: type })
+        });
+        const data = await res.json();
+        showToast(data.message);
+      } catch (e) {
+        showToast('Could not send alert. Please notify staff directly.');
+      }
+    }
+  </script>
+</body>
+</html>
+

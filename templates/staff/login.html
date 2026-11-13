@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Portal Login | Hotel Rhino RMS</title>
+  <meta name="theme-color" content="#3B2418">
+  <link rel="icon" type="image/svg+xml" href="/static/images/rhino_logo.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepBrown: '#3B2418',
+            darkEspresso: '#24160F',
+            terracotta: '#B66A36',
+            warmSand: '#D8BD96',
+            tradBeige: '#E9D9BC',
+            creamBg: '#F8F4EA',
+            mutedOlive: '#68734A',
+            errorRed: '#C64C43',
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-creamBg min-h-screen flex items-center justify-center p-4">
+
+  <div class="max-w-md w-full bg-white rounded-3xl border border-tradBeige shadow-2xl p-8 sm:p-10 space-y-6">
+    <div class="text-center space-y-2">
+      <div class="mx-auto w-16 h-16 bg-creamBg rounded-2xl p-2 border border-tradBeige flex items-center justify-center">
+        <img src="/static/images/rhino_logo.svg" alt="Hotel Rhino" class="w-12 h-12">
+      </div>
+      <h1 class="font-heading text-2xl font-bold text-deepBrown">Hotel Rhino RMS</h1>
+      <p class="text-xs text-darkEspresso/70">Restaurant Management, POS & Kitchen Display System</p>
+    </div>
+
+    {% if messages %}
+    <div class="space-y-2">
+      {% for msg in messages %}
+      <div class="p-3 bg-errorRed/10 border border-errorRed/30 text-errorRed rounded-xl text-xs font-semibold">
+        {{ msg }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'staff_login' %}" class="space-y-4 text-xs">
+      {% csrf_token %}
+      <div>
+        <label class="block font-semibold text-deepBrown mb-1">Username / Staff ID</label>
+        <div class="relative">
+          <input type="text" name="username" required autofocus placeholder="admin / cashier / waiter" class="w-full pl-10 pr-4 py-3 rounded-xl border border-tradBeige bg-creamBg/40 focus:outline-none focus:border-terracotta">
+          <i data-lucide="user" class="w-4 h-4 text-darkEspresso/40 absolute left-3.5 top-3.5"></i>
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-semibold text-deepBrown mb-1">Password</label>
+        <div class="relative">
+          <input type="password" name="password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-3 rounded-xl border border-tradBeige bg-creamBg/40 focus:outline-none focus:border-terracotta">
+          <i data-lucide="lock" class="w-4 h-4 text-darkEspresso/40 absolute left-3.5 top-3.5"></i>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" class="w-full bg-terracotta hover:bg-[#9c5525] text-white py-3.5 rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i> Sign In to Terminal
+        </button>
+      </div>
+    </form>
+
+    <div class="p-4 rounded-2xl bg-creamBg/80 border border-tradBeige/80 text-[11px] text-darkEspresso/70 space-y-1">
+      <p class="font-bold text-deepBrown flex items-center gap-1">
+        <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-terracotta"></i> Authorized Staff Access Only
+      </p>
+      <p>Role-based access is active: Admin, Cashier, Waiter, and Kitchen stations are logged for security.</p>
+    </div>
+
+    <div class="text-center pt-2">
+      <a href="/" class="text-xs text-terracotta hover:underline font-medium inline-flex items-center gap-1">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Return to Public Website
+      </a>
+    </div>
+  </div>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
+
