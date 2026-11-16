@@ -3,112 +3,94 @@
 {% block title %}Hotel Rhino | Authentic Himalayan Thakali Khana Set{% endblock %}
 
 {% block content %}
-<!-- Full-Width Panoramic Hero Section with Thakali Khana Set in the Background -->
-<section class="relative min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center text-white overflow-hidden">
+<!-- Full-Width Panoramic Hero Section with Thakali Khana Set Editorial 16:9 Banner -->
+<section class="relative min-h-[92vh] lg:min-h-[94vh] flex items-center bg-creamBg overflow-hidden">
   
-  <!-- Panoramic Thakali Khana Set Background Image - Zoomed Out with High Exposure -->
-  <div class="absolute inset-0 z-0 bg-darkEspresso">
-    <img src="/static/images/hero_thakali_bg.jpg" alt="Authentic Nepali Thakali Khana Set" class="w-full h-full object-cover sm:object-contain object-center transform scale-90 sm:scale-95 brightness-115 contrast-105 saturate-110 filter">
+  <!-- 16:9 Cinematic Editorial Background: Subject on Extreme Left, Dissolving into Champagne-Beige on the Right -->
+  <div class="absolute inset-0 z-0">
+    <img src="/static/images/hero_editorial_banner.jpg" alt="Authentic Nepali Thakali Khana Set Portrait" class="w-full h-full object-cover object-left lg:object-center">
     
-    <!-- Ultra-light Ambient Vignette to maintain text readability while exposing the full Thali -->
-    <div class="absolute inset-0 bg-darkEspresso/20"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso/90 via-transparent to-darkEspresso/30"></div>
+    <!-- Ultra-subtle overlay ensuring contrast while letting the champagne-beige gradient shine -->
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-creamBg/40 to-creamBg/90 lg:to-creamBg/95"></div>
   </div>
 
-  <!-- Hero Content Centered and Structured with Enlarged Typography -->
-  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center space-y-8">
-    
-    <!-- Top Pill Badge -->
-    <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-deepBrown/90 border border-terracotta/70 text-sm sm:text-base font-bold text-warmSand shadow-xl backdrop-blur-md">
-      <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
-      🏔️ AUTHENTIC MUSTANG THAKALI & HIMALAYAN DINING
-    </div>
-
-    <!-- Main Hero Headings with Increased Font Sizing -->
-    <div class="space-y-5">
-      <h1 class="font-heading text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white uppercase leading-[1.08] drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
-        WELCOME TO <br class="hidden sm:inline">
-        <span class="text-warmSand font-heading">HOTEL RHINO</span>
-      </h1>
-      <p class="text-xl sm:text-2xl lg:text-3xl text-tradBeige max-w-4xl mx-auto font-normal leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-        More than a meal, a taste of Himalayan tradition. Authentic brass thali sets, Mustang Jimbu dal, and heartfelt mountain hospitality.
-      </p>
-    </div>
-
-    <!-- Call to Action Buttons - Purely Informational & Hospitality-Focused -->
-    <div class="flex flex-wrap items-center justify-center gap-5 pt-3">
-      <a href="{% url 'our_story' %}" class="bg-warmSand hover:bg-white text-darkEspresso font-bold text-lg sm:text-xl py-4 px-10 rounded-2xl shadow-2xl transition transform hover:-translate-y-0.5 flex items-center gap-3">
-        <i data-lucide="compass" class="w-6 h-6 text-terracotta"></i> Discover Our Story
-      </a>
-      <a href="{% url 'khana_sets' %}" class="bg-deepBrown/90 hover:bg-terracotta text-white border border-warmSand/50 font-bold text-lg sm:text-xl py-4 px-10 rounded-2xl shadow-2xl transition transform hover:-translate-y-0.5 flex items-center gap-3 backdrop-blur-md">
-        <i data-lucide="utensils" class="w-6 h-6 text-warmSand"></i> View Thakali Thali Menu
-      </a>
-      <a href="{% url 'visit_us' %}" class="bg-darkEspresso/80 hover:bg-white hover:text-darkEspresso text-white border border-white/40 font-bold text-lg sm:text-xl py-4 px-9 rounded-2xl shadow-xl transition backdrop-blur-md flex items-center gap-2.5">
-        <i data-lucide="map-pin" class="w-6 h-6 text-terracotta"></i> Visit in Dhangadhi
-      </a>
-    </div>
-
-    <!-- 4 Pill Feature Cards (Nature / Food / Traditions / Hospitality) like the Reference Image -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 max-w-4xl mx-auto">
+  <!-- Hero Content Left-aligned & Positioned Over the Clean Right Half -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full flex justify-end">
+    <div class="w-full lg:w-7/12 xl:w-1/2 space-y-7 text-left pl-0 lg:pl-8">
       
-      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
-        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
-          <i data-lucide="sparkles" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Mustang Jimbu</span>
-          <span class="text-xs sm:text-sm text-tradBeige/75">Wild Mountain Allium</span>
-        </div>
+      <!-- Top Pill Badge -->
+      <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-white/90 border border-terracotta/40 text-sm sm:text-base font-bold text-terracotta shadow-md backdrop-blur-md">
+        <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
+        🏔️ AUTHENTIC MUSTANG THAKALI & HIMALAYAN DINING
       </div>
 
-      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
-        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
-          <i data-lucide="utensils-crossed" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Brass Thali</span>
-          <span class="text-xs sm:text-sm text-tradBeige/75">Pure Bell-Metal Kansa</span>
-        </div>
+      <!-- Main Hero Headings -->
+      <div class="space-y-4">
+        <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-deepBrown uppercase leading-[1.12]">
+          WELCOME TO <br>
+          <span class="text-terracotta font-heading">HOTEL RHINO</span>
+        </h1>
+        <p class="text-lg sm:text-2xl text-darkEspresso/85 font-normal leading-relaxed">
+          More than a meal, a taste of Himalayan tradition. Authentic brass thali sets, Mustang Jimbu dal, and heartfelt mountain hospitality in Dhangadhi.
+        </p>
       </div>
 
-      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
-        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
-          <i data-lucide="infinity" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Refills</span>
-          <span class="text-xs sm:text-sm text-tradBeige/75">Unlimited Bhat & Dal</span>
-        </div>
-      </div>
-
-      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
-        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
-          <i data-lucide="heart-handshake" class="w-6 h-6"></i>
-        </div>
-        <div>
-          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Hospitality</span>
-          <span class="text-xs sm:text-sm text-tradBeige/75">Atithi Devo Bhava</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Highlighted Signature Set Tag -->
-    {% if hero_thakali_set %}
-    <div class="pt-2">
-      <div class="inline-flex flex-col sm:flex-row items-center gap-3 px-6 py-3 rounded-2xl bg-darkEspresso/85 border border-warmSand/30 backdrop-blur-md text-xs sm:text-sm shadow-xl">
-        <span class="text-warmSand font-bold flex items-center gap-1.5">
-          <i data-lucide="award" class="w-4 h-4 text-terracotta"></i> Today's Signature:
-        </span>
-        <span class="text-white font-medium">{{ hero_thakali_set.name }}</span>
-        <span class="bg-terracotta text-white font-bold px-2.5 py-0.5 rounded-full text-xs">NPR {{ hero_thakali_set.price_npr }}</span>
-        <a href="{% url 'khana_sets' %}" class="text-warmSand hover:text-white underline font-semibold flex items-center gap-1">
-          Explore Dishes & Ingredients <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+      <!-- Call to Action Buttons -->
+      <div class="flex flex-wrap items-center gap-4 pt-2">
+        <a href="{% url 'our_story' %}" class="btn-primary text-base sm:text-lg py-4 px-9 shadow-xl rounded-2xl">
+          <i data-lucide="compass" class="w-5 h-5"></i> Discover Our Story
+        </a>
+        <a href="{% url 'khana_sets' %}" class="btn-outline border-terracotta text-deepBrown hover:bg-terracotta hover:text-white text-base sm:text-lg py-3.5 px-8 rounded-2xl bg-white/80 shadow-md backdrop-blur-sm">
+          <i data-lucide="utensils" class="w-5 h-5 text-terracotta"></i> View Thakali Thali Menu
         </a>
       </div>
-    </div>
-    {% endif %}
 
+      <!-- 4 Clean Feature Cards arranged on the right side -->
+      <div class="grid grid-cols-2 gap-3.5 pt-4">
+        
+        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
+          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Mustang Jimbu</span>
+            <span class="text-xs text-mutedOlive">Mountain Allium</span>
+          </div>
+        </div>
+
+        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
+          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+            <i data-lucide="utensils-crossed" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Brass Thali</span>
+            <span class="text-xs text-mutedOlive">Bell-Metal Kansa</span>
+          </div>
+        </div>
+
+        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
+          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+            <i data-lucide="infinity" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Refills</span>
+            <span class="text-xs text-mutedOlive">Unlimited Bhat & Dal</span>
+          </div>
+        </div>
+
+        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
+          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+            <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Hospitality</span>
+            <span class="text-xs text-mutedOlive">Atithi Devo Bhava</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 </section>
 
