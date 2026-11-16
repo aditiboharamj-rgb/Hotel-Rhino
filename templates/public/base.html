@@ -49,45 +49,72 @@
 </head>
 <body class="bg-creamBg text-darkEspresso flex flex-col min-h-screen text-base antialiased">
 
-  <!-- Navigation -->
-  <header class="sticky top-0 z-50 bg-creamBg/95 backdrop-blur-md border-b border-tradBeige shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <!-- Ultra-Modern Floating Glassmorphism Navbar -->
+  <header class="sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 pb-2 transition-all duration-300">
+    <div class="max-w-7xl mx-auto bg-white/75 backdrop-blur-xl border border-white/60 rounded-3xl shadow-[0_8px_32px_0_rgba(59,36,24,0.07)] px-5 sm:px-7 h-20 flex items-center justify-between transition-all duration-300 hover:shadow-[0_12px_40px_0_rgba(59,36,24,0.12)]">
       
-      <!-- Brand Logo & Clean Placed Titles -->
+      <!-- Brand Logo with Golden Halo Effect -->
       <a href="/" class="flex items-center gap-3 shrink-0 group py-1">
-        <img src="/static/images/hotel_rhino_logo.png" alt="Hotel Rhino Logo" class="h-14 w-auto object-contain drop-shadow-md group-hover:scale-105 transition transform rounded-lg">
+        <div class="relative p-1 rounded-2xl transition duration-300 group-hover:scale-105">
+          <img src="/static/images/hotel_rhino_logo.png" alt="Hotel Rhino Logo" class="h-13 w-auto max-h-[52px] object-contain drop-shadow-sm">
+        </div>
       </a>
 
-      <!-- Desktop Links - Introductory & Hospitality Exploration -->
-      <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-[17px] xl:text-[18px] font-medium tracking-normal text-darkEspresso">
-        <a href="/" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'home' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Home</a>
-        <a href="{% url 'our_story' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'our_story' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">About Hotel & Heritage</a>
-        <a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'khana_sets' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Thakali Thali Sets</a>
-        <a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'whats_inside_thali' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Inside Your Thali</a>
-        <a href="{% url 'gallery' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'gallery' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Gallery</a>
-        <a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'guest_experiences' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Hospitality Stories</a>
-        <a href="{% url 'visit_us' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'visit_us' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Visit Us</a>
+      <!-- Desktop Links - Refined Interactive Modern Pills -->
+      <nav class="hidden lg:flex items-center gap-1 xl:gap-2 text-[15px] xl:text-[16px] font-medium text-deepBrown">
+        <a href="/" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'home' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Home
+        </a>
+        <a href="{% url 'our_story' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'our_story' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Heritage
+        </a>
+        <a href="{% url 'khana_sets' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'khana_sets' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Thakali Thalis
+        </a>
+        <a href="{% url 'whats_inside_thali' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'whats_inside_thali' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Inside Your Thali
+        </a>
+        <a href="{% url 'gallery' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'gallery' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Gallery
+        </a>
+        <a href="{% url 'guest_experiences' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'guest_experiences' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Reviews
+        </a>
+        <a href="{% url 'visit_us' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'visit_us' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+          Visit Us
+        </a>
       </nav>
 
-      <!-- Action Button -->
+      <!-- Action Button - Glowing Editorial Pill -->
       <div class="hidden sm:flex items-center gap-3 shrink-0">
-        <a href="{% url 'visit_us' %}" class="btn-primary text-base py-3 px-7 shadow-md rounded-full font-semibold">
-          <i data-lucide="map-pin" class="w-4 h-4"></i> Plan Your Visit
+        <a href="{% url 'visit_us' %}" class="relative inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-terracotta to-deepBrown shadow-md hover:shadow-lg hover:scale-102 active:scale-98 transition-all duration-200">
+          <i data-lucide="compass" class="w-4 h-4 text-warmSand"></i>
+          <span>Plan Your Visit</span>
         </a>
       </div>
 
       <!-- Mobile Menu Toggle -->
-      <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-deepBrown hover:bg-tradBeige/50" aria-label="Toggle menu">
+      <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-2xl bg-tradBeige/30 text-deepBrown hover:bg-terracotta hover:text-white transition" aria-label="Toggle menu">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
     </div>
 
-    <!-- Mobile Dropdown -->
-    <div id="mobileMenu" class="hidden lg:hidden bg-creamBg border-b border-tradBeige px-6 pt-3 pb-6 space-y-2">
-      <a href="/" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Home</a>
-      <a href="{% url 'our_story' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">About Hotel & Heritage</a>
-      <a href="{% url 'khana_sets' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Thakali Thali Sets</a>
-      <a href="{% url 'whats_inside_thali' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">What's Inside Your Thali</a>
+    <!-- Mobile Dropdown with Glassmorphic Card Style -->
+    <div id="mobileMenu" class="hidden lg:hidden mt-2 max-w-7xl mx-auto bg-white/95 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl px-6 py-5 space-y-1">
+      <a href="/" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Home</a>
+      <a href="{% url 'our_story' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">About Hotel & Heritage</a>
+      <a href="{% url 'khana_sets' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Thakali Thali Sets</a>
+      <a href="{% url 'whats_inside_thali' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">What's Inside Your Thali</a>
+      <a href="{% url 'gallery' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Gallery</a>
+      <a href="{% url 'guest_experiences' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Hospitality Stories</a>
+      <a href="{% url 'visit_us' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Directions & Hours</a>
+      <div class="pt-3 border-t border-tradBeige/40">
+        <a href="{% url 'visit_us' %}" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-sm font-semibold text-white bg-terracotta shadow-md">
+          <i data-lucide="map-pin" class="w-4 h-4 text-warmSand"></i> Plan Your Visit
+        </a>
+      </div>
+    </div>
+  </header>
       <a href="{% url 'gallery' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Gallery</a>
       <a href="{% url 'guest_experiences' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Hospitality Stories</a>
       <a href="{% url 'visit_us' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Visit Us / Contact</a>
