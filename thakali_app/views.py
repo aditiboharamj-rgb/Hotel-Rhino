@@ -48,9 +48,11 @@ def get_user_role(user):
 
 def home_view(request):
     featured_sets = KhanaSet.objects.filter(is_enabled_by_admin=True, is_available=True, is_featured=True)[:4]
+    hero_thakali_set = featured_sets.first() if featured_sets.exists() else None
     reviews = CustomerReview.objects.filter(is_approved=True)[:6]
     return render(request, 'public/home.html', {
         'featured_sets': featured_sets,
+        'hero_thakali_set': hero_thakali_set,
         'reviews': reviews,
     })
 

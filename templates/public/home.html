@@ -35,6 +35,30 @@
           </a>
         </div>
 
+        <!-- Highlighted Thakali Khana Set Card in Hero -->
+        {% if hero_thakali_set %}
+        <div class="mt-6 p-4 sm:p-5 rounded-2xl bg-deepBrown/90 border border-terracotta/40 backdrop-blur-sm shadow-xl text-left">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {% if hero_thakali_set.category == 'VEG' %}bg-successGreen text-white{% else %}bg-terracotta text-white{% endif %}">
+                  {{ hero_thakali_set.get_category_display }}
+                </span>
+                <span class="text-xs text-warmSand font-medium">★ Signature Khana Set</span>
+              </div>
+              <h3 class="font-heading font-bold text-lg text-white leading-tight">{{ hero_thakali_set.name }}</h3>
+              <p class="text-xs text-tradBeige/80 line-clamp-1">{{ hero_thakali_set.traditional_items }}</p>
+            </div>
+            <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-2 shrink-0">
+              <span class="font-heading font-extrabold text-xl text-warmSand">NPR {{ hero_thakali_set.price_npr }}</span>
+              <a href="{% url 'khana_sets' %}" class="bg-terracotta hover:bg-[#9c5525] text-white text-xs font-semibold px-4 py-2 rounded-full transition flex items-center gap-1.5 shadow">
+                Order Set <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         <div class="pt-6 border-t border-deepBrown/60 grid grid-cols-3 gap-4 text-center lg:text-left">
           <div>
             <span class="block text-2xl font-heading font-bold text-terracotta">100%</span>
@@ -55,13 +79,24 @@
       <div class="lg:col-span-5 relative">
         <div class="relative mx-auto max-w-md lg:max-w-none">
           <div class="w-full aspect-square rounded-3xl overflow-hidden border-4 border-warmSand/30 shadow-2xl relative bg-deepBrown">
-            <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=1000&q=80" alt="Authentic Thakali Khana Set" class="w-full h-full object-cover">
+            {% if hero_thakali_set and hero_thakali_set.image %}
+              <img src="{{ hero_thakali_set.image.url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover">
+            {% elif hero_thakali_set and hero_thakali_set.image_url %}
+              <img src="{{ hero_thakali_set.image_url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover">
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=1000&q=80" alt="Authentic Thakali Khana Set" class="w-full h-full object-cover">
+            {% endif %}
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-transparent to-transparent"></div>
             
             <div class="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-darkEspresso/90 backdrop-blur-md border border-terracotta/40">
-              <span class="text-xs font-semibold text-terracotta uppercase tracking-wider block">Signature Offering</span>
-              <p class="font-heading text-lg font-bold text-white">Traditional Mustang Thakali Khana Set</p>
-              <p class="text-xs text-tradBeige/80">Served in pure brass thali with slow-simmered Mustang dal & hot aromatic ghee.</p>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-semibold text-terracotta uppercase tracking-wider block">Featured Thali Set</span>
+                {% if hero_thakali_set %}
+                <span class="text-xs font-bold text-warmSand bg-terracotta/30 px-2 py-0.5 rounded-full">NPR {{ hero_thakali_set.price_npr }}</span>
+                {% endif %}
+              </div>
+              <p class="font-heading text-lg font-bold text-white">{{ hero_thakali_set.name|default:"Traditional Mustang Thakali Khana Set" }}</p>
+              <p class="text-xs text-tradBeige/80">{{ hero_thakali_set.portion_info|default:"Served in pure brass thali with slow-simmered Mustang dal & hot aromatic ghee." }}</p>
             </div>
           </div>
         </div>
