@@ -234,8 +234,11 @@
 </section>
 
 <!-- Customer Reviews Section -->
-<section class="py-24 bg-creamBg">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-24 bg-creamBg relative overflow-hidden">
+  <!-- Subtle decorative ambient dots -->
+  <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#B66A36_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="text-center max-w-2xl mx-auto space-y-3.5 mb-16">
       <span class="text-sm uppercase tracking-widest font-semibold text-terracotta">Guest Testimonials</span>
       <h2 class="text-3xl sm:text-4xl font-heading font-bold text-deepBrown">Words From Our Diners</h2>
@@ -244,26 +247,46 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {% for review in reviews %}
-      <div class="bg-white p-7 rounded-2xl border border-tradBeige shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="flex text-warningAmber text-base mb-3.5">
-            ★★★★★
-          </div>
-          <p class="text-sm sm:text-base italic text-darkEspresso/80 leading-relaxed">"{{ review.comment }}"</p>
+      <div class="review-interactive-card p-8 flex flex-col justify-between">
+        <!-- Giant Decorative Quote Watermark -->
+        <div class="quote-icon pointer-events-none">
+          <i data-lucide="quote" class="w-12 h-12"></i>
         </div>
-        <div class="mt-8 pt-5 border-t border-tradBeige/70 flex items-center justify-between">
-          <div>
-            <h4 class="font-bold text-sm text-deepBrown">{{ review.name }}</h4>
-            <span class="text-xs text-mutedOlive">{{ review.city }}</span>
+
+        <div>
+          <!-- Star Rating with Hover Glow Animation -->
+          <div class="flex items-center gap-1.5 text-warningAmber text-base mb-4 star-glow">
+            <span>★★★★★</span>
+            <span class="text-xs text-mutedOlive font-semibold ml-2">(5.0)</span>
           </div>
-          <i data-lucide="check-circle" class="w-5 h-5 text-successGreen"></i>
+
+          <!-- Review Quote -->
+          <p class="text-base italic text-darkEspresso/85 leading-relaxed relative z-10">
+            "{{ review.comment }}"
+          </p>
+        </div>
+
+        <!-- Reviewer Information with Interactive Badge -->
+        <div class="mt-8 pt-5 border-t border-tradBeige/70 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="reviewer-avatar w-10 h-10 rounded-full bg-tradBeige/50 border border-terracotta/30 flex items-center justify-center font-heading font-bold text-deepBrown text-sm">
+              {{ review.name|slice:":2"|upper }}
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-deepBrown leading-tight">{{ review.name }}</h4>
+              <span class="text-xs text-mutedOlive block mt-0.5">{{ review.city }}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-1 text-xs text-successGreen font-medium bg-successGreen/10 px-2.5 py-1 rounded-full border border-successGreen/20">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Verified Dine-in
+          </div>
         </div>
       </div>
       {% endfor %}
     </div>
 
-    <div class="text-center mt-12">
-      <a href="{% url 'guest_experiences' %}" class="btn-primary text-sm sm:text-base py-3.5 px-8">
+    <div class="text-center mt-14">
+      <a href="{% url 'guest_experiences' %}" class="btn-primary text-base py-3.5 px-9 shadow-md hover:shadow-lg transition">
         Read All Experiences & Leave a Review
       </a>
     </div>

@@ -188,12 +188,76 @@ a {
   opacity: 1;
 }
 
-.badge-tag {
-  display: inline-block;
-  padding: 0.35rem 0.9rem;
-  border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 600;
+/* Interactive Testimonial Cards */
+.review-interactive-card {
+  background: var(--color-white);
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-trad-beige);
+  box-shadow: 0 10px 25px -5px rgba(59, 36, 24, 0.06);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.review-interactive-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-terracotta), var(--color-warm-sand), var(--color-muted-olive));
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.35s ease;
+  z-index: 10;
+}
+
+.review-interactive-card .quote-icon {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  color: var(--color-warm-sand);
+  opacity: 0.25;
+  transition: all 0.4s ease;
+  transform: rotate(-10deg) scale(0.9);
+}
+
+.review-interactive-card .star-glow {
+  transition: all 0.3s ease;
+}
+
+.review-interactive-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 25px 40px -10px rgba(59, 36, 24, 0.15), 0 0 0 1.5px rgba(182, 106, 54, 0.3);
+  border-color: rgba(182, 106, 54, 0.4);
+}
+
+.review-interactive-card:hover::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.review-interactive-card:hover .quote-icon {
+  opacity: 0.6;
+  color: var(--color-terracotta);
+  transform: rotate(0deg) scale(1.15);
+}
+
+.review-interactive-card:hover .star-glow {
+  letter-spacing: 2px;
+  filter: drop-shadow(0 2px 4px rgba(214, 139, 39, 0.4));
+}
+
+.review-interactive-card .reviewer-avatar {
+  transition: all 0.35s ease;
+}
+
+.review-interactive-card:hover .reviewer-avatar {
+  background-color: var(--color-terracotta);
+  color: var(--color-white);
+  transform: rotate(5deg) scale(1.08);
 }
 
 /* Toast Notification */
