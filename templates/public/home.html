@@ -36,13 +36,16 @@
       </p>
     </div>
 
-    <!-- Call to Action Buttons -->
+    <!-- Call to Action Buttons - Purely Informational & Hospitality-Focused -->
     <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-      <a href="{% url 'visit_us' %}" class="bg-warmSand hover:bg-white text-darkEspresso font-bold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5">
-        <i data-lucide="calendar" class="w-5 h-5 text-terracotta"></i> Book Table Now
+      <a href="{% url 'our_story' %}" class="bg-warmSand hover:bg-white text-darkEspresso font-bold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5">
+        <i data-lucide="compass" class="w-5 h-5 text-terracotta"></i> Discover Our Story
       </a>
       <a href="{% url 'khana_sets' %}" class="bg-deepBrown/80 hover:bg-terracotta text-white border border-warmSand/40 font-semibold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5 backdrop-blur-md">
-        <i data-lucide="utensils" class="w-5 h-5 text-warmSand"></i> Food & Khana Sets Menu
+        <i data-lucide="utensils" class="w-5 h-5 text-warmSand"></i> View Thakali Thali Menu
+      </a>
+      <a href="{% url 'visit_us' %}" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold text-base sm:text-lg py-4 px-8 rounded-2xl shadow-lg transition backdrop-blur-md flex items-center gap-2">
+        <i data-lucide="map-pin" class="w-5 h-5 text-warmSand"></i> Visit in Dhangadhi
       </a>
     </div>
 
@@ -101,7 +104,7 @@
         <span class="text-white font-medium">{{ hero_thakali_set.name }}</span>
         <span class="bg-terracotta text-white font-bold px-2.5 py-0.5 rounded-full text-xs">NPR {{ hero_thakali_set.price_npr }}</span>
         <a href="{% url 'khana_sets' %}" class="text-warmSand hover:text-white underline font-semibold flex items-center gap-1">
-          Explore Menu <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          Explore Dishes & Ingredients <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
     </div>
@@ -155,7 +158,7 @@
               <i data-lucide="check" class="w-4 h-4 inline text-terracotta mr-1.5"></i>{{ set.portion_info }}
             </p>
             <a href="{% url 'khana_sets' %}" class="btn-primary w-full text-sm py-3 justify-center">
-              View Set & Order
+              Explore Thali Ingredients
             </a>
           </div>
         </div>

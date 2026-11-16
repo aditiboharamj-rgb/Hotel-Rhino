@@ -62,21 +62,21 @@
         </div>
       </a>
 
-      <!-- Desktop Nav Links - Perfectly Balanced Placement & Typography -->
+      <!-- Desktop Links - Introductory & Hospitality Exploration -->
       <nav class="hidden lg:flex items-center space-x-7 xl:space-x-8 text-[15px] font-medium tracking-normal text-darkEspresso">
         <a href="/" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'home' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Home</a>
-        <a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'khana_sets' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Khana Sets</a>
-        <a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'whats_inside_thali' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">What's Inside</a>
-        <a href="{% url 'our_story' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'our_story' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Our Story</a>
+        <a href="{% url 'our_story' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'our_story' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">About Hotel & Heritage</a>
+        <a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'khana_sets' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Thakali Thali Sets</a>
+        <a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'whats_inside_thali' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Inside Your Thali</a>
         <a href="{% url 'gallery' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'gallery' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Gallery</a>
-        <a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'guest_experiences' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Experiences</a>
+        <a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'guest_experiences' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Hospitality Stories</a>
         <a href="{% url 'visit_us' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'visit_us' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Visit Us</a>
       </nav>
 
       <!-- Action Button -->
       <div class="hidden sm:flex items-center gap-3 shrink-0">
         <a href="{% url 'visit_us' %}" class="btn-primary text-sm py-2.5 px-6 shadow-md rounded-full font-semibold">
-          <i data-lucide="utensils" class="w-4 h-4"></i> Reserve Table
+          <i data-lucide="map-pin" class="w-4 h-4"></i> Plan Your Visit
         </a>
       </div>
 
@@ -89,13 +89,13 @@
     <!-- Mobile Dropdown -->
     <div id="mobileMenu" class="hidden lg:hidden bg-creamBg border-b border-tradBeige px-6 pt-3 pb-6 space-y-2">
       <a href="/" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Home</a>
-      <a href="{% url 'khana_sets' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Khana Sets</a>
+      <a href="{% url 'our_story' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">About Hotel & Heritage</a>
+      <a href="{% url 'khana_sets' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Thakali Thali Sets</a>
       <a href="{% url 'whats_inside_thali' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">What's Inside Your Thali</a>
-      <a href="{% url 'our_story' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Our Story</a>
       <a href="{% url 'gallery' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Gallery</a>
-      <a href="{% url 'guest_experiences' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Guest Experiences</a>
-      <a href="{% url 'visit_us' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Visit Us / Reserve</a>
-      <a href="{% url 'visit_us' %}" class="btn-primary w-full text-center mt-3 py-2.5 text-sm">Reserve Table</a>
+      <a href="{% url 'guest_experiences' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Hospitality Stories</a>
+      <a href="{% url 'visit_us' %}" class="block py-2 text-base font-medium text-darkEspresso hover:text-terracotta">Visit Us / Contact</a>
+      <a href="{% url 'visit_us' %}" class="btn-primary w-full text-center mt-3 py-2.5 text-sm">Plan Your Visit</a>
     </div>
   </header>
 
