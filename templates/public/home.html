@@ -3,105 +3,116 @@
 {% block title %}Hotel Rhino | Authentic Himalayan Thakali Khana Set{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="relative bg-darkEspresso text-creamBg overflow-hidden py-20 lg:py-28">
-  <div class="absolute inset-0 opacity-25 bg-[radial-gradient(#B66A36_1px,transparent_1px)] [background-size:20px_20px]"></div>
-  <!-- Ambient Gradient Glow -->
-  <div class="absolute top-1/4 right-10 w-[30rem] h-[30rem] bg-terracotta/20 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Full-Width Panoramic Hero Section with Thakali Khana Set in the Background -->
+<section class="relative min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center text-white overflow-hidden">
+  
+  <!-- Panoramic Thakali Khana Set Background Image -->
+  <div class="absolute inset-0 z-0">
+    {% if hero_thakali_set and hero_thakali_set.image %}
+      <img src="{{ hero_thakali_set.image.url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover object-center scale-105 transform">
+    {% elif hero_thakali_set and hero_thakali_set.image_url %}
+      <img src="{{ hero_thakali_set.image_url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover object-center scale-105 transform">
+    {% else %}
+      <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=2000&q=85" alt="Authentic Thakali Khana Set" class="w-full h-full object-cover object-center scale-105 transform">
+    {% endif %}
+    
+    <!-- Multi-layered Atmospheric Overlays for Depth and Readability -->
+    <div class="absolute inset-0 bg-darkEspresso/65 backdrop-blur-[1px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/40 to-darkEspresso/70"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-darkEspresso/90 via-darkEspresso/50 to-transparent"></div>
+  </div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-      <div class="lg:col-span-7 space-y-7 text-center lg:text-left">
-        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-deepBrown/85 border border-terracotta/40 text-sm font-semibold text-warmSand">
-          <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
-          Original Mustang Thakali Heritage
+  <!-- Hero Content Centered and Structured like the Reference Design -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24 text-center space-y-8">
+    
+    <!-- Top Pill Badge -->
+    <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-deepBrown/85 border border-terracotta/60 text-sm font-semibold text-warmSand shadow-lg backdrop-blur-md">
+      <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
+      🏔️ AUTHENTIC MUSTANG THAKALI & HIMALAYAN DINING
+    </div>
+
+    <!-- Main Hero Headings -->
+    <div class="space-y-4">
+      <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.12] drop-shadow-md">
+        WELCOME TO <br class="hidden sm:inline">
+        <span class="text-warmSand font-heading">HOTEL RHINO</span>
+      </h1>
+      <p class="text-lg sm:text-2xl text-tradBeige/95 max-w-3xl mx-auto font-light leading-relaxed drop-shadow-sm">
+        More than a meal, a taste of Himalayan tradition. Authentic brass thali sets, Mustang Jimbu dal, and heartfelt mountain hospitality.
+      </p>
+    </div>
+
+    <!-- Call to Action Buttons -->
+    <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+      <a href="{% url 'visit_us' %}" class="bg-warmSand hover:bg-white text-darkEspresso font-bold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5">
+        <i data-lucide="calendar" class="w-5 h-5 text-terracotta"></i> Book Table Now
+      </a>
+      <a href="{% url 'khana_sets' %}" class="bg-deepBrown/80 hover:bg-terracotta text-white border border-warmSand/40 font-semibold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5 backdrop-blur-md">
+        <i data-lucide="utensils" class="w-5 h-5 text-warmSand"></i> Food & Khana Sets Menu
+      </a>
+    </div>
+
+    <!-- 4 Pill Feature Cards (Nature / Food / Traditions / Hospitality) like the Reference Image -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 max-w-4xl mx-auto">
+      
+      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
+        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
         </div>
-        
-        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.18]">
-          More Than a Meal, <br>
-          <span class="text-terracotta italic font-normal">A Taste of Himalayan Tradition.</span>
-        </h1>
-        
-        <p class="text-lg sm:text-xl text-tradBeige/90 max-w-2xl font-light leading-relaxed">
-          Welcome to <strong class="text-white font-medium">Hotel Rhino</strong>, where centuries-old Thakali hospitality comes alive. Prepared with authentic Mustang Jimbu, sun-dried Gundruk, stone-ground Timur, and pure mountain ghee served in gleaming heritage brass Kansa thalis.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
-          <a href="{% url 'khana_sets' %}" class="btn-primary text-base sm:text-lg py-4 px-9 shadow-lg shadow-terracotta/20">
-            <i data-lucide="compass" class="w-5 h-5"></i> Explore Khana Sets
-          </a>
-          <a href="{% url 'visit_us' %}" class="btn-outline border-warmSand text-creamBg hover:bg-white hover:text-darkEspresso text-base sm:text-lg py-3.5 px-8">
-            <i data-lucide="calendar" class="w-5 h-5"></i> Reserve a Table
-          </a>
-        </div>
-
-        <!-- Highlighted Thakali Khana Set Card in Hero -->
-        {% if hero_thakali_set %}
-        <div class="mt-8 p-5 sm:p-6 rounded-2xl bg-deepBrown/90 border border-terracotta/40 backdrop-blur-sm shadow-xl text-left">
-          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="space-y-1.5">
-              <div class="flex items-center gap-2.5">
-                <span class="px-2.5 py-1 rounded-full text-xs font-bold {% if hero_thakali_set.category == 'VEG' %}bg-successGreen text-white{% else %}bg-terracotta text-white{% endif %}">
-                  {{ hero_thakali_set.get_category_display }}
-                </span>
-                <span class="text-sm text-warmSand font-medium">★ Signature Himalayan Thali</span>
-              </div>
-              <h3 class="font-heading font-bold text-xl sm:text-2xl text-white leading-tight">{{ hero_thakali_set.name }}</h3>
-              <p class="text-sm text-tradBeige/80 line-clamp-1">{{ hero_thakali_set.traditional_items }}</p>
-            </div>
-            <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-3 shrink-0">
-              <span class="font-heading font-extrabold text-2xl text-warmSand">NPR {{ hero_thakali_set.price_npr }}</span>
-              <a href="{% url 'khana_sets' %}" class="bg-terracotta hover:bg-[#9c5525] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition flex items-center gap-2 shadow">
-                Order Set <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        {% endif %}
-
-        <div class="pt-8 border-t border-deepBrown/70 grid grid-cols-3 gap-6 text-center lg:text-left">
-          <div>
-            <span class="block text-3xl font-heading font-bold text-terracotta">100%</span>
-            <span class="text-sm text-tradBeige/80 font-medium">Authentic Thakali</span>
-          </div>
-          <div>
-            <span class="block text-3xl font-heading font-bold text-terracotta">Unlimited</span>
-            <span class="text-sm text-tradBeige/80 font-medium">Bhat, Dal & Saag Refills</span>
-          </div>
-          <div>
-            <span class="block text-3xl font-heading font-bold text-terracotta">Jimbu</span>
-            <span class="text-sm text-tradBeige/80 font-medium">Tempered Mountain Ghee</span>
-          </div>
+        <div>
+          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Mustang Jimbu</span>
+          <span class="text-xs sm:text-sm text-tradBeige/75">Wild Mountain Allium</span>
         </div>
       </div>
 
-      <!-- Hero Visual Representation of Thakali Thali -->
-      <div class="lg:col-span-5 relative">
-        <div class="relative mx-auto max-w-md lg:max-w-none">
-          <div class="w-full aspect-square rounded-3xl overflow-hidden border-4 border-warmSand/30 shadow-2xl relative bg-deepBrown">
-            {% if hero_thakali_set and hero_thakali_set.image %}
-              <img src="{{ hero_thakali_set.image.url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover">
-            {% elif hero_thakali_set and hero_thakali_set.image_url %}
-              <img src="{{ hero_thakali_set.image_url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover">
-            {% else %}
-              <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=1000&q=80" alt="Authentic Thakali Khana Set" class="w-full h-full object-cover">
-            {% endif %}
-            <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-transparent to-transparent"></div>
-            
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/90 backdrop-blur-md border border-terracotta/40">
-              <div class="flex items-center justify-between mb-1.5">
-                <span class="text-xs font-semibold text-terracotta uppercase tracking-wider block">Featured Thali Set</span>
-                {% if hero_thakali_set %}
-                <span class="text-sm font-bold text-warmSand bg-terracotta/30 px-3 py-1 rounded-full">NPR {{ hero_thakali_set.price_npr }}</span>
-                {% endif %}
-              </div>
-              <p class="font-heading text-xl font-bold text-white leading-tight">{{ hero_thakali_set.name|default:"Traditional Mustang Thakali Khana Set" }}</p>
-              <p class="text-xs sm:text-sm text-tradBeige/80 mt-1">{{ hero_thakali_set.portion_info|default:"Served in pure brass thali with slow-simmered Mustang dal & hot aromatic ghee." }}</p>
-            </div>
-          </div>
+      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
+        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+          <i data-lucide="utensils-crossed" class="w-6 h-6"></i>
         </div>
+        <div>
+          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Brass Thali</span>
+          <span class="text-xs sm:text-sm text-tradBeige/75">Pure Bell-Metal Kansa</span>
+        </div>
+      </div>
+
+      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
+        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+          <i data-lucide="infinity" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Refills</span>
+          <span class="text-xs sm:text-sm text-tradBeige/75">Unlimited Bhat & Dal</span>
+        </div>
+      </div>
+
+      <div class="bg-darkEspresso/80 border border-terracotta/40 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-center gap-3.5 shadow-lg hover:border-warmSand transition group">
+        <div class="p-3 rounded-xl bg-terracotta/20 text-warmSand group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+          <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <span class="block font-bold text-base sm:text-lg text-white leading-tight">Hospitality</span>
+          <span class="text-xs sm:text-sm text-tradBeige/75">Atithi Devo Bhava</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Highlighted Signature Set Tag -->
+    {% if hero_thakali_set %}
+    <div class="pt-2">
+      <div class="inline-flex flex-col sm:flex-row items-center gap-3 px-6 py-3 rounded-2xl bg-darkEspresso/85 border border-warmSand/30 backdrop-blur-md text-xs sm:text-sm shadow-xl">
+        <span class="text-warmSand font-bold flex items-center gap-1.5">
+          <i data-lucide="award" class="w-4 h-4 text-terracotta"></i> Today's Signature:
+        </span>
+        <span class="text-white font-medium">{{ hero_thakali_set.name }}</span>
+        <span class="bg-terracotta text-white font-bold px-2.5 py-0.5 rounded-full text-xs">NPR {{ hero_thakali_set.price_npr }}</span>
+        <a href="{% url 'khana_sets' %}" class="text-warmSand hover:text-white underline font-semibold flex items-center gap-1">
+          Explore Menu <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
       </div>
     </div>
+    {% endif %}
+
   </div>
 </section>
 
