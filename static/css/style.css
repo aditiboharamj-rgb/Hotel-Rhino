@@ -302,16 +302,29 @@ a {
   animation: ambientDrift 20s ease-in-out infinite reverse;
 }
 
-/* Endless Infinite Marquee Track */
+/* Endless Infinite Marquee Track: Seamless mathematical CSS loop */
 @keyframes marqueeScroll {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
 }
 
 .marquee-track {
   display: flex;
+  flex-shrink: 0;
   width: max-content;
-  animation: marqueeScroll 35s linear infinite;
+  will-change: transform;
+  animation: marqueeScroll 40s linear infinite;
 }
 
 .marquee-track:hover {
