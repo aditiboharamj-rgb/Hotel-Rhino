@@ -3,7 +3,7 @@ import os
 def restaurant_settings(request):
     return {
         'RESTAURANT_NAME': os.getenv('RESTAURANT_NAME', 'Hotel Rhino - Authentic Thakali Kitchen'),
-        'RESTAURANT_LOCATION': os.getenv('RESTAURANT_LOCATION', 'Sauraha, Chitwan / Kathmandu, Nepal'),
+        'RESTAURANT_LOCATION': os.getenv('RESTAURANT_LOCATION', 'Main Road, Dhangadhi, Sudurpaschim Province, Nepal'),
         'RESTAURANT_PHONE': os.getenv('RESTAURANT_PHONE', '+977-9801234567'),
         'RESTAURANT_WHATSAPP': os.getenv('RESTAURANT_WHATSAPP', '+977-9801234567'),
         'RESTAURANT_EMAIL': os.getenv('RESTAURANT_EMAIL', 'info@hotelrhinothakali.com'),

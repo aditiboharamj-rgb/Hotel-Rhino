@@ -7,7 +7,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env
-load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / '.env', override=True)
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'default-django-insecure-secret-key-hotel-rhino')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
