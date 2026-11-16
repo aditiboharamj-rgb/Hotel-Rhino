@@ -287,7 +287,36 @@ a {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* Traditional Nepali Pattern Border */
+/* Ambient Floating Particles Background Animation for Bottom/Footer */
+@keyframes ambientDrift {
+  0% { transform: translateY(0px) rotate(0deg); opacity: 0.15; }
+  50% { transform: translateY(-20px) rotate(180deg); opacity: 0.35; }
+  100% { transform: translateY(0px) rotate(360deg); opacity: 0.15; }
+}
+
+.ambient-particle-1 {
+  animation: ambientDrift 14s ease-in-out infinite;
+}
+
+.ambient-particle-2 {
+  animation: ambientDrift 20s ease-in-out infinite reverse;
+}
+
+/* Endless Infinite Marquee Track */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 35s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
 /* ==========================================================================
    Seamless Hero Image-to-Background Color Blend Engine
    Adaptable to any image, any background color, and any color palette.
