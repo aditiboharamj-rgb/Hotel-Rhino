@@ -6,46 +6,45 @@
 <!-- Full-Width Panoramic Hero Section with Thakali Khana Set in the Background -->
 <section class="relative min-h-[90vh] lg:min-h-[92vh] flex items-center justify-center text-white overflow-hidden">
   
-  <!-- Panoramic Thakali Khana Set Background Image -->
-  <div class="absolute inset-0 z-0">
-    <img src="/static/images/hero_thakali_bg.jpg" alt="Authentic Nepali Thakali Khana Set" class="w-full h-full object-cover object-center transform scale-100">
+  <!-- Panoramic Thakali Khana Set Background Image - Zoomed Out with High Exposure -->
+  <div class="absolute inset-0 z-0 bg-darkEspresso">
+    <img src="/static/images/hero_thakali_bg.jpg" alt="Authentic Nepali Thakali Khana Set" class="w-full h-full object-cover sm:object-contain object-center transform scale-90 sm:scale-95 brightness-115 contrast-105 saturate-110 filter">
     
-    <!-- Lighter, Balanced Overlays for Maximum Background Visibility with Text Readability -->
-    <div class="absolute inset-0 bg-darkEspresso/35"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso/80 via-transparent to-darkEspresso/40"></div>
-    <div class="absolute inset-0 bg-radial from-transparent via-darkEspresso/25 to-darkEspresso/60"></div>
+    <!-- Ultra-light Ambient Vignette to maintain text readability while exposing the full Thali -->
+    <div class="absolute inset-0 bg-darkEspresso/20"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso/90 via-transparent to-darkEspresso/30"></div>
   </div>
 
-  <!-- Hero Content Centered and Structured like the Reference Design -->
-  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24 text-center space-y-8">
+  <!-- Hero Content Centered and Structured with Enlarged Typography -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center space-y-8">
     
     <!-- Top Pill Badge -->
-    <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-deepBrown/85 border border-terracotta/60 text-sm font-semibold text-warmSand shadow-lg backdrop-blur-md">
+    <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-deepBrown/90 border border-terracotta/70 text-sm sm:text-base font-bold text-warmSand shadow-xl backdrop-blur-md">
       <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
       🏔️ AUTHENTIC MUSTANG THAKALI & HIMALAYAN DINING
     </div>
 
-    <!-- Main Hero Headings -->
-    <div class="space-y-4">
-      <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white uppercase leading-[1.12] drop-shadow-md">
+    <!-- Main Hero Headings with Increased Font Sizing -->
+    <div class="space-y-5">
+      <h1 class="font-heading text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white uppercase leading-[1.08] drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]">
         WELCOME TO <br class="hidden sm:inline">
         <span class="text-warmSand font-heading">HOTEL RHINO</span>
       </h1>
-      <p class="text-lg sm:text-2xl text-tradBeige/95 max-w-3xl mx-auto font-light leading-relaxed drop-shadow-sm">
+      <p class="text-xl sm:text-2xl lg:text-3xl text-tradBeige max-w-4xl mx-auto font-normal leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
         More than a meal, a taste of Himalayan tradition. Authentic brass thali sets, Mustang Jimbu dal, and heartfelt mountain hospitality.
       </p>
     </div>
 
     <!-- Call to Action Buttons - Purely Informational & Hospitality-Focused -->
-    <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-      <a href="{% url 'our_story' %}" class="bg-warmSand hover:bg-white text-darkEspresso font-bold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5">
-        <i data-lucide="compass" class="w-5 h-5 text-terracotta"></i> Discover Our Story
+    <div class="flex flex-wrap items-center justify-center gap-5 pt-3">
+      <a href="{% url 'our_story' %}" class="bg-warmSand hover:bg-white text-darkEspresso font-bold text-lg sm:text-xl py-4 px-10 rounded-2xl shadow-2xl transition transform hover:-translate-y-0.5 flex items-center gap-3">
+        <i data-lucide="compass" class="w-6 h-6 text-terracotta"></i> Discover Our Story
       </a>
-      <a href="{% url 'khana_sets' %}" class="bg-deepBrown/80 hover:bg-terracotta text-white border border-warmSand/40 font-semibold text-base sm:text-lg py-4 px-9 rounded-2xl shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5 backdrop-blur-md">
-        <i data-lucide="utensils" class="w-5 h-5 text-warmSand"></i> View Thakali Thali Menu
+      <a href="{% url 'khana_sets' %}" class="bg-deepBrown/90 hover:bg-terracotta text-white border border-warmSand/50 font-bold text-lg sm:text-xl py-4 px-10 rounded-2xl shadow-2xl transition transform hover:-translate-y-0.5 flex items-center gap-3 backdrop-blur-md">
+        <i data-lucide="utensils" class="w-6 h-6 text-warmSand"></i> View Thakali Thali Menu
       </a>
-      <a href="{% url 'visit_us' %}" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold text-base sm:text-lg py-4 px-8 rounded-2xl shadow-lg transition backdrop-blur-md flex items-center gap-2">
-        <i data-lucide="map-pin" class="w-5 h-5 text-warmSand"></i> Visit in Dhangadhi
+      <a href="{% url 'visit_us' %}" class="bg-darkEspresso/80 hover:bg-white hover:text-darkEspresso text-white border border-white/40 font-bold text-lg sm:text-xl py-4 px-9 rounded-2xl shadow-xl transition backdrop-blur-md flex items-center gap-2.5">
+        <i data-lucide="map-pin" class="w-6 h-6 text-terracotta"></i> Visit in Dhangadhi
       </a>
     </div>
 
