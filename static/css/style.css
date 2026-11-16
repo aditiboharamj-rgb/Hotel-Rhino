@@ -288,6 +288,132 @@ a {
 }
 
 /* Traditional Nepali Pattern Border */
+/* ==========================================================================
+   Seamless Hero Image-to-Background Color Blend Engine
+   Adaptable to any image, any background color, and any color palette.
+   Uses multi-stop cubic-bezier / cosine gradient feathering + CSS mask
+   ========================================================================== */
+.hero-blend-container {
+  --hero-bg: var(--color-cream-bg);
+  background-color: var(--hero-bg);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Image wrapper anchored on the left */
+.hero-blend-image-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* The subject image positioned on the left */
+.hero-blend-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* 
+  Multi-stop feathered gradient overlay that matches the container's background color.
+  Provides a natural, luxurious dissolve starting gently at 25-30% and becoming
+  100% solid background color by 55-60%, leaving the entire right side clean.
+*/
+.hero-blend-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 22%,
+    color-mix(in srgb, var(--hero-bg) 5%, transparent) 28%,
+    color-mix(in srgb, var(--hero-bg) 18%, transparent) 34%,
+    color-mix(in srgb, var(--hero-bg) 38%, transparent) 40%,
+    color-mix(in srgb, var(--hero-bg) 64%, transparent) 46%,
+    color-mix(in srgb, var(--hero-bg) 86%, transparent) 52%,
+    color-mix(in srgb, var(--hero-bg) 96%, transparent) 57%,
+    var(--hero-bg) 62%,
+    var(--hero-bg) 100%
+  );
+}
+
+/* Progressive CSS Mask for modern browsers: directly feather the image pixels into alpha transparency */
+@supports (mask-image: linear-gradient(to right, black, transparent)) or (-webkit-mask-image: linear-gradient(to right, black, transparent)) {
+  .hero-blend-img-masked {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 22%,
+      rgba(0, 0, 0, 0.95) 28%,
+      rgba(0, 0, 0, 0.82) 34%,
+      rgba(0, 0, 0, 0.62) 40%,
+      rgba(0, 0, 0, 0.36) 46%,
+      rgba(0, 0, 0, 0.14) 52%,
+      rgba(0, 0, 0, 0.04) 57%,
+      rgba(0, 0, 0, 0) 62%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 22%,
+      rgba(0, 0, 0, 0.95) 28%,
+      rgba(0, 0, 0, 0.82) 34%,
+      rgba(0, 0, 0, 0.62) 40%,
+      rgba(0, 0, 0, 0.36) 46%,
+      rgba(0, 0, 0, 0.14) 52%,
+      rgba(0, 0, 0, 0.04) 57%,
+      rgba(0, 0, 0, 0) 62%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}
+
+/* Mobile & Tablet Adaptation: transitions smoothly vertically when content stacks */
+@media (max-width: 1023px) {
+  .hero-blend-gradient-overlay {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 20%,
+      color-mix(in srgb, var(--hero-bg) 40%, transparent) 40%,
+      color-mix(in srgb, var(--hero-bg) 85%, transparent) 60%,
+      var(--hero-bg) 75%,
+      var(--hero-bg) 100%
+    );
+  }
+
+  @supports (mask-image: linear-gradient(to bottom, black, transparent)) or (-webkit-mask-image: linear-gradient(to bottom, black, transparent)) {
+    .hero-blend-img-masked {
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0.6) 40%,
+        rgba(0, 0, 0, 0.15) 60%,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0.6) 40%,
+        rgba(0, 0, 0, 0.15) 60%,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+  }
+}
+
 .nepali-pattern-border {
   background-image: radial-gradient(var(--color-warm-sand) 15%, transparent 16%);
   background-size: 16px 16px;
