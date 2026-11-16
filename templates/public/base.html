@@ -51,22 +51,22 @@
 
   <!-- Navigation -->
   <header class="sticky top-0 z-50 bg-creamBg/95 backdrop-blur-md border-b border-tradBeige shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
       <!-- Brand Logo & Clean Placed Titles -->
-      <a href="/" class="flex items-center gap-3.5 shrink-0 group py-1.5">
-        <img src="/static/images/hotel_rhino_logo.png" alt="Hotel Rhino Logo" class="h-16 sm:h-20 w-auto object-contain drop-shadow-md group-hover:scale-105 transition transform rounded-lg">
+      <a href="/" class="flex items-center gap-3 shrink-0 group py-1">
+        <img src="/static/images/hotel_rhino_logo.png" alt="Hotel Rhino Logo" class="h-14 w-auto object-contain drop-shadow-md group-hover:scale-105 transition transform rounded-lg">
       </a>
 
       <!-- Desktop Links - Introductory & Hospitality Exploration -->
-      <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-[16px] xl:text-[17px] font-medium tracking-normal text-darkEspresso">
-        <a href="/" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'home' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Home</a>
-        <a href="{% url 'our_story' %}" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'our_story' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">About Hotel & Heritage</a>
-        <a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'khana_sets' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Thakali Thali Sets</a>
-        <a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'whats_inside_thali' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Inside Your Thali</a>
-        <a href="{% url 'gallery' %}" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'gallery' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Gallery</a>
-        <a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'guest_experiences' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Hospitality Stories</a>
-        <a href="{% url 'visit_us' %}" class="hover:text-terracotta transition py-2 relative {% if request.resolver_match.url_name == 'visit_us' %}text-terracotta font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Visit Us</a>
+      <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-[17px] xl:text-[18px] font-medium tracking-normal text-darkEspresso">
+        <a href="/" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'home' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Home</a>
+        <a href="{% url 'our_story' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'our_story' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">About Hotel & Heritage</a>
+        <a href="{% url 'khana_sets' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'khana_sets' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Thakali Thali Sets</a>
+        <a href="{% url 'whats_inside_thali' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'whats_inside_thali' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Inside Your Thali</a>
+        <a href="{% url 'gallery' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'gallery' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Gallery</a>
+        <a href="{% url 'guest_experiences' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'guest_experiences' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Hospitality Stories</a>
+        <a href="{% url 'visit_us' %}" class="hover:text-terracotta transition py-1 relative {% if request.resolver_match.url_name == 'visit_us' %}text-terracotta font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-terracotta after:rounded-full{% endif %}">Visit Us</a>
       </nav>
 
       <!-- Action Button -->
@@ -77,8 +77,8 @@
       </div>
 
       <!-- Mobile Menu Toggle -->
-      <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-xl text-deepBrown hover:bg-tradBeige/50" aria-label="Toggle menu">
-        <i data-lucide="menu" class="w-7 h-7"></i>
+      <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-deepBrown hover:bg-tradBeige/50" aria-label="Toggle menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
     </div>
 
