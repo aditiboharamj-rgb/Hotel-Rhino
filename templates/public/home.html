@@ -14,12 +14,12 @@
     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-creamBg/40 to-creamBg/90 lg:to-creamBg/95"></div>
   </div>
 
-  <!-- Hero Content Left-aligned & Positioned Over the Clean Right Half -->
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 w-full flex justify-end">
-    <div class="w-full lg:w-7/12 xl:w-1/2 space-y-7 text-left pl-0 lg:pl-8">
+  <!-- Hero Content Balanced Across the Frame -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 w-full flex justify-end">
+    <div class="w-full lg:w-3/5 xl:w-[58%] space-y-7 text-left pl-0 lg:pl-6">
       
       <!-- Top Pill Badge -->
-      <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-white/90 border border-terracotta/40 text-sm sm:text-base font-bold text-terracotta shadow-md backdrop-blur-md">
+      <div class="inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-white/95 border border-terracotta/40 text-sm sm:text-base font-bold text-terracotta shadow-md backdrop-blur-md">
         <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse"></span>
         🏔️ AUTHENTIC MUSTANG THAKALI & HIMALAYAN DINING
       </div>
@@ -40,54 +40,70 @@
         <a href="{% url 'our_story' %}" class="btn-primary text-base sm:text-lg py-4 px-9 shadow-xl rounded-2xl">
           <i data-lucide="compass" class="w-5 h-5"></i> Discover Our Story
         </a>
-        <a href="{% url 'khana_sets' %}" class="btn-outline border-terracotta text-deepBrown hover:bg-terracotta hover:text-white text-base sm:text-lg py-3.5 px-8 rounded-2xl bg-white/80 shadow-md backdrop-blur-sm">
+        <a href="{% url 'khana_sets' %}" class="btn-outline border-terracotta text-deepBrown hover:bg-terracotta hover:text-white text-base sm:text-lg py-3.5 px-8 rounded-2xl bg-white/90 shadow-md backdrop-blur-sm">
           <i data-lucide="utensils" class="w-5 h-5 text-terracotta"></i> View Thakali Thali Menu
         </a>
       </div>
 
-      <!-- 4 Clean Feature Cards arranged on the right side -->
-      <div class="grid grid-cols-2 gap-3.5 pt-4">
+      <!-- 4 Rich Feature Cards arranged on the right side filling the space elegantly -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3">
         
-        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/90 border border-tradBeige/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-start gap-3.5 shadow-sm hover:shadow-md hover:border-terracotta transition group">
+          <div class="p-3 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="sparkles" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Mustang Jimbu</span>
-            <span class="text-xs text-mutedOlive">Mountain Allium</span>
+            <span class="block font-bold text-base text-deepBrown leading-tight">Mustang Jimbu</span>
+            <span class="text-xs sm:text-sm text-mutedOlive mt-0.5 block">High-altitude herb hand-tempered in pure mountain ghee.</span>
           </div>
         </div>
 
-        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/90 border border-tradBeige/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-start gap-3.5 shadow-sm hover:shadow-md hover:border-terracotta transition group">
+          <div class="p-3 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="utensils-crossed" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Brass Thali</span>
-            <span class="text-xs text-mutedOlive">Bell-Metal Kansa</span>
+            <span class="block font-bold text-base text-deepBrown leading-tight">Heavy Brass Kansa</span>
+            <span class="text-xs sm:text-sm text-mutedOlive mt-0.5 block">Therapeutic bell-metal alloy crafted for authentic dining.</span>
           </div>
         </div>
 
-        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/90 border border-tradBeige/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-start gap-3.5 shadow-sm hover:shadow-md hover:border-terracotta transition group">
+          <div class="p-3 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="infinity" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Refills</span>
-            <span class="text-xs text-mutedOlive">Unlimited Bhat & Dal</span>
+            <span class="block font-bold text-base text-deepBrown leading-tight">Unlimited Refills</span>
+            <span class="text-xs sm:text-sm text-mutedOlive mt-0.5 block">Warm fragrant rice, Jimbu dal, and seasonal saag served freely.</span>
           </div>
         </div>
 
-        <div class="bg-white/85 border border-tradBeige/90 backdrop-blur-md p-4 rounded-2xl text-left flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/90 border border-tradBeige/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl text-left flex items-start gap-3.5 shadow-sm hover:shadow-md hover:border-terracotta transition group">
+          <div class="p-3 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="heart-handshake" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm sm:text-base text-deepBrown leading-tight">Hospitality</span>
-            <span class="text-xs text-mutedOlive">Atithi Devo Bhava</span>
+            <span class="block font-bold text-base text-deepBrown leading-tight">Mountain Warmth</span>
+            <span class="text-xs sm:text-sm text-mutedOlive mt-0.5 block">Rooted in Nepali Atithi Devo Bhava hospitality traditions.</span>
           </div>
         </div>
 
+      </div>
+
+      <!-- Quick Hospitality Highlight Strip -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-tradBeige/70 text-xs sm:text-sm text-darkEspresso/80">
+        <div class="flex items-center gap-2">
+          <i data-lucide="map-pin" class="w-4 h-4 text-terracotta"></i>
+          <span>Main Road, Dhangadhi, Nepal</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="clock" class="w-4 h-4 text-terracotta"></i>
+          <span>Open Daily: 9:00 AM – 10:30 PM</span>
+        </div>
+        <div class="flex items-center gap-2 font-semibold text-terracotta">
+          <i data-lucide="shield-check" class="w-4 h-4 text-terracotta"></i>
+          <span>100% Authentic Flavors</span>
+        </div>
       </div>
 
     </div>
