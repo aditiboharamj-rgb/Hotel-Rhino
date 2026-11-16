@@ -233,6 +233,122 @@
   </div>
 </section>
 
+<!-- Sliding Showcase Gallery Section -->
+<section class="py-24 bg-darkEspresso text-white relative overflow-hidden">
+  <!-- Subtle pattern background -->
+  <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#B66A36_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div class="space-y-3">
+        <span class="text-sm uppercase tracking-widest font-semibold text-terracotta flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+          Visual Glimpse & Dining Ambiance
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-warmSand leading-tight">
+          Hotel Rhino Himalayan Gallery
+        </h2>
+        <p class="text-base sm:text-lg text-tradBeige/80 max-w-xl font-light">
+          Take a sensory tour through our authentic brass cookware, smoking Jimbu dal, and tranquil heritage dining spaces.
+        </p>
+      </div>
+
+      <!-- Carousel Navigation Controls -->
+      <div class="flex items-center gap-3 shrink-0">
+        <button id="sliderPrevBtn" class="w-12 h-12 rounded-full border border-terracotta/50 bg-deepBrown/80 hover:bg-terracotta text-white flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" aria-label="Previous Slide">
+          <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <button id="sliderNextBtn" class="w-12 h-12 rounded-full border border-terracotta/50 bg-deepBrown/80 hover:bg-terracotta text-white flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" aria-label="Next Slide">
+          <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sliding Carousel Track -->
+    <div class="relative overflow-hidden rounded-3xl">
+      <div id="gallerySliderTrack" class="flex gap-6 transition-transform duration-700 ease-out cursor-grab active:cursor-grabbing select-none">
+        
+        <!-- Slide 1: Authentic Brass Thali -->
+        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+            <img src="/static/images/hero_thakali_bg.jpg" alt="Traditional Brass Thakali Thali" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/20 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+              <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Mustang Heritage</span>
+              <h3 class="font-heading font-bold text-xl text-white">Authentic Bell-Metal Thali</h3>
+              <p class="text-xs text-tradBeige/80 mt-1">Simmered in Jimbu herb with steaming hot Basmati rice & ghee.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Ambiance -->
+        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80" alt="Restaurant Ambiance" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/20 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+              <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Dining Experience</span>
+              <h3 class="font-heading font-bold text-xl text-white">Warm Himalayan Ambiance</h3>
+              <p class="text-xs text-tradBeige/80 mt-1">Spacious, tranquil seating celebrating traditional Nepali wood and terracotta.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Jimbu & Spices -->
+        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+            <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=1000&q=80" alt="Himalayan Jimbu and Spices" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/20 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+              <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Authentic Sourcing</span>
+              <h3 class="font-heading font-bold text-xl text-white">Wild Mountain Spices</h3>
+              <p class="text-xs text-tradBeige/80 mt-1">Hand-harvested Jimbu allium and stone-ground Timur pepper from Upper Mustang.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Thali Dining Tradition -->
+        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+            <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1000&q=80" alt="Traditional Thakali Feast" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/20 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+              <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Hospitality</span>
+              <h3 class="font-heading font-bold text-xl text-white">Table-Side Ghee & Refills</h3>
+              <p class="text-xs text-tradBeige/80 mt-1">Steaming rice and freshly tempered dal ladled graciously at your seat.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: The Mountain Valley -->
+        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80" alt="Mustang Valley Inspiration" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/20 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+              <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Our Roots</span>
+              <h3 class="font-heading font-bold text-xl text-white">Thak Khola Valley Inspiration</h3>
+              <p class="text-xs text-tradBeige/80 mt-1">Carrying the culinary legacy of the ancient Trans-Himalayan trade routes.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Gallery Indicators & Action Link -->
+    <div class="flex flex-col sm:flex-row items-center justify-between mt-10 pt-6 border-t border-deepBrown/80 gap-4">
+      <div id="sliderDots" class="flex items-center gap-2">
+        <!-- Dots rendered dynamically via JS -->
+      </div>
+      <a href="{% url 'gallery' %}" class="btn-outline border-warmSand text-creamBg hover:bg-white hover:text-darkEspresso text-sm sm:text-base py-3 px-8 rounded-full">
+        Explore Full Photo Gallery <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
 <!-- Customer Reviews Section -->
 <section class="py-24 bg-creamBg relative overflow-hidden">
   <!-- Subtle decorative ambient dots -->
@@ -310,4 +426,94 @@
     </div>
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Dynamic sliding showcase gallery with auto-scroll and touch controls
+  document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('gallerySliderTrack');
+    const prevBtn = document.getElementById('sliderPrevBtn');
+    const nextBtn = document.getElementById('sliderNextBtn');
+    const dotsContainer = document.getElementById('sliderDots');
+
+    if (!track) return;
+
+    const slides = Array.from(track.children);
+    let currentIndex = 0;
+    let autoPlayTimer = null;
+
+    // Create pagination dots
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('button');
+      dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-terracotta w-8' : 'bg-warmSand/40 hover:bg-warmSand'}`;
+      dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+      dot.addEventListener('click', () => {
+        currentIndex = idx;
+        updateSlider();
+        restartAutoPlay();
+      });
+      dotsContainer.appendChild(dot);
+    });
+
+    const updateSlider = () => {
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      const gap = 24; // 1.5rem (gap-6)
+      const offset = currentIndex * (slideWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+
+      // Update dots
+      Array.from(dotsContainer.children).forEach((dot, idx) => {
+        if (idx === currentIndex) {
+          dot.className = 'w-8 h-3 rounded-full bg-terracotta transition-all duration-300';
+        } else {
+          dot.className = 'w-3 h-3 rounded-full bg-warmSand/40 hover:bg-warmSand transition-all duration-300';
+        }
+      });
+    };
+
+    const nextSlide = () => {
+      const maxIndex = slides.length - 1;
+      currentIndex = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+      updateSlider();
+    };
+
+    const prevSlide = () => {
+      const maxIndex = slides.length - 1;
+      currentIndex = currentIndex <= 0 ? maxIndex : currentIndex - 1;
+      updateSlider();
+    };
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        restartAutoPlay();
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        restartAutoPlay();
+      });
+    }
+
+    // Auto Play every 4.5 seconds
+    const startAutoPlay = () => {
+      autoPlayTimer = setInterval(nextSlide, 4500);
+    };
+
+    const restartAutoPlay = () => {
+      clearInterval(autoPlayTimer);
+      startAutoPlay();
+    };
+
+    startAutoPlay();
+
+    // Pause on hover
+    track.addEventListener('mouseenter', () => clearInterval(autoPlayTimer));
+    track.addEventListener('mouseleave', () => startAutoPlay());
+  });
+</script>
 {% endblock %}
