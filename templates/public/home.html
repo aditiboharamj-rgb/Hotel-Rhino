@@ -8,18 +8,12 @@
   
   <!-- Panoramic Thakali Khana Set Background Image -->
   <div class="absolute inset-0 z-0">
-    {% if hero_thakali_set and hero_thakali_set.image %}
-      <img src="{{ hero_thakali_set.image.url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover object-center scale-105 transform">
-    {% elif hero_thakali_set and hero_thakali_set.image_url %}
-      <img src="{{ hero_thakali_set.image_url }}" alt="{{ hero_thakali_set.name }}" class="w-full h-full object-cover object-center scale-105 transform">
-    {% else %}
-      <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=2000&q=85" alt="Authentic Thakali Khana Set" class="w-full h-full object-cover object-center scale-105 transform">
-    {% endif %}
+    <img src="/static/images/hero_thakali_set.jpg" alt="Authentic Nepali Thakali Khana Set" class="w-full h-full object-cover object-center scale-105 transform">
     
     <!-- Multi-layered Atmospheric Overlays for Depth and Readability -->
-    <div class="absolute inset-0 bg-darkEspresso/65 backdrop-blur-[1px]"></div>
+    <div class="absolute inset-0 bg-darkEspresso/60 backdrop-blur-[1px]"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/40 to-darkEspresso/70"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-darkEspresso/90 via-darkEspresso/50 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-darkEspresso/90 via-darkEspresso/45 to-darkEspresso/70"></div>
   </div>
 
   <!-- Hero Content Centered and Structured like the Reference Design -->
