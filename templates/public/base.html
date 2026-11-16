@@ -49,30 +49,6 @@
 </head>
 <body class="bg-creamBg text-darkEspresso flex flex-col min-h-screen text-base antialiased">
 
-  <!-- Heritage Top Bar -->
-  <div class="bg-darkEspresso text-tradBeige text-sm py-2 px-4 sm:px-6 lg:px-8 border-b border-terracotta/30">
-    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-3">
-      <div class="flex items-center gap-6">
-        <span class="flex items-center text-xs sm:text-sm font-medium">
-          <i data-lucide="map-pin" class="w-4 h-4 inline text-terracotta mr-1.5 shrink-0"></i>
-          {{ RESTAURANT_LOCATION }}
-        </span>
-        <span class="hidden md:flex items-center text-xs sm:text-sm font-medium">
-          <i data-lucide="clock" class="w-4 h-4 inline text-terracotta mr-1.5 shrink-0"></i>
-          10:00 AM – 10:30 PM (Daily)
-        </span>
-      </div>
-      <div class="flex items-center gap-5">
-        <a href="tel:{{ RESTAURANT_PHONE }}" class="hover:text-white transition flex items-center gap-1.5 text-xs sm:text-sm font-semibold">
-          <i data-lucide="phone" class="w-4 h-4 text-terracotta shrink-0"></i>{{ RESTAURANT_PHONE }}
-        </a>
-        <a href="/staff/dashboard/" class="bg-terracotta/25 hover:bg-terracotta text-white px-3 py-1 rounded-full text-xs font-semibold transition border border-terracotta/50">
-          Staff RMS Portal
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- Navigation -->
   <header class="sticky top-0 z-50 bg-creamBg/95 backdrop-blur-md border-b border-tradBeige shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
