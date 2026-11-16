@@ -291,7 +291,6 @@ a {
 /* ==========================================================================
    Seamless Hero Image-to-Background Color Blend Engine
    Adaptable to any image, any background color, and any color palette.
-   Uses multi-stop cubic-bezier / cosine gradient feathering + CSS mask
    ========================================================================== */
 .hero-blend-container {
   --hero-bg: var(--color-cream-bg);
@@ -304,11 +303,18 @@ a {
 /* Image wrapper anchored on the left */
 .hero-blend-image-wrap {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60%;
   pointer-events: none;
   z-index: 1;
+}
+
+@media (min-width: 1280px) {
+  .hero-blend-image-wrap {
+    width: 62%;
+  }
 }
 
 /* The subject image positioned on the left */
@@ -320,9 +326,8 @@ a {
 }
 
 /* 
-  Multi-stop feathered gradient overlay that matches the container's background color.
-  Provides a natural, luxurious dissolve starting gently at 25-30% and becoming
-  100% solid background color by 55-60%, leaving the entire right side clean.
+  Multi-stop feathered gradient overlay matching the background color.
+  Starts smoothly around 45% and blends into solid background color by 85%.
 */
 .hero-blend-gradient-overlay {
   position: absolute;
@@ -332,60 +337,57 @@ a {
   background: linear-gradient(
     to right,
     transparent 0%,
-    transparent 22%,
-    color-mix(in srgb, var(--hero-bg) 5%, transparent) 28%,
-    color-mix(in srgb, var(--hero-bg) 18%, transparent) 34%,
-    color-mix(in srgb, var(--hero-bg) 38%, transparent) 40%,
-    color-mix(in srgb, var(--hero-bg) 64%, transparent) 46%,
-    color-mix(in srgb, var(--hero-bg) 86%, transparent) 52%,
-    color-mix(in srgb, var(--hero-bg) 96%, transparent) 57%,
-    var(--hero-bg) 62%,
+    transparent 35%,
+    color-mix(in srgb, var(--hero-bg) 15%, transparent) 45%,
+    color-mix(in srgb, var(--hero-bg) 40%, transparent) 55%,
+    color-mix(in srgb, var(--hero-bg) 75%, transparent) 68%,
+    color-mix(in srgb, var(--hero-bg) 95%, transparent) 80%,
+    var(--hero-bg) 88%,
     var(--hero-bg) 100%
   );
 }
 
-/* Progressive CSS Mask for modern browsers: directly feather the image pixels into alpha transparency */
+/* Progressive CSS Mask directly on image */
 @supports (mask-image: linear-gradient(to right, black, transparent)) or (-webkit-mask-image: linear-gradient(to right, black, transparent)) {
   .hero-blend-img-masked {
     -webkit-mask-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 22%,
-      rgba(0, 0, 0, 0.95) 28%,
-      rgba(0, 0, 0, 0.82) 34%,
-      rgba(0, 0, 0, 0.62) 40%,
-      rgba(0, 0, 0, 0.36) 46%,
-      rgba(0, 0, 0, 0.14) 52%,
-      rgba(0, 0, 0, 0.04) 57%,
-      rgba(0, 0, 0, 0) 62%,
+      rgba(0, 0, 0, 1) 40%,
+      rgba(0, 0, 0, 0.85) 52%,
+      rgba(0, 0, 0, 0.55) 65%,
+      rgba(0, 0, 0, 0.2) 78%,
+      rgba(0, 0, 0, 0) 90%,
       rgba(0, 0, 0, 0) 100%
     );
     mask-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 1) 22%,
-      rgba(0, 0, 0, 0.95) 28%,
-      rgba(0, 0, 0, 0.82) 34%,
-      rgba(0, 0, 0, 0.62) 40%,
-      rgba(0, 0, 0, 0.36) 46%,
-      rgba(0, 0, 0, 0.14) 52%,
-      rgba(0, 0, 0, 0.04) 57%,
-      rgba(0, 0, 0, 0) 62%,
+      rgba(0, 0, 0, 1) 40%,
+      rgba(0, 0, 0, 0.85) 52%,
+      rgba(0, 0, 0, 0.55) 65%,
+      rgba(0, 0, 0, 0.2) 78%,
+      rgba(0, 0, 0, 0) 90%,
       rgba(0, 0, 0, 0) 100%
     );
   }
 }
 
-/* Mobile & Tablet Adaptation: transitions smoothly vertically when content stacks */
+/* Mobile & Tablet Adaptation */
 @media (max-width: 1023px) {
+  .hero-blend-image-wrap {
+    width: 100%;
+    height: 50%;
+  }
+
   .hero-blend-gradient-overlay {
     background: linear-gradient(
       to bottom,
       transparent 0%,
       transparent 20%,
-      color-mix(in srgb, var(--hero-bg) 40%, transparent) 40%,
-      color-mix(in srgb, var(--hero-bg) 85%, transparent) 60%,
-      var(--hero-bg) 75%,
+      color-mix(in srgb, var(--hero-bg) 50%, transparent) 40%,
+      color-mix(in srgb, var(--hero-bg) 90%, transparent) 65%,
+      var(--hero-bg) 80%,
       var(--hero-bg) 100%
     );
   }
@@ -395,19 +397,19 @@ a {
       -webkit-mask-image: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 1) 20%,
-        rgba(0, 0, 0, 0.6) 40%,
-        rgba(0, 0, 0, 0.15) 60%,
-        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 1) 25%,
+        rgba(0, 0, 0, 0.6) 45%,
+        rgba(0, 0, 0, 0.15) 65%,
+        rgba(0, 0, 0, 0) 80%,
         rgba(0, 0, 0, 0) 100%
       );
       mask-image: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 1) 20%,
-        rgba(0, 0, 0, 0.6) 40%,
-        rgba(0, 0, 0, 0.15) 60%,
-        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 1) 25%,
+        rgba(0, 0, 0, 0.6) 45%,
+        rgba(0, 0, 0, 0.15) 65%,
+        rgba(0, 0, 0, 0) 80%,
         rgba(0, 0, 0, 0) 100%
       );
     }
