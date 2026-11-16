@@ -1,14 +1,10 @@
 :root {
-  --color-warm-cream: #F5EFE6;
-  --color-light-beige: #E9DCCB;
-  --color-soft-sand: #F2E9DD;
-  --color-muted-gold: #C69A55;
-  --color-terracotta: #A65E3F;
-  --color-deep-brown: #38291F;
+  --color-deep-brown: #3B2418;
   --color-espresso: #24160F;
+  --color-terracotta: #B66A36;
   --color-warm-sand: #D8BD96;
-  --color-trad-beige: #E9DCCB;
-  --color-cream-bg: #F5EFE6;
+  --color-trad-beige: #E9D9BC;
+  --color-cream-bg: #F8F4EA;
   --color-muted-olive: #68734A;
   --color-white: #FFFFFF;
   --color-success: #25834A;
@@ -292,103 +288,6 @@ a {
 }
 
 /* Traditional Nepali Pattern Border */
-
-/* ==========================================================================
-   Premium Himalayan Hero Section (Left Food Image to Right Warm Cream Blend)
-   ========================================================================== */
-.hero-himalayan-wrapper {
-  background-color: var(--color-warm-cream);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-image-pane {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  min-height: 440px;
-}
-
-@media (min-width: 1024px) {
-  .hero-image-pane {
-    min-height: 640px;
-  }
-}
-
-/* Natural Desktop Blend: Horizontal gradient dissolving into #F5EFE6 */
-.hero-image-pane::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(245, 239, 230, 0) 0%,
-    rgba(245, 239, 230, 0.45) 45%,
-    rgba(245, 239, 230, 0.88) 80%,
-    #F5EFE6 100%
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Natural Mobile/Tablet Blend: Smooth bottom fade to prevent abrupt boundary when stacked */
-@media (max-width: 1023px) {
-  .hero-image-pane::after {
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 45%;
-    background: linear-gradient(
-      to bottom,
-      rgba(245, 239, 230, 0) 0%,
-      rgba(245, 239, 230, 0.6) 50%,
-      #F5EFE6 100%
-    );
-  }
-}
-
-/* Feature Cards - Subtle warm beige backgrounds, elegant icons, soft borders */
-.feature-card-heritage {
-  background: rgba(233, 220, 203, 0.45);
-  border: 1px solid rgba(198, 154, 85, 0.35);
-  border-radius: 1rem;
-  padding: 1rem 1.15rem;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
-.feature-card-heritage:hover {
-  background: rgba(233, 220, 203, 0.85);
-  border-color: var(--color-muted-gold);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -6px rgba(56, 41, 31, 0.12);
-}
-
-.feature-card-heritage .icon-wrap {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.75rem;
-  background: rgba(166, 94, 63, 0.12);
-  color: var(--color-terracotta);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-.feature-card-heritage:hover .icon-wrap {
-  background: var(--color-deep-brown);
-  color: var(--color-muted-gold);
-}
-
 .nepali-pattern-border {
   background-image: radial-gradient(var(--color-warm-sand) 15%, transparent 16%);
   background-size: 16px 16px;
