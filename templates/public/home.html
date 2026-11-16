@@ -122,34 +122,34 @@
       <p class="text-base sm:text-lg text-darkEspresso/75 leading-relaxed">We exclusively celebrate the timeless Thakali Khana tradition. Every set is prepared fresh to order with uncompromised mountain standards.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {% for set in featured_sets %}
-      <div class="card-heritage flex flex-col justify-between">
-        <div class="relative h-64 overflow-hidden bg-tradBeige/40">
+      <div class="card-heritage flex flex-col justify-between group">
+        <div class="relative h-72 overflow-hidden bg-tradBeige/40">
           {% if set.image %}
-            <img src="{{ set.image.url }}" alt="{{ set.name }}" class="w-full h-full object-cover">
+            <img src="{{ set.image.url }}" alt="{{ set.name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
           {% elif set.image_url %}
-            <img src="{{ set.image_url }}" alt="{{ set.name }}" class="w-full h-full object-cover">
+            <img src="{{ set.image_url }}" alt="{{ set.name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
           {% else %}
-            <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80" alt="{{ set.name }}" class="w-full h-full object-cover">
+            <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80" alt="{{ set.name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
           {% endif %}
-          <div class="absolute top-3 right-3 bg-darkEspresso/85 text-warmSand px-3.5 py-1.5 rounded-full text-sm font-bold backdrop-blur-sm">
+          <div class="absolute top-4 right-4 bg-darkEspresso/90 text-warmSand px-4 py-1.5 rounded-full text-sm font-bold backdrop-blur-md shadow-md border border-terracotta/30">
             NPR {{ set.price_npr }}
           </div>
           {% if set.category == 'VEG' %}
-          <div class="absolute top-3 left-3 bg-successGreen text-white px-3 py-1 rounded-full text-xs font-bold">
+          <div class="absolute top-4 left-4 bg-successGreen text-white px-3.5 py-1 rounded-full text-xs font-bold shadow-md">
             Pure Veg
           </div>
           {% else %}
-          <div class="absolute top-3 left-3 bg-terracotta text-white px-3 py-1 rounded-full text-xs font-bold">
+          <div class="absolute top-4 left-4 bg-terracotta text-white px-3.5 py-1 rounded-full text-xs font-bold shadow-md">
             Non-Veg
           </div>
           {% endif %}
         </div>
 
-        <div class="p-6 sm:p-7 flex-grow flex flex-col justify-between space-y-4">
+        <div class="p-7 flex-grow flex flex-col justify-between space-y-4">
           <div>
-            <h3 class="font-heading text-xl font-bold text-deepBrown leading-snug">{{ set.name }}</h3>
+            <h3 class="font-heading text-2xl font-bold text-deepBrown group-hover:text-terracotta transition leading-snug">{{ set.name }}</h3>
             <p class="text-sm text-darkEspresso/80 mt-2 line-clamp-3 leading-relaxed">{{ set.description }}</p>
           </div>
 

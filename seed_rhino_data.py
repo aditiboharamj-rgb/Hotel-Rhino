@@ -131,6 +131,28 @@ khana_sets = [
         'image_url': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=800&q=80',
         'order_priority': 4,
     },
+    {
+        'name': 'Special Mustang Dhido Thakali Khana Set',
+        'slug': 'mustang-dhido-thakali-set',
+        'category': 'VEG',
+        'price_npr': Decimal('550.00'),
+        'description': 'A time-honored Himalayan staple made from stone-ground organic mountain buckwheat (Phapar) and millet (Kodo), served piping hot with melted Shingati Chyangra cow ghee, Jimbu-fried black dal, fresh rayo saag, spicy timur pickle, and seasonal hill tarkari.',
+        'traditional_items': 'Hot Organic Buckwheat/Millet Dhido, Pure Cow Ghee, Jimbu Mustang Dal, Rayo ko Saag, Gundruk Sadeko, Timur Chutney, Seasonal Tarkari',
+        'portion_info': 'Wholesome ancestral energy meal with unlimited soup & vegetable refills',
+        'image_url': 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80',
+        'order_priority': 5,
+    },
+    {
+        'name': 'Heritage Sukuti & Sekuwa Thakali Feast Set',
+        'slug': 'sukuti-sekuwa-thakali-feast-set',
+        'category': 'MUTTON',
+        'price_npr': Decimal('950.00'),
+        'description': 'The ultimate celebratory Thakali feast. Features smoked hill goat Sukuti sautéed with garlic, green chilies, and fenugreek, served alongside tender mountain mutton curry, hot Basmati rice, Jimbu Mustang dal, charred Timur chutney, roasted Bhatmas, and pure golden ghee.',
+        'traditional_items': 'Dry-Cured Goat Sukuti, Tender Mutton Curry, Jimbu Dal, Steamed Rice, Rayo ko Saag, Gundruk Sadeko, Timur Chutney, Papad, Pure Ghee',
+        'portion_info': 'Grand celebratory Himalayan banquet with full unlimited side refills',
+        'image_url': 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+        'order_priority': 6,
+    },
 ]
 
 for kd in khana_sets:

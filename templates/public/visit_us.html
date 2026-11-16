@@ -56,16 +56,32 @@
             </div>
           </div>
 
-          <div class="pt-5 border-t border-tradBeige/80">
-            <!-- Simulated Google Maps Frame -->
-            <div class="w-full h-56 rounded-2xl bg-tradBeige/40 border border-tradBeige flex flex-col items-center justify-center text-center p-6">
-              <i data-lucide="map" class="w-10 h-10 text-terracotta mb-2.5"></i>
-              <span class="font-bold text-sm text-deepBrown">Interactive Google Maps View</span>
-              <p class="text-xs sm:text-sm text-darkEspresso/70 mt-1">{{ RESTAURANT_LOCATION }}</p>
-              <a href="https://maps.google.com/?q={{ RESTAURANT_LOCATION|urlencode }}" target="_blank" class="mt-3 text-sm text-terracotta font-semibold underline">
-                Open in Google Maps App
+          <div class="pt-5 border-t border-tradBeige/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-sm text-deepBrown flex items-center gap-1.5">
+                <i data-lucide="navigation" class="w-4 h-4 text-terracotta"></i> Live Map & Directions
+              </span>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=Main+Road+Dhangadhi+Sudurpaschim+Province+Nepal" target="_blank" class="text-xs text-terracotta hover:underline font-bold flex items-center gap-1">
+                Get Directions <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
               </a>
             </div>
+
+            <!-- Authentic Embedded Google Maps Iframe for Live Direction -->
+            <div class="w-full h-64 rounded-2xl overflow-hidden border border-tradBeige shadow-sm relative">
+              <iframe 
+                src="https://maps.google.com/maps?q=Main+Road,+Dhangadhi,+Sudurpaschim+Province,+Nepal&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                class="w-full h-full border-0" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Hotel Rhino Dhangadhi Live Google Map">
+              </iframe>
+            </div>
+            
+            <p class="text-[11px] text-mutedOlive flex items-center gap-1.5">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-terracotta shrink-0"></i>
+              Centrally located on Main Road, Dhangadhi with convenient landmark access and valet parking.
+            </p>
           </div>
         </div>
       </div>
