@@ -367,11 +367,8 @@
       </div>
     </div>
 
-    <!-- Gallery Indicators & Action Link -->
-    <div class="flex flex-col sm:flex-row items-center justify-between mt-10 pt-6 border-t border-deepBrown/80 gap-4">
-      <div id="sliderDots" class="flex items-center gap-2">
-        <!-- Dots rendered dynamically via JS -->
-      </div>
+    <!-- Gallery Action Link -->
+    <div class="flex justify-center sm:justify-end mt-10 pt-6 border-t border-deepBrown/80">
       <a href="{% url 'gallery' %}" class="btn-outline border-warmSand text-creamBg hover:bg-white hover:text-darkEspresso text-sm sm:text-base py-3 px-8 rounded-full">
         Explore Full Photo Gallery <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
       </a>
@@ -657,27 +654,12 @@
     const track = document.getElementById('gallerySliderTrack');
     const prevBtn = document.getElementById('sliderPrevBtn');
     const nextBtn = document.getElementById('sliderNextBtn');
-    const dotsContainer = document.getElementById('sliderDots');
 
     if (!track) return;
 
     const slides = Array.from(track.children);
     let currentIndex = 0;
     let autoPlayTimer = null;
-
-    // Create pagination dots
-    dotsContainer.innerHTML = '';
-    slides.forEach((_, idx) => {
-      const dot = document.createElement('button');
-      dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-terracotta w-8' : 'bg-warmSand/40 hover:bg-warmSand'}`;
-      dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
-      dot.addEventListener('click', () => {
-        currentIndex = idx;
-        updateSlider();
-        restartAutoPlay();
-      });
-      dotsContainer.appendChild(dot);
-    });
 
     const updateSlider = () => {
       if (!slides.length) return;
@@ -692,15 +674,6 @@
         offset = maxOffset;
       }
       track.style.transform = `translateX(-${offset}px)`;
-
-      // Update dots
-      Array.from(dotsContainer.children).forEach((dot, idx) => {
-        if (idx === currentIndex) {
-          dot.className = 'w-8 h-3 rounded-full bg-terracotta transition-all duration-300';
-        } else {
-          dot.className = 'w-3 h-3 rounded-full bg-warmSand/40 hover:bg-warmSand transition-all duration-300';
-        }
-      });
     };
 
     const nextSlide = () => {
