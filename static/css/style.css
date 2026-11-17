@@ -302,13 +302,13 @@ a {
   animation: ambientDrift 20s ease-in-out infinite reverse;
 }
 
-/* Endless Infinite Marquee Track: Mathematically Seamless Pure Flex Loop */
+/* Endless Infinite Marquee Track: Mathematically Perfect Continuous Loop */
 @keyframes marqueeScroll {
   0% {
     transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(calc(-100% - 2.5rem), 0, 0);
   }
 }
 
@@ -323,11 +323,13 @@ a {
   display: flex;
   flex-shrink: 0;
   align-items: stretch;
-  animation: marqueeScroll 35s linear infinite;
+  gap: 2.5rem;
+  margin-right: 2.5rem;
+  animation: marqueeScroll 38s linear infinite;
   will-change: transform;
 }
 
-.marquee-track:hover {
+.marquee-container:hover .marquee-track {
   animation-play-state: paused;
 }
 /* ==========================================================================
