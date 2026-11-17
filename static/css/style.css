@@ -302,13 +302,13 @@ a {
   animation: ambientDrift 20s ease-in-out infinite reverse;
 }
 
-/* Endless Infinite Marquee Track: Seamless mathematical CSS loop */
+/* Endless Infinite Marquee Track: Mathematically Seamless Pure Flex Loop */
 @keyframes marqueeScroll {
-  from {
+  0% {
     transform: translate3d(0, 0, 0);
   }
-  to {
-    transform: translate3d(-50%, 0, 0);
+  100% {
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
@@ -322,9 +322,9 @@ a {
 .marquee-track {
   display: flex;
   flex-shrink: 0;
-  width: max-content;
+  align-items: stretch;
+  animation: marqueeScroll 35s linear infinite;
   will-change: transform;
-  animation: marqueeScroll 40s linear infinite;
 }
 
 .marquee-track:hover {
