@@ -106,7 +106,8 @@ khana_sets = [
         'description': 'Free-range Nepali local chicken (Local Kukhura) slow-cooked with whole Himalayan spices, cloves, black cardamom, and fragrant mountain herbs. Accompanied by steaming fluffy rice, Mustang Jimbu dal, fresh seasonal vegetables, Rayo ko saag, fermented Gundruk, stone-milled Timur achar, and crisp roasted papad, finished with generous spoonfuls of hot aromatic cow ghee.',
         'traditional_items': 'Local Chicken Curry (Kukhura ko Jhol), Jimbu Dal, Basmati Rice, Tarkari, Rayo ko Saag, Gundruk Sadeko, Timur Achar, Papad, Ghee',
         'portion_info': 'Generous chicken portion with Unlimited Rice, Dal & Vegetable refills',
-        'image_url': 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
+        'image': 'khana_sets/thakali_khana_brass_thali.jpg',
+        'image_url': '/media/khana_sets/thakali_khana_brass_thali.jpg',
         'order_priority': 2,
     },
     {
