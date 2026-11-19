@@ -157,9 +157,11 @@
     const internalReviewSection = document.getElementById('internalReviewSection');
     const hiddenRatingInput = document.getElementById('hiddenRatingInput');
 
-    // Direct Google Write Review link for Hotel Raino (place id: ChIJe94F1sfsQTkRWoCHaHZ4_Ik)
-    // Automatically pops open the dark review dialog box with stars and photo upload shown in the second image!
-    const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJe94F1sfsQTkRWoCHaHZ4_Ik";
+    function getGoogleReviewUrl(stars) {
+      // 0x39a1ecc7d6052e7b:0x89fc78766887805a is Hotel Raino Dhangadhi's unique identifier.
+      // Action code 3 with trailing rating parameter (e.g. ,3,5 or ,3,4) pre-selects the rating on Google!
+      return `https://www.google.com/search?q=Hotel+Raino+Dhangadhi#lrd=0x39a1ecc7d6052e7b:0x89fc78766887805a,3,${stars}`;
+    }
 
     // Google-style vivid gold star color (#f59e0b) matching the reference screenshot
     const activeColor = '#f59e0b';
@@ -205,15 +207,21 @@
           googleRedirectBanner.classList.add('hidden');
           internalReviewSection.classList.remove('hidden');
         } else if (selectedRating > 3) {
-          // 4 or 5 stars -> Open the Google Review dialog form in a new tab
-          ratingStatusText.textContent = `${selectedRating} Stars - Opening Google Review Dialog...`;
+          // 4 or 5 stars -> Open the Google Review dialog form with corresponding pre-filled stars!
+          ratingStatusText.textContent = `${selectedRating} Stars - Opening Google Review Dialog with ${selectedRating} stars pre-filled...`;
           internalReviewSection.classList.add('hidden');
           googleRedirectBanner.classList.remove('hidden');
 
-          // Automatically opens the Google Review dialog box in a new tab
-          const newTab = window.open(googleReviewUrl, '_blank');
+          const targetUrl = getGoogleReviewUrl(selectedRating);
+          const manualGoogleLink = document.getElementById('manualGoogleLink');
+          if (manualGoogleLink) {
+            manualGoogleLink.href = targetUrl;
+          }
+
+          // Automatically opens the Google Review dialog box in a new tab with pre-filled stars
+          const newTab = window.open(targetUrl, '_blank');
           if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
-            ratingStatusText.textContent = `${selectedRating} Stars - Click below to open the Google Review form`;
+            ratingStatusText.textContent = `${selectedRating} Stars - Click below to open your review on Google`;
           }
         } else {
           // Less than 3 stars (1 or 2 stars) -> form does not open
