@@ -140,12 +140,20 @@ def guest_experiences_view(request):
     reviews = CustomerReview.objects.filter(is_approved=True)
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
-        rating = int(request.POST.get('rating', 5))
+        phone = request.POST.get('phone', '').strip()
+        rating = int(request.POST.get('rating', 3))
         comment = request.POST.get('comment', '').strip()
-        city = request.POST.get('city', 'Kathmandu').strip()
+        city = request.POST.get('city', 'Dhangadhi').strip()
         if name and comment:
-            CustomerReview.objects.create(name=name, rating=rating, comment=comment, city=city, is_approved=True)
-            messages.success(request, "Dhanyabad! Thank you for sharing your experience at Hotel Rhino.")
+            CustomerReview.objects.create(
+                name=name, 
+                phone=phone,
+                rating=rating, 
+                comment=comment, 
+                city=city, 
+                is_approved=True
+            )
+            messages.success(request, "Dhanyabad! Thank you for sharing your feedback with Hotel Rhino.")
             return redirect('guest_experiences')
     return render(request, 'public/guest_experiences.html', {'reviews': reviews})
 

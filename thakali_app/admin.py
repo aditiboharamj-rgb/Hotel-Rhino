@@ -62,9 +62,9 @@ class TableReservationAdmin(ModelAdmin):
 
 @admin.register(CustomerReview)
 class CustomerReviewAdmin(ModelAdmin):
-    list_display = ('name', 'rating', 'city', 'is_approved', 'created_at')
+    list_display = ('name', 'phone', 'rating', 'city', 'is_approved', 'created_at')
     list_filter = ('rating', 'is_approved')
-    search_fields = ('name', 'comment')
+    search_fields = ('name', 'phone', 'comment')
 
 @admin.register(CustomerServiceRequest)
 class CustomerServiceRequestAdmin(ModelAdmin):

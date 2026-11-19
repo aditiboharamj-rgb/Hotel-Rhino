@@ -318,9 +318,10 @@ class TableReservation(models.Model):
 # Customer Review & Testimonials
 class CustomerReview(models.Model):
     name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20, blank=True, help_text="Guest contact phone number")
     rating = models.PositiveSmallIntegerField(default=5)
     comment = models.TextField()
-    city = models.CharField(max_length=100, default="Kathmandu / Chitwan")
+    city = models.CharField(max_length=100, default="Kathmandu / Chitwan", blank=True)
     is_approved = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
