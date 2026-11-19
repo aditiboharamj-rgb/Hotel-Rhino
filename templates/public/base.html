@@ -69,10 +69,10 @@
           Heritage
         </a>
         <a href="{% url 'khana_sets' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'khana_sets' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
-          Thakali Thalis
+          Menu
         </a>
         <a href="{% url 'whats_inside_thali' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'whats_inside_thali' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
-          Inside Your Thali
+          Ingredients
         </a>
         <a href="{% url 'gallery' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'gallery' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Gallery
@@ -103,8 +103,8 @@
     <div id="mobileMenu" class="hidden lg:hidden mt-2 max-w-7xl mx-auto bg-white/95 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl px-6 py-5 space-y-1">
       <a href="/" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Home</a>
       <a href="{% url 'our_story' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">About Hotel & Heritage</a>
-      <a href="{% url 'khana_sets' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Thakali Thali Sets</a>
-      <a href="{% url 'whats_inside_thali' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">What's Inside Your Thali</a>
+      <a href="{% url 'khana_sets' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Menu</a>
+      <a href="{% url 'whats_inside_thali' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Ingredients</a>
       <a href="{% url 'gallery' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Gallery</a>
       <a href="{% url 'guest_experiences' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Hospitality Stories</a>
       <a href="{% url 'visit_us' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Directions & Hours</a>
