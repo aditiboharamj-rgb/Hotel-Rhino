@@ -1,50 +1,863 @@
 {% extends 'public/base.html' %}
 
-{% block title %}Our Story - Hotel Rhino Thakali{% endblock %}
+{% block title %}Heritage & Culinary Roots of Sudurpaschim - Hotel Rhino{% endblock %}
+
+{% block extra_head %}
+<!-- Google Fonts: Cormorant Garamond & Inter -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- GSAP & ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root {
+    --deep-roasted-brown: #482C20;
+    --terracotta-earth: #9A4D30;
+    --antique-mustard-gold: #B88B46;
+    --warm-parchment: #D7C39B;
+    --herbal-green: #56613B;
+    --cream-ivory: #EEE5D5;
+  }
+
+  .font-cormorant {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .font-inter {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Handmade textured background grain */
+  .bg-parchment-grain {
+    background-color: var(--cream-ivory);
+    background-image: 
+      radial-gradient(var(--warm-parchment) 0.75px, transparent 0.75px),
+      radial-gradient(var(--deep-roasted-brown) 0.5px, transparent 0.5px);
+    background-size: 24px 24px, 48px 48px;
+    background-position: 0 0, 12px 12px;
+  }
+
+  /* Traditional woven textile pattern border */
+  .nepali-weave-pattern {
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(184, 139, 70, 0.12) 0,
+      rgba(184, 139, 70, 0.12) 2px,
+      transparent 0,
+      transparent 12px
+    );
+  }
+
+  /* Cinematic hero background slow zoom */
+  @keyframes heroSlowZoom {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  .animate-slow-zoom {
+    animation: heroSlowZoom 28s ease-in-out infinite alternate;
+  }
+
+  /* Floating golden particle animation */
+  @keyframes floatParticle {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+    50% { transform: translateY(-40px) rotate(180deg); opacity: 0.7; }
+    100% { transform: translateY(0) rotate(360deg); opacity: 0.2; }
+  }
+  .floating-particle {
+    animation: floatParticle 8s ease-in-out infinite;
+  }
+
+  /* Organic Masking */
+  .organic-mask-1 {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  .organic-mask-2 {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  /* 3D tilt perspective */
+  .tilt-card {
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+  }
+  .tilt-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  /* Thali hotspot pulsing marker */
+  @keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(184, 139, 70, 0.7); }
+    70% { transform: scale(1.15); box-shadow: 0 0 0 16px rgba(184, 139, 70, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(184, 139, 70, 0); }
+  }
+  .hotspot-glow {
+    animation: pulseGlow 2.5s infinite;
+  }
+
+  /* Steam rising animation */
+  @keyframes steamRise {
+    0% { opacity: 0; transform: translateY(0) scaleX(1); }
+    50% { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-30px) scaleX(1.4); }
+  }
+  .steam-line {
+    animation: steamRise 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* Smooth scroll snapping */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="py-16 lg:py-24 bg-creamBg">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+<div class="bg-parchment-grain text-[#482C20] font-inter overflow-hidden relative selection:bg-[#B88B46] selection:text-white">
+
+  <!-- =========================================================================
+       SECTION 2: HERO SECTION – "A Taste of Our Roots"
+       ========================================================================= -->
+  <section id="roots-hero" class="relative min-h-[92vh] lg:min-h-screen flex items-center justify-center overflow-hidden bg-[#482C20] text-[#EEE5D5]">
     
-    <div class="text-center space-y-4">
-      <span class="text-sm uppercase tracking-widest font-semibold text-terracotta">Himalayan Heritage & Origin</span>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-deepBrown">The Story of Hotel Rhino</h1>
-      <p class="text-base sm:text-lg text-darkEspresso/75">From the dry winds of Thak Khola to the warm hearts of our dining room.</p>
+    <!-- Cinematic Background with slow zoom & golden warm grade -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img src="/static/images/hero_thakali_16_9_banner.jpg" 
+           alt="Authentic Nepali Traditional Feast on Brassware" 
+           class="w-full h-full object-cover object-center animate-slow-zoom brightness-75 contrast-110">
+      
+      <!-- Multi-layer gradient for deep luxury rustic mood -->
+      <div class="absolute inset-0 bg-gradient-to-t from-[#482C20] via-[#482C20]/60 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-[#482C20]/80 via-transparent to-[#482C20]/80"></div>
+      <div class="absolute inset-0 bg-[#9A4D30]/20 mix-blend-color-burn"></div>
     </div>
 
-    <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white max-h-[420px]">
-      <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1200&q=80" alt="Himalayas and Mustang" class="w-full h-full object-cover">
+    <!-- Floating subtle golden particles -->
+    <div class="absolute inset-0 pointer-events-none z-10 overflow-hidden">
+      <div class="floating-particle absolute top-1/4 left-1/6 w-2 h-2 rounded-full bg-[#B88B46]/60 blur-[0.5px]"></div>
+      <div class="floating-particle absolute top-1/3 right-1/4 w-3 h-3 rounded-full bg-[#D7C39B]/50 blur-[1px]" style="animation-delay: 2s;"></div>
+      <div class="floating-particle absolute bottom-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-[#B88B46]/70" style="animation-delay: 4s;"></div>
+      <div class="floating-particle absolute top-2/3 right-1/5 w-2.5 h-2.5 rounded-full bg-[#D7C39B]/60" style="animation-delay: 1.5s;"></div>
     </div>
 
-    <div class="space-y-7 text-base sm:text-lg text-darkEspresso/85 leading-relaxed bg-white p-8 sm:p-14 rounded-3xl border border-tradBeige shadow-sm">
-      <h2 class="font-heading text-2xl sm:text-3xl font-bold text-deepBrown">The Himalayan Salt Route Tradition</h2>
-      <p>
-        Centuries ago, along the rugged Kali Gandaki gorge dividing the majestic Annapurna and Dhaulagiri mountain massifs, the indigenous Thakali people of Mustang managed the bustling trade between Tibet and the southern plains of Nepal. 
-      </p>
-      <p>
-        To nourish weary caravans, traders, and pilgrims, Thakali mothers and innkeepers developed an exceptional culinary mastery: a complete, impeccably balanced thali designed to restore vitality after long mountain journeys. They elevated simple ingredients — mountain buckwheat, black lentils, wild Jimbu herb, and locally pressed mustard oil — into Nepal’s most beloved gastronomic triumph.
-      </p>
-
-      <h2 class="font-heading text-2xl sm:text-3xl font-bold text-deepBrown pt-4">Our Commitment at Hotel Rhino</h2>
-      <p>
-        Hotel Rhino was born with a singular, uncompromising purpose: <strong>to preserve and honor authentic Thakali cuisine without dilution or shortcuts.</strong>
-      </p>
-      <ul class="list-disc pl-6 space-y-2.5 text-sm sm:text-base text-darkEspresso/80">
-        <li><strong>No artificial colors, MSG, or processed preservatives:</strong> Only pure spices ground on traditional stone Silauto.</li>
-        <li><strong>True Mustang Jimbu:</strong> Hand-picked in the sub-alpine regions of Upper Mustang.</li>
-        <li><strong>Authentic Brassware:</strong> Solid hand-cast bell-metal Kansa sets that maintain heat and celebrate dining as an auspicious ritual.</li>
-        <li><strong>Unconditional Hospitality:</strong> The Nepali spirit of "Atithi Devo Bhava" (The guest is god) with endless hot refills of rice, dal, and greens.</li>
-      </ul>
-
-      <div class="pt-8 border-t border-tradBeige/80 flex flex-col sm:flex-row items-center justify-between gap-5">
-        <div>
-          <h4 class="font-heading font-bold text-xl text-deepBrown">The Founders & Kitchen Family</h4>
-          <span class="text-sm text-mutedOlive">Hotel Rhino Thakali Kitchen</span>
-        </div>
-        <a href="{% url 'khana_sets' %}" class="btn-primary text-sm sm:text-base py-3 px-8">Explore Our Menu</a>
+    <!-- Content: Animated Heading Reveal & Story Callout -->
+    <div class="relative z-20 max-w-5xl mx-auto px-6 text-center space-y-8 py-20">
+      
+      <!-- Traditional Emblem Pill -->
+      <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#482C20]/80 border border-[#B88B46]/40 backdrop-blur-md shadow-2xl">
+        <span class="w-2 h-2 rounded-full bg-[#B88B46] animate-ping"></span>
+        <span class="text-xs uppercase tracking-[0.25em] font-semibold text-[#D7C39B]">
+          Culinary Heritage of Sudurpaschim, Nepal
+        </span>
       </div>
+
+      <!-- Main Headline -->
+      <h1 class="font-cormorant text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-[#EEE5D5] leading-[1.05] drop-shadow-lg">
+        A Taste of <span class="italic font-normal text-[#B88B46]">Our Roots</span>
+      </h1>
+
+      <!-- Supporting Editorial Subtitle -->
+      <p class="max-w-2xl mx-auto text-base sm:text-xl font-light text-[#D7C39B]/90 leading-relaxed font-inter">
+        Discover the authentic flavours, traditional recipes and culinary heritage of Sudurpaschim — slow-cooked over sacred hearths and served in timeless brass Kansa thalis.
+      </p>
+
+      <!-- Action Button: Explore Our Flavours -->
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-5">
+        <a href="#signature-dishes" 
+           class="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#B88B46] text-[#482C20] font-semibold text-sm tracking-wider uppercase shadow-xl hover:bg-[#D7C39B] transition-all duration-300 transform hover:-translate-y-1">
+          <span>Explore Our Flavours</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5"></i>
+        </a>
+        <a href="#interactive-thali" 
+           class="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white/10 text-[#EEE5D5] border border-white/20 font-medium text-sm tracking-wide hover:bg-white/20 backdrop-blur-md transition">
+          <i data-lucide="disc" class="w-4 h-4 text-[#B88B46]"></i>
+          <span>Interactive Thali Explorer</span>
+        </a>
+      </div>
+
+      <!-- Scroll-down indicator -->
+      <div class="pt-12 flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition">
+        <span class="text-[11px] tracking-[0.3em] uppercase text-[#D7C39B]">Scroll to Discover</span>
+        <div class="w-5 h-9 rounded-full border-2 border-[#B88B46]/60 flex items-start justify-center p-1">
+          <div class="w-1.5 h-2 bg-[#B88B46] rounded-full animate-bounce"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SECTION 3: INTRODUCTION – "The Flavours of Our Land"
+       ========================================================================= -->
+  <section class="py-24 sm:py-32 px-6 lg:px-12 max-w-7xl mx-auto nepali-weave-pattern relative">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      
+      <!-- Asymmetrical Column 1: Organic Framed Image -->
+      <div class="lg:col-span-6 relative">
+        <div class="relative z-10 overflow-hidden shadow-2xl border-4 border-[#D7C39B]/40 rounded-3xl group">
+          <img src="/static/images/hero_editorial_banner.jpg" 
+               alt="Traditional Kitchen Cooking in Brassware" 
+               class="w-full h-[460px] sm:h-[540px] object-cover object-center group-hover:scale-105 transition duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#482C20]/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-[#482C20]/85 backdrop-blur-md border border-[#B88B46]/30 text-[#EEE5D5]">
+            <span class="text-xs uppercase tracking-widest text-[#B88B46] font-semibold block mb-1">Authentic Hearth Tradition</span>
+            <p class="font-cormorant text-2xl font-semibold">Chulo, Clay Stove & Wood Fire</p>
+            <p class="text-xs text-[#D7C39B]/80 mt-1">Slow-simmered aromas preserved through generational mother-to-daughter oral recipes.</p>
+          </div>
+        </div>
+
+        <!-- Decorative background organic element -->
+        <div class="absolute -top-6 -left-6 w-36 h-36 bg-[#B88B46]/15 rounded-full blur-2xl -z-10"></div>
+        <div class="absolute -bottom-8 -right-8 w-48 h-48 bg-[#9A4D30]/15 rounded-full blur-3xl -z-10"></div>
+      </div>
+
+      <!-- Asymmetrical Column 2: Storytelling Content -->
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B88B46]/15 border border-[#B88B46]/40 text-xs uppercase tracking-widest font-semibold text-[#9A4D30]">
+          Generational Gastronomy
+        </div>
+
+        <h2 class="font-cormorant text-4xl sm:text-5xl lg:text-6xl font-bold text-[#482C20] leading-tight">
+          The Flavours of <br><span class="italic text-[#9A4D30] font-normal">Our Land</span>
+        </h2>
+
+        <p class="text-base sm:text-lg text-[#482C20]/85 leading-relaxed font-light">
+          In the fertile plains and mist-draped hills of <strong>Sudurpaschim</strong>, food is not merely sustenance — it is a sacred offering of hospitality. Deeply rooted in indigenous culinary practices, every pot stirred in our kitchen honours centuries-old agrarian balance.
+        </p>
+
+        <p class="text-sm sm:text-base text-[#482C20]/80 leading-relaxed font-light">
+          From the wild sun-dried herbs of the far-western valleys to the black lentils tempered with native Mustang Jimbu and local Shingati butter, our recipes follow the celestial rhythms of Nepal's seasonal harvest. We never use commercial powders, additives, or synthetic enhancers — our only secrets are stone-milled Silauto pastes, mountain river minerals, and slow wooden fire.
+        </p>
+
+        <div class="grid grid-cols-2 gap-6 pt-4 border-t border-[#D7C39B]/60">
+          <div>
+            <span class="font-cormorant text-3xl font-bold text-[#9A4D30] block">100%</span>
+            <span class="text-xs text-[#482C20]/75 uppercase tracking-wider font-semibold">Stone-Ground Spices</span>
+          </div>
+          <div>
+            <span class="font-cormorant text-3xl font-bold text-[#56613B] block">Pure Brass</span>
+            <span class="text-xs text-[#482C20]/75 uppercase tracking-wider font-semibold">Vedic Kansa Dinnerware</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SECTION 4: SIGNATURE DISHES – "Our Traditional Kitchen" (Masonry Gallery)
+       ========================================================================= -->
+  <section id="signature-dishes" class="py-24 bg-[#482C20] text-[#EEE5D5] relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 space-y-14">
+      
+      <!-- Section Header with Category Filters -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-[#B88B46]/30 pb-10">
+        <div class="space-y-3 max-w-2xl">
+          <span class="text-xs uppercase tracking-[0.2em] font-semibold text-[#B88B46]">Culinary Masterpieces</span>
+          <h2 class="font-cormorant text-4xl sm:text-5xl lg:text-6xl font-bold text-[#EEE5D5]">
+            Our Traditional <span class="italic text-[#B88B46] font-normal">Kitchen</span>
+          </h2>
+          <p class="text-sm sm:text-base text-[#D7C39B]/85 leading-relaxed font-light">
+            An artisanal tapestry of indigenous Sudurpaschim and classic Nepali specialties, distinguished by their regional integrity and seasonal purity.
+          </p>
+        </div>
+
+        <!-- Category Filtering -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterGallery('ALL')" class="gal-filter-btn active px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-[#B88B46] text-[#482C20] transition">All Dishes</button>
+          <button onclick="filterGallery('THALI')" class="gal-filter-btn px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-white/10 text-[#D7C39B] hover:bg-[#B88B46] hover:text-[#482C20] transition">Thali Sets</button>
+          <button onclick="filterGallery('REGIONAL')" class="gal-filter-btn px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-white/10 text-[#D7C39B] hover:bg-[#B88B46] hover:text-[#482C20] transition">Sudurpaschim Specials</button>
+          <button onclick="filterGallery('SWEET_SIDES')" class="gal-filter-btn px-4 py-2 rounded-full text-xs uppercase tracking-wider font-semibold bg-white/10 text-[#D7C39B] hover:bg-[#B88B46] hover:text-[#482C20] transition">Sides & Breads</button>
+        </div>
+      </div>
+
+      <!-- Asymmetrical Masonry Grid of Signature Dishes -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Dish 1: Royal Himalayan Brass Thali -->
+        <div class="gal-item tilt-card relative rounded-3xl overflow-hidden bg-[#24160F] border border-[#B88B46]/30 group shadow-xl" data-category="THALI">
+          <div class="relative h-96 overflow-hidden">
+            <img src="/static/images/thakali_khana_brass_thali.jpg" 
+                 alt="Traditional Nepali Khana Set in Brass" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#24160F] via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-[#B88B46] text-[#482C20] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Full Thali
+            </div>
+            <div class="absolute top-4 left-4 bg-black/60 text-[#D7C39B] text-[11px] font-medium px-3 py-1 rounded-full backdrop-blur-md">
+              Authentic Nepali
+            </div>
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="font-cormorant text-2xl font-bold text-[#EEE5D5] group-hover:text-[#B88B46] transition">Royal Thakali Khana Set</h3>
+            <p class="text-xs text-[#D7C39B]/80 font-light leading-relaxed">
+              Steaming mountain rice, slow-cooked dal tempered with Jimbu, tender Himalayan meat, Gundruk Sadeko, and fresh cow ghee in heavy bell-metal brassware.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dish 2: Traditional Dhido & Fermented Gundruk -->
+        <div class="gal-item tilt-card relative rounded-3xl overflow-hidden bg-[#24160F] border border-[#B88B46]/30 group shadow-xl lg:row-span-1" data-category="REGIONAL">
+          <div class="relative h-96 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80" 
+                 alt="Millet Dhido & Gundruk Soup" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#24160F] via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-[#56613B] text-white text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Millet & Herb
+            </div>
+            <div class="absolute top-4 left-4 bg-[#9A4D30] text-white text-[11px] font-medium px-3 py-1 rounded-full">
+              Highland Classic
+            </div>
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="font-cormorant text-2xl font-bold text-[#EEE5D5] group-hover:text-[#B88B46] transition">Himalayan Dhido & Gundruk</h3>
+            <p class="text-xs text-[#D7C39B]/80 font-light leading-relaxed">
+              Wholesome mountain millet paste kneaded with brass ladles, served piping hot alongside tangy sun-fermented leafy greens and hot melted ghee.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dish 3: Slow-Braised Khasi Meat Curry -->
+        <div class="gal-item tilt-card relative rounded-3xl overflow-hidden bg-[#24160F] border border-[#B88B46]/30 group shadow-xl" data-category="THALI">
+          <div class="relative h-96 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" 
+                 alt="Traditional Nepali Meat Curry" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#24160F] via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-[#9A4D30] text-white text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Heritage Braise
+            </div>
+            <div class="absolute top-4 left-4 bg-black/60 text-[#D7C39B] text-[11px] font-medium px-3 py-1 rounded-full backdrop-blur-md">
+              Local Spices
+            </div>
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="font-cormorant text-2xl font-bold text-[#EEE5D5] group-hover:text-[#B88B46] transition">Mountain Khasi (Goat) Curry</h3>
+            <p class="text-xs text-[#D7C39B]/80 font-light leading-relaxed">
+              Tender mountain mutton braised patiently in thick brass deghs with whole cloves, black cardamom, and fragrant roasted coriander.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dish 4: Golden Crispy Sel Roti -->
+        <div class="gal-item tilt-card relative rounded-3xl overflow-hidden bg-[#24160F] border border-[#B88B46]/30 group shadow-xl" data-category="SWEET_SIDES">
+          <div class="relative h-96 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80" 
+                 alt="Crisp Ring-Shaped Sel Roti" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#24160F] via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-[#B88B46] text-[#482C20] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Festive Bread
+            </div>
+            <div class="absolute top-4 left-4 bg-black/60 text-[#D7C39B] text-[11px] font-medium px-3 py-1 rounded-full backdrop-blur-md">
+              Traditional Handcrafted
+            </div>
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="font-cormorant text-2xl font-bold text-[#EEE5D5] group-hover:text-[#B88B46] transition">Handcrafted Sel Roti</h3>
+            <p class="text-xs text-[#D7C39B]/80 font-light leading-relaxed">
+              Ring-shaped traditional rice flour bread, deep-fried to crisp golden perfection with ground cloves, cardamom, and mountain cow milk.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dish 5: Sudurpaschim Seasonal Vegetable Tarkari -->
+        <div class="gal-item tilt-card relative rounded-3xl overflow-hidden bg-[#24160F] border border-[#B88B46]/30 group shadow-xl" data-category="REGIONAL">
+          <div class="relative h-96 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80" 
+                 alt="Sudurpaschim Farm Vegetables and Herbs" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#24160F] via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-[#56613B] text-white text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Sudurpaschim Produce
+            </div>
+            <div class="absolute top-4 left-4 bg-black/60 text-[#D7C39B] text-[11px] font-medium px-3 py-1 rounded-full backdrop-blur-md">
+              Farm-to-Table
+            </div>
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="font-cormorant text-2xl font-bold text-[#EEE5D5] group-hover:text-[#B88B46] transition">Terai & Mountain Tarkari</h3>
+            <p class="text-xs text-[#D7C39B]/80 font-light leading-relaxed">
+              Seasonal bamboo shoots (Tama), crisp root vegetables, and tender mustard leaves sautéed gently in cold-pressed mustard oil with fresh fenugreek seeds.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dish 6: Homemade Stone-Ground Timur & Tomato Achar -->
+        <div class="gal-item tilt-card relative rounded-3xl overflow-hidden bg-[#24160F] border border-[#B88B46]/30 group shadow-xl" data-category="SWEET_SIDES">
+          <div class="relative h-96 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80" 
+                 alt="Stone-ground Chutneys and Timur Pickles" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#24160F] via-transparent to-transparent"></div>
+            <div class="absolute top-4 right-4 bg-[#9A4D30] text-white text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Stone Silauto
+            </div>
+            <div class="absolute top-4 left-4 bg-black/60 text-[#D7C39B] text-[11px] font-medium px-3 py-1 rounded-full backdrop-blur-md">
+              Tingle of Timur
+            </div>
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="font-cormorant text-2xl font-bold text-[#EEE5D5] group-hover:text-[#B88B46] transition">Silauto Timur Chutney & Achar</h3>
+            <p class="text-xs text-[#D7C39B]/80 font-light leading-relaxed">
+              Charred Himalayan organic tomatoes crushed by hand on black granite with wild Sichuan pepper (Timur) and toasted hemp seed relishes.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SECTION 5: SIGNATURE INTERACTIVE EXPERIENCE – "Discover the Traditional Thali"
+       ========================================================================= -->
+  <section id="interactive-thali" class="py-28 px-6 lg:px-12 max-w-7xl mx-auto relative">
+    
+    <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B88B46]/20 border border-[#B88B46]/40 text-xs uppercase tracking-widest font-semibold text-[#9A4D30]">
+        Interactive Dining Mandala
+      </div>
+      <h2 class="font-cormorant text-4xl sm:text-6xl font-bold text-[#482C20]">
+        Discover the <span class="italic text-[#9A4D30]">Traditional Thali</span>
+      </h2>
+      <p class="text-base text-[#482C20]/80 font-light leading-relaxed">
+        Hover or tap on each sacred item placed upon the handcrafted brass Kansa plate to reveal its ingredients, culinary technique, and cultural significance.
+      </p>
     </div>
 
-  </div>
+    <!-- The Thali Interactive Layout (Central Plate + Floating Dynamic Card) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Interactive Thali Visual with Clickable Hotspots -->
+      <div class="lg:col-span-7 flex justify-center">
+        <div class="relative w-full max-w-[520px] aspect-square rounded-full p-3 bg-gradient-to-tr from-[#B88B46] via-[#D7C39B] to-[#9A4D30] shadow-[0_20px_60px_rgba(72,44,32,0.25)] border-4 border-white/80">
+          
+          <!-- Base Realistic Overhead Thali Image -->
+          <div class="w-full h-full rounded-full overflow-hidden relative">
+            <img src="/static/images/thakali_khana_brass_thali.jpg" 
+                 alt="Overhead View of Authentic Nepali Thali" 
+                 class="w-full h-full object-cover rounded-full">
+            <div class="absolute inset-0 bg-[#482C20]/10 rounded-full"></div>
+          </div>
+
+          <!-- HOTSPOT 1: Steaming Rice (Center-Left) -->
+          <button type="button" 
+                  onclick="selectHotspot('rice')" 
+                  class="hotspot-btn absolute top-[48%] left-[28%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#B88B46] text-white flex items-center justify-center font-bold text-xs shadow-lg hotspot-glow hover:scale-125 transition duration-300 focus:outline-none"
+                  aria-label="Steaming Basmati Rice Hotspot">
+            <span>1</span>
+          </button>
+
+          <!-- HOTSPOT 2: Mountain Dal & Jimbu (Top-Right) -->
+          <button type="button" 
+                  onclick="selectHotspot('dal')" 
+                  class="hotspot-btn absolute top-[36%] right-[14%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#B88B46] text-white flex items-center justify-center font-bold text-xs shadow-lg hotspot-glow hover:scale-125 transition duration-300 focus:outline-none"
+                  aria-label="Mustang Jimbu Dal Hotspot">
+            <span>2</span>
+          </button>
+
+          <!-- HOTSPOT 3: Local Meat / Tarkari (Center-Right) -->
+          <button type="button" 
+                  onclick="selectHotspot('tarkari')" 
+                  class="hotspot-btn absolute top-[52%] right-[24%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#B88B46] text-white flex items-center justify-center font-bold text-xs shadow-lg hotspot-glow hover:scale-125 transition duration-300 focus:outline-none"
+                  aria-label="Slow-cooked Tarkari Curry Hotspot">
+            <span>3</span>
+          </button>
+
+          <!-- HOTSPOT 4: Pure Mountain Ghee (Top Center Bowl) -->
+          <button type="button" 
+                  onclick="selectHotspot('ghee')" 
+                  class="hotspot-btn absolute top-[28%] left-[58%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#B88B46] text-white flex items-center justify-center font-bold text-xs shadow-lg hotspot-glow hover:scale-125 transition duration-300 focus:outline-none"
+                  aria-label="Pure Cow Ghee Bowl Hotspot">
+            <span>4</span>
+          </button>
+
+          <!-- HOTSPOT 5: Rayo ko Saag & Chutney (Bottom-Right) -->
+          <button type="button" 
+                  onclick="selectHotspot('saag')" 
+                  class="hotspot-btn absolute bottom-[18%] right-[32%] -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#B88B46] text-white flex items-center justify-center font-bold text-xs shadow-lg hotspot-glow hover:scale-125 transition duration-300 focus:outline-none"
+                  aria-label="Rayo ko Saag and Timur Achar Hotspot">
+            <span>5</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Hotspot Information Card (Dynamic Content) -->
+      <div class="lg:col-span-5">
+        <div id="hotspotCard" class="bg-white p-8 sm:p-10 rounded-3xl border border-[#D7C39B] shadow-xl space-y-6 transition-all duration-500">
+          
+          <div class="flex items-center justify-between border-b border-[#D7C39B]/50 pb-4">
+            <span id="hotspotCategory" class="text-xs uppercase tracking-[0.2em] font-semibold text-[#9A4D30]">
+              Sacred Foundation
+            </span>
+            <span id="hotspotBadge" class="px-3 py-1 rounded-full bg-[#B88B46]/20 text-[#482C20] text-xs font-bold font-cormorant">
+              Item 1 of 5
+            </span>
+          </div>
+
+          <div>
+            <h3 id="hotspotTitle" class="font-cormorant text-3xl sm:text-4xl font-bold text-[#482C20]">
+              Steaming Mountain Rice (Bhat)
+            </h3>
+            <p id="hotspotNepali" class="text-xs text-[#9A4D30] font-semibold mt-1 italic">
+              बासमती चामलको भात • Pure Himalayan Carbohydrate
+            </p>
+          </div>
+
+          <p id="hotspotDesc" class="text-sm sm:text-base text-[#482C20]/80 leading-relaxed font-light">
+            Cooked with filtered mountain spring water to fluffy, cloud-like perfection. In Nepali culture, rice is considered Annapurna's blessing — the heart of the thali meant to absorb the rich flavors of hot Jimbu lentils and ghee.
+          </p>
+
+          <div class="bg-[#EEE5D5]/60 p-4 rounded-2xl border border-[#D7C39B]/60 space-y-1.5">
+            <span class="text-xs font-bold text-[#482C20] uppercase tracking-wider block">Key Ingredients:</span>
+            <p id="hotspotIngredients" class="text-xs text-[#482C20]/75">Long-grain aromatic Basmati, Himalayan water, simmered to optimal moisture.</p>
+          </div>
+
+          <div class="pt-2 text-xs text-[#56613B] font-semibold flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4 text-[#B88B46]"></i>
+            <span id="hotspotTradition">Unlimited warm table-side refills honoring Atithi Devo Bhava.</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SECTION 6: TRADITIONAL COOKING – "From Our Roots to Your Plate"
+       ========================================================================= -->
+  <section class="py-24 bg-[#EEE5D5] border-y border-[#D7C39B] relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 space-y-16">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <span class="text-xs uppercase tracking-[0.2em] font-semibold text-[#9A4D30]">Ancestral Culinary Stages</span>
+        <h2 class="font-cormorant text-4xl sm:text-5xl font-bold text-[#482C20]">
+          From Our Roots <span class="italic text-[#9A4D30] font-normal">to Your Plate</span>
+        </h2>
+        <p class="text-sm text-[#482C20]/75 font-light">The authentic four-step ritual practiced daily in the kitchens of Hotel Rhino.</p>
+      </div>
+
+      <!-- 4 Stages Horizontal Process -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Step 1 -->
+        <div class="bg-white p-7 rounded-3xl border border-[#D7C39B] shadow-sm hover:shadow-lg transition space-y-5 relative group">
+          <div class="w-12 h-12 rounded-2xl bg-[#B88B46]/20 text-[#9A4D30] flex items-center justify-center font-cormorant text-2xl font-bold">
+            01
+          </div>
+          <div class="h-44 rounded-2xl overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=600&q=80" 
+                 alt="Fresh Local Harvest" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <h3 class="font-cormorant text-2xl font-bold text-[#482C20]">Fresh Local Sourcing</h3>
+          <p class="text-xs text-[#482C20]/75 leading-relaxed font-light">
+            Grown in Sudurpaschim's pristine valleys and Upper Mustang's micro-climates without synthetic agro-chemicals.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-white p-7 rounded-3xl border border-[#D7C39B] shadow-sm hover:shadow-lg transition space-y-5 relative group">
+          <div class="w-12 h-12 rounded-2xl bg-[#B88B46]/20 text-[#9A4D30] flex items-center justify-center font-cormorant text-2xl font-bold">
+            02
+          </div>
+          <div class="h-44 rounded-2xl overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80" 
+                 alt="Stone Silauto Grinding" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <h3 class="font-cormorant text-2xl font-bold text-[#482C20]">Stone Silauto Grinding</h3>
+          <p class="text-xs text-[#482C20]/75 leading-relaxed font-light">
+            Crushed gently on stone mortars to release essential fragrant oils that modern electric blenders destroy.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-white p-7 rounded-3xl border border-[#D7C39B] shadow-sm hover:shadow-lg transition space-y-5 relative group">
+          <div class="w-12 h-12 rounded-2xl bg-[#B88B46]/20 text-[#9A4D30] flex items-center justify-center font-cormorant text-2xl font-bold">
+            03
+          </div>
+          <div class="h-44 rounded-2xl overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" 
+                 alt="Slow Cooking on Wood Fire" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <h3 class="font-cormorant text-2xl font-bold text-[#482C20]">Slow Wood-Fire Cooking</h3>
+          <p class="text-xs text-[#482C20]/75 leading-relaxed font-light">
+            Simmered in heavy bell-metal brass deghs, infusing authentic smoky warmth and tenderizing meats gently.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="bg-white p-7 rounded-3xl border border-[#D7C39B] shadow-sm hover:shadow-lg transition space-y-5 relative group">
+          <div class="w-12 h-12 rounded-2xl bg-[#B88B46]/20 text-[#9A4D30] flex items-center justify-center font-cormorant text-2xl font-bold">
+            04
+          </div>
+          <div class="h-44 rounded-2xl overflow-hidden">
+            <img src="/static/images/thakali_khana_brass_thali.jpg" 
+                 alt="Serving on Pure Brassware" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <h3 class="font-cormorant text-2xl font-bold text-[#482C20]">Sacred Kansa Serving</h3>
+          <p class="text-xs text-[#482C20]/75 leading-relaxed font-light">
+            Served gracefully on heavy bronze thalis, finished with sizzling hot cow ghee poured before your eyes.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SECTION 7: INGREDIENTS – "The Goodness of Our Land"
+       ========================================================================= -->
+  <section class="py-24 px-6 lg:px-12 max-w-7xl mx-auto space-y-16">
+    
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <span class="text-xs uppercase tracking-[0.2em] font-semibold text-[#56613B]">Indigenous Bounty</span>
+      <h2 class="font-cormorant text-4xl sm:text-5xl font-bold text-[#482C20]">
+        The Goodness of <span class="italic text-[#B88B46] font-normal">Our Land</span>
+      </h2>
+      <p class="text-sm text-[#482C20]/75 font-light">Discover the sacred grains, highland spices, and cold-pressed elixirs behind our culinary soul.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+      
+      <!-- Ingredient 1: Wild Jimbu -->
+      <div class="bg-white p-6 rounded-3xl border border-[#D7C39B] text-center space-y-4 hover:border-[#B88B46] transition group">
+        <div class="w-20 h-20 mx-auto rounded-full bg-[#B88B46]/10 flex items-center justify-center text-4xl group-hover:scale-110 transition">
+          🌿
+        </div>
+        <h4 class="font-cormorant text-2xl font-bold text-[#482C20]">Mustang Jimbu</h4>
+        <span class="text-xs text-[#9A4D30] font-semibold block">Wild Himalayan Allium</span>
+        <p class="text-xs text-[#482C20]/75 font-light leading-relaxed">
+          Harvested at 3,500m in the dry winds of Mustang. Tempered in bubbling ghee, it gives our black dal its unmistakable aroma.
+        </p>
+      </div>
+
+      <!-- Ingredient 2: Wild Timur -->
+      <div class="bg-white p-6 rounded-3xl border border-[#D7C39B] text-center space-y-4 hover:border-[#B88B46] transition group">
+        <div class="w-20 h-20 mx-auto rounded-full bg-[#9A4D30]/10 flex items-center justify-center text-4xl group-hover:scale-110 transition">
+          🌶️
+        </div>
+        <h4 class="font-cormorant text-2xl font-bold text-[#482C20]">Wild Timur Pepper</h4>
+        <span class="text-xs text-[#9A4D30] font-semibold block">Himalayan Sichuan Pepper</span>
+        <p class="text-xs text-[#482C20]/75 font-light leading-relaxed">
+          Delivers a signature citrusy, tongue-tingling numbing note essential to authentic mountain chutneys and meat braises.
+        </p>
+      </div>
+
+      <!-- Ingredient 3: Pure Shingati Ghee -->
+      <div class="bg-white p-6 rounded-3xl border border-[#D7C39B] text-center space-y-4 hover:border-[#B88B46] transition group">
+        <div class="w-20 h-20 mx-auto rounded-full bg-[#B88B46]/15 flex items-center justify-center text-4xl group-hover:scale-110 transition">
+          🧈
+        </div>
+        <h4 class="font-cormorant text-2xl font-bold text-[#482C20]">Pure Mountain Ghee</h4>
+        <span class="text-xs text-[#9A4D30] font-semibold block">Clarified Cow Butter</span>
+        <p class="text-xs text-[#482C20]/75 font-light leading-relaxed">
+          Slow-churned by local herders from free-grazing Himalayan cows. Golden, aromatic, and rich in nourishing Ayurvedic essence.
+        </p>
+      </div>
+
+      <!-- Ingredient 4: Highland Millet (Kodo) -->
+      <div class="bg-white p-6 rounded-3xl border border-[#D7C39B] text-center space-y-4 hover:border-[#B88B46] transition group">
+        <div class="w-20 h-20 mx-auto rounded-full bg-[#56613B]/10 flex items-center justify-center text-4xl group-hover:scale-110 transition">
+          🌾
+        </div>
+        <h4 class="font-cormorant text-2xl font-bold text-[#482C20]">Mountain Millet & Buckwheat</h4>
+        <span class="text-xs text-[#9A4D30] font-semibold block">Kodo & Phapar</span>
+        <p class="text-xs text-[#482C20]/75 font-light leading-relaxed">
+          Ancient, drought-tolerant highland grains rich in fiber and minerals, used for traditional Dhido and festive breads.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       SECTION 8: DINING EXPERIENCE – "A Seat at Our Table"
+       ========================================================================= -->
+  <section class="relative py-28 bg-[#482C20] text-[#EEE5D5] overflow-hidden">
+    
+    <!-- Atmospheric Restaurant Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80" 
+           alt="Hotel Rhino Dining Environment" 
+           class="w-full h-full object-cover brightness-40 contrast-125">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#482C20] via-[#482C20]/75 to-[#482C20]/90"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-8">
+      
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B88B46]/20 border border-[#B88B46]/40 text-xs uppercase tracking-widest font-semibold text-[#D7C39B]">
+        Warm Himalayan Hospitality in Dhangadhi
+      </div>
+
+      <h2 class="font-cormorant text-5xl sm:text-6xl lg:text-7xl font-bold text-[#EEE5D5] leading-tight">
+        A Seat at <span class="italic text-[#B88B46]">Our Table</span>
+      </h2>
+
+      <p class="text-base sm:text-xl text-[#D7C39B]/90 font-light leading-relaxed max-w-2xl mx-auto">
+        We invite you to step away from the everyday rush and partake in the timeless fellowship of a Himalayan feast. Bask in the warm glow of amber lantern light, fragrant wood smoke, and unconditional generosity.
+      </p>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-5">
+        <a href="{% url 'visit_us' %}" 
+           class="btn-primary text-sm sm:text-base py-4 px-10 rounded-full font-semibold uppercase tracking-wider shadow-2xl hover:scale-105 transition transform">
+          <i data-lucide="compass" class="w-5 h-5 mr-1 text-[#D7C39B]"></i>
+          Experience Our Hospitality
+        </a>
+        <a href="{% url 'khana_sets' %}" 
+           class="px-8 py-4 rounded-full border border-[#D7C39B]/40 text-[#D7C39B] hover:bg-white/10 text-sm font-semibold tracking-wide backdrop-blur-md transition">
+          View Today's Menu
+        </a>
+      </div>
+
+    </div>
+  </section>
+
 </div>
+
+<!-- =========================================================================
+     SECTION 9: JAVASCRIPT ANIMATIONS & INTERACTIVE THALI LOGIC
+     ========================================================================= -->
+<script>
+  // Hotspot Knowledge Base for Interactive Thali Experience
+  const hotspotData = {
+    rice: {
+      category: "Sacred Foundation",
+      badge: "Item 1 of 5",
+      title: "Steaming Mountain Rice (Bhat)",
+      nepali: "बासमती चामलको भात • Pure Himalayan Carbohydrate",
+      desc: "Cooked with filtered mountain spring water to fluffy, cloud-like perfection. In Nepali culture, rice is considered Annapurna's blessing — the heart of the thali meant to absorb the rich flavors of hot Jimbu lentils and ghee.",
+      ingredients: "Long-grain aromatic Basmati, Himalayan water, simmered to optimal moisture.",
+      tradition: "Unlimited warm table-side refills honoring Atithi Devo Bhava."
+    },
+    dal: {
+      category: "Heart of the Meal",
+      badge: "Item 2 of 5",
+      title: "Mustang Jimbu Kalodaal",
+      nepali: "कालो दाल र जिम्बुको झान • Slow-Simmered Black Lentils",
+      desc: "Slow-cooked in an authentic brass pot for hours until creamy, then tempered (Jhaneko) in hot cow ghee with sun-dried wild Mustang Jimbu grass that crackles with aromatic mountain perfume.",
+      ingredients: "Organic Mustang Black Lentils, Wild Jimbu, Turmeric, Ginger, Mountain Cow Ghee.",
+      tradition: "Poured generously over your rice at your table while steaming hot."
+    },
+    tarkari: {
+      category: "Mountain Nourishment",
+      badge: "Item 3 of 5",
+      title: "Tender Meat / Seasonal Tarkari",
+      nepali: "स्थानीय खसी वा कुखुराको झोल • Heritage Braise",
+      desc: "Prepared with free-range Himalayan goat or country chicken braised gently with freshly pounded cloves, black cardamom, shallots, and mountain herbs until the meat melts off the bone.",
+      ingredients: "Local meat or seasonal Terai vegetables, Silauto-ground spices, cold-pressed mustard oil.",
+      tradition: "Braised according to generations-old Sudurpaschim family recipes."
+    },
+    ghee: {
+      category: "Golden Nectar",
+      badge: "Item 4 of 5",
+      title: "Pure Mountain Shingati Ghee",
+      nepali: "शुद्ध नौनी घिउ • Clarified Cow Butter",
+      desc: "Hand-churned by highland pastoralists. A steaming spoonful is poured atop your hot rice and dal, unlocking digestive enzymes and creating the legendary silky Thakali finish.",
+      ingredients: "100% grass-fed mountain cow milk fat, slow-clarified over low fire.",
+      tradition: "Ayurvedic nectar that alkalizes food and warms the soul."
+    },
+    saag: {
+      category: "Fresh & Pungent Sides",
+      badge: "Item 5 of 5",
+      title: "Rayo ko Saag & Silauto Timur Achar",
+      nepali: "रायोको साग र टिमुरको अचार • Bitter & Tingling Balance",
+      desc: "Crisp leafy mustard greens wok-fried with dried chillies and fenugreek, served with stone-crushed roasted tomato relish spiked with wild Sichuan pepper (Timur) and fermented Gundruk.",
+      ingredients: "Local mustard greens, wild Timur peppercorns, sun-dried Gundruk, toasted hemp seed.",
+      tradition: "Provides Ayurvedic balance: bitter, spicy, sour, and astringent notes."
+    }
+  };
+
+  function selectHotspot(itemKey) {
+    const data = hotspotData[itemKey];
+    if (!data) return;
+
+    const card = document.getElementById('hotspotCard');
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(10px)';
+
+    setTimeout(() => {
+      document.getElementById('hotspotCategory').textContent = data.category;
+      document.getElementById('hotspotBadge').textContent = data.badge;
+      document.getElementById('hotspotTitle').textContent = data.title;
+      document.getElementById('hotspotNepali').textContent = data.nepali;
+      document.getElementById('hotspotDesc').textContent = data.desc;
+      document.getElementById('hotspotIngredients').textContent = data.ingredients;
+      document.getElementById('hotspotTradition').textContent = data.tradition;
+
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 250);
+  }
+
+  // Filter functionality for the Signature Kitchen Masonry Gallery
+  function filterGallery(cat) {
+    const items = document.querySelectorAll('.gal-item');
+    const btns = document.querySelectorAll('.gal-filter-btn');
+
+    btns.forEach(b => {
+      b.classList.remove('bg-[#B88B46]', 'text-[#482C20]');
+      b.classList.add('bg-white/10', 'text-[#D7C39B]');
+    });
+
+    event.currentTarget.classList.add('bg-[#B88B46]', 'text-[#482C20]');
+    event.currentTarget.classList.remove('bg-white/10', 'text-[#D7C39B]');
+
+    items.forEach(item => {
+      if (cat === 'ALL' || item.getAttribute('data-category') === cat) {
+        item.style.display = 'block';
+        item.style.opacity = '1';
+        item.style.transform = 'scale(1)';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // GSAP Smooth ScrollTrigger Reveals
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from('#roots-hero h1', {
+        opacity: 0,
+        y: 40,
+        duration: 1.4,
+        ease: 'power3.out'
+      });
+
+      gsap.utils.toArray('.tilt-card').forEach((card, index) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          delay: (index % 3) * 0.15,
+          ease: 'power2.out'
+        });
+      });
+    }
+  });
+</script>
 {% endblock %}
