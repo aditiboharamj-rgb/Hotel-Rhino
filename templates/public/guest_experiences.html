@@ -63,31 +63,31 @@
           <div id="starContainer" class="flex items-center gap-2 cursor-pointer select-none">
             <!-- Star 1 -->
             <button type="button" data-value="1" class="star-btn transition transform hover:scale-125 focus:outline-none p-1">
-              <svg class="w-9 h-9 fill-[#d1d5db] transition-colors duration-200" viewBox="0 0 24 24">
+              <svg class="w-10 h-10 transition-colors duration-200" fill="#d1d5db" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
             </button>
             <!-- Star 2 -->
             <button type="button" data-value="2" class="star-btn transition transform hover:scale-125 focus:outline-none p-1">
-              <svg class="w-9 h-9 fill-[#d1d5db] transition-colors duration-200" viewBox="0 0 24 24">
+              <svg class="w-10 h-10 transition-colors duration-200" fill="#d1d5db" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
             </button>
             <!-- Star 3 -->
             <button type="button" data-value="3" class="star-btn transition transform hover:scale-125 focus:outline-none p-1">
-              <svg class="w-9 h-9 fill-[#d1d5db] transition-colors duration-200" viewBox="0 0 24 24">
+              <svg class="w-10 h-10 transition-colors duration-200" fill="#d1d5db" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
             </button>
             <!-- Star 4 -->
             <button type="button" data-value="4" class="star-btn transition transform hover:scale-125 focus:outline-none p-1">
-              <svg class="w-9 h-9 fill-[#d1d5db] transition-colors duration-200" viewBox="0 0 24 24">
+              <svg class="w-10 h-10 transition-colors duration-200" fill="#d1d5db" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
             </button>
             <!-- Star 5 -->
             <button type="button" data-value="5" class="star-btn transition transform hover:scale-125 focus:outline-none p-1">
-              <svg class="w-9 h-9 fill-[#d1d5db] transition-colors duration-200" viewBox="0 0 24 24">
+              <svg class="w-10 h-10 transition-colors duration-200" fill="#d1d5db" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
               </svg>
             </button>
@@ -98,19 +98,19 @@
         <!-- Google Redirect Notification Banner (shown if 4 or 5 stars selected) -->
         <div id="googleRedirectBanner" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center space-y-2.5 transition-all">
           <p class="text-xs font-medium text-amber-900 leading-relaxed">
-            Thank you for the wonderful rating! Opening Google Reviews in a new tab...
+            Thank you for rating us! Opening the Google Review dialog in a new tab...
           </p>
           <a id="manualGoogleLink" 
-             href="https://www.google.com/maps/place/Hotel+Raino/@28.7046125,80.5658959,17z/data=!4m8!3m7!1s0x39a1ecc7d6052e7b:0x89fc78766887805a!8m2!3d28.7046125!4d80.5684708!9m1!1b1!16s%2Fg%2F11gdknkqc8?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D" 
+             href="https://search.google.com/local/writereview?placeid=ChIJe94F1sfsQTkRWoCHaHZ4_Ik" 
              target="_blank" 
              rel="noopener noreferrer"
-             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-terracotta text-white font-semibold text-xs shadow-md hover:bg-deepBrown transition">
+             class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-terracotta text-white font-semibold text-xs shadow-md hover:bg-deepBrown transition">
             <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             Write Google Review
           </a>
         </div>
 
-        <!-- Feedback Form (Opens when 1, 2, or 3 stars clicked) -->
+        <!-- Feedback Form (Opens ONLY if the viewer gives minimum 3 stars) -->
         <div id="internalReviewSection" class="hidden pt-2 border-t border-tradBeige/60 space-y-4">
           <div class="space-y-1">
             <span class="text-xs font-bold text-deepBrown block">How can we improve your experience?</span>
@@ -157,61 +157,69 @@
     const internalReviewSection = document.getElementById('internalReviewSection');
     const hiddenRatingInput = document.getElementById('hiddenRatingInput');
 
-    const googleReviewUrl = "https://www.google.com/maps/place/Hotel+Raino/@28.7046125,80.5658959,17z/data=!4m8!3m7!1s0x39a1ecc7d6052e7b:0x89fc78766887805a!8m2!3d28.7046125!4d80.5684708!9m1!1b1!16s%2Fg%2F11gdknkqc8?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D";
+    // Direct Google Write Review link for Hotel Raino (place id: ChIJe94F1sfsQTkRWoCHaHZ4_Ik)
+    // Automatically pops open the dark review dialog box with stars and photo upload shown in the second image!
+    const googleReviewUrl = "https://search.google.com/local/writereview?placeid=ChIJe94F1sfsQTkRWoCHaHZ4_Ik";
 
-    // Google-style vivid gold star color
-    const activeColor = '#f59e0b'; // Google reviews gold/amber
-    const inactiveColor = '#d1d5db'; // muted gray
+    // Google-style vivid gold star color (#f59e0b) matching the reference screenshot
+    const activeColor = '#f59e0b';
+    const inactiveColor = '#d1d5db';
 
     let selectedRating = 0;
 
     function paintStars(rating) {
       starBtns.forEach(btn => {
-        const val = parseInt(btn.getAttribute('data-value'));
+        const val = parseInt(btn.getAttribute('data-value'), 10);
         const svg = btn.querySelector('svg');
         if (val <= rating) {
           svg.setAttribute('fill', activeColor);
+          svg.style.fill = activeColor;
         } else {
           svg.setAttribute('fill', inactiveColor);
+          svg.style.fill = inactiveColor;
         }
       });
     }
 
     starBtns.forEach(btn => {
-      // Hover effect
+      // Hover effect: preview stars
       btn.addEventListener('mouseenter', function () {
-        const val = parseInt(this.getAttribute('data-value'));
+        const val = parseInt(this.getAttribute('data-value'), 10);
         paintStars(val);
       });
 
-      // Hover leave effect
+      // Hover leave effect: reset to clicked/selected rating
       btn.addEventListener('mouseleave', function () {
         paintStars(selectedRating);
       });
 
       // Click event
       btn.addEventListener('click', function () {
-        selectedRating = parseInt(this.getAttribute('data-value'));
+        selectedRating = parseInt(this.getAttribute('data-value'), 10);
         paintStars(selectedRating);
         hiddenRatingInput.value = selectedRating;
 
-        if (selectedRating <= 3) {
-          // Open feedback form with Name, Phone Number, Review & Submit
-          ratingStatusText.textContent = `${selectedRating} Star${selectedRating > 1 ? 's' : ''} - We value your feedback`;
+        if (selectedRating === 3) {
+          // Exactly 3 stars -> Open internal feedback form
+          ratingStatusText.textContent = '3 Stars - We value your feedback';
           googleRedirectBanner.classList.add('hidden');
           internalReviewSection.classList.remove('hidden');
-        } else {
-          // 4 or 5 stars -> Open Google review in new tab
-          ratingStatusText.textContent = `${selectedRating} Stars - Exceptional! Redirecting to Google Reviews...`;
+        } else if (selectedRating > 3) {
+          // 4 or 5 stars -> Open the Google Review dialog form in a new tab
+          ratingStatusText.textContent = `${selectedRating} Stars - Opening Google Review Dialog...`;
           internalReviewSection.classList.add('hidden');
           googleRedirectBanner.classList.remove('hidden');
 
-          // Open Google review link in new tab
-          const win = window.open(googleReviewUrl, '_blank');
-          if (!win || win.closed || typeof win.closed === 'undefined') {
-            // Popup blocked: the visible banner link provides fallback
-            ratingStatusText.textContent = `${selectedRating} Stars - Click the button below to post your review on Google!`;
+          // Automatically opens the Google Review dialog box in a new tab
+          const newTab = window.open(googleReviewUrl, '_blank');
+          if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+            ratingStatusText.textContent = `${selectedRating} Stars - Click below to open the Google Review form`;
           }
+        } else {
+          // Less than 3 stars (1 or 2 stars) -> form does not open
+          ratingStatusText.textContent = `${selectedRating} Star${selectedRating > 1 ? 's' : ''}`;
+          internalReviewSection.classList.add('hidden');
+          googleRedirectBanner.classList.add('hidden');
         }
       });
     });
