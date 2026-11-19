@@ -454,11 +454,11 @@
     </p>
   </div>
 
-  <!-- Truly Seamless Infinite Sliding Marquee (Zero Overlap, Continuous Flow) -->
+  <!-- Truly Seamless Infinite Sliding Marquee (Continuous Gapless Loop) -->
   <div class="marquee-container relative w-full overflow-hidden py-6 z-10">
     <div class="marquee-track">
       
-      <!-- Group A (4 Cards) -->
+      <!-- Group A (4 Distinct Cards) -->
       <!-- Slide Item 1: Joyful Gathering -->
       <div class="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 bg-deepBrown/85 border border-warmSand/25 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md group hover:border-terracotta transition duration-300">
         <div class="relative h-56 sm:h-60 overflow-hidden">
@@ -541,7 +541,92 @@
 
     </div>
 
-    <!-- Duplicate Identical Track Group B for Truly Gapless Infinite Loop -->
+    <!-- Group B (Identical Set 2) -->
+    <div class="marquee-track" aria-hidden="true">
+      
+      <!-- Slide Item 1: Joyful Gathering -->
+      <div class="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 bg-deepBrown/85 border border-warmSand/25 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md group hover:border-terracotta transition duration-300">
+        <div class="relative h-56 sm:h-60 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80" alt="Joyful Gatherings at Hotel Rhino" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <div class="absolute top-3 left-3 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+            Joyful Dining
+          </div>
+        </div>
+        <div class="p-6 space-y-2.5">
+          <div class="flex items-center gap-1 text-warningAmber text-sm">
+            <span>★★★★★</span>
+            <span class="text-xs text-warmSand/80 ml-1">"Pure bliss!"</span>
+          </div>
+          <h4 class="font-heading font-bold text-lg text-white">Laughter, Friends & Hot Rice</h4>
+          <p class="text-xs sm:text-sm text-tradBeige/80 leading-relaxed">
+            Diners praising the warmth of our hosts and celebrating family reunions over boundless brass refills.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide Item 2: Traditional Thakali Table -->
+      <div class="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 bg-deepBrown/85 border border-warmSand/25 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md group hover:border-terracotta transition duration-300">
+        <div class="relative h-56 sm:h-60 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" alt="Traditional Mountain Heritage Table" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <div class="absolute top-3 left-3 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+            Mustang Heritage
+          </div>
+        </div>
+        <div class="p-6 space-y-2.5">
+          <div class="flex items-center gap-1 text-warningAmber text-sm">
+            <span>★★★★★</span>
+            <span class="text-xs text-warmSand/80 ml-1">"Timeless Flavor"</span>
+          </div>
+          <h4 class="font-heading font-bold text-lg text-white">Appraising Authentic Spices</h4>
+          <p class="text-xs sm:text-sm text-tradBeige/80 leading-relaxed">
+            Guests savoring each aroma: the distinct kick of wild Timur pepper, organic Gundruk, and slow-fried river fish.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide Item 3: Hilly Rustic Dining Vibes -->
+      <div class="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 bg-deepBrown/85 border border-warmSand/25 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md group hover:border-terracotta transition duration-300">
+        <div class="relative h-56 sm:h-60 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Hilly Vibes and Cozy Timber Ambiance" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <div class="absolute top-3 left-3 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+            Hilly Vibes
+          </div>
+        </div>
+        <div class="p-6 space-y-2.5">
+          <div class="flex items-center gap-1 text-warningAmber text-sm">
+            <span>★★★★★</span>
+            <span class="text-xs text-warmSand/80 ml-1">"Cozy Escape"</span>
+          </div>
+          <h4 class="font-heading font-bold text-lg text-white">Western Hilly Mountain Vibes</h4>
+          <p class="text-xs sm:text-sm text-tradBeige/80 leading-relaxed">
+            Atmospheric pine-timber decor, soft amber candlelight, and authentic brass tableware transported straight from Mustang.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide Item 4: Appraising Mountain Ghee -->
+      <div class="w-[300px] sm:w-[340px] md:w-[360px] shrink-0 bg-deepBrown/85 border border-warmSand/25 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md group hover:border-terracotta transition duration-300">
+        <div class="relative h-56 sm:h-60 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" alt="Appraising The Thakali Taste" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <div class="absolute top-3 left-3 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+            Praising The Taste
+          </div>
+        </div>
+        <div class="p-6 space-y-2.5">
+          <div class="flex items-center gap-1 text-warningAmber text-sm">
+            <span>★★★★★</span>
+            <span class="text-xs text-warmSand/80 ml-1">"Sublime Taste"</span>
+          </div>
+          <h4 class="font-heading font-bold text-lg text-white">Golden Himalayan Ghee Pour</h4>
+          <p class="text-xs sm:text-sm text-tradBeige/80 leading-relaxed">
+            Nothing compares to the moment sizzling Mustang Jimbu lentils meet piping hot Basmati rice with fresh cow ghee.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Group C (Identical Set 3 to Guarantee Seamless Full Viewport Coverage) -->
     <div class="marquee-track" aria-hidden="true">
       
       <!-- Slide Item 1: Joyful Gathering -->
