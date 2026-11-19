@@ -4,8 +4,8 @@ def restaurant_settings(request):
     return {
         'RESTAURANT_NAME': os.getenv('RESTAURANT_NAME', 'Hotel Rhino - Authentic Thakali Kitchen'),
         'RESTAURANT_LOCATION': os.getenv('RESTAURANT_LOCATION', 'Main Road, Dhangadhi, Sudurpaschim Province, Nepal'),
-        'RESTAURANT_PHONE': os.getenv('RESTAURANT_PHONE', '+977-9801234567'),
-        'RESTAURANT_WHATSAPP': os.getenv('RESTAURANT_WHATSAPP', '+977-9801234567'),
+        'RESTAURANT_PHONE': os.getenv('RESTAURANT_PHONE', '+977-9715003003'),
+        'RESTAURANT_WHATSAPP': os.getenv('RESTAURANT_WHATSAPP', '+977-9715003003'),
         'RESTAURANT_EMAIL': os.getenv('RESTAURANT_EMAIL', 'info@hotelrhinothakali.com'),
         'CURRENCY': os.getenv('CURRENCY', 'NPR'),
         'VAT_PERCENTAGE': float(os.getenv('VAT_PERCENTAGE', 13.0)),

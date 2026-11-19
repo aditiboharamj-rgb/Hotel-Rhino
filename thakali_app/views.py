@@ -608,7 +608,7 @@ def receipt_pdf_view(request, bill_id):
     elements.append(Paragraph("HOTEL RHINO", title_style))
     elements.append(Paragraph("Authentic Himalayan Thakali Kitchen", sub_style))
     elements.append(Paragraph("Sauraha, Chitwan / Kathmandu, Nepal", sub_style))
-    elements.append(Paragraph("Tel: +977-9801234567 | PAN: 601234589", sub_style))
+    elements.append(Paragraph("Tel: +977-9715003003 | PAN: 601234589", sub_style))
     elements.append(Spacer(1, 6))
     elements.append(Paragraph(f"Receipt: {bill.receipt_number}", bold_style))
     elements.append(Paragraph(f"Date: {bill.created_at.strftime('%Y-%m-%d %H:%M')}", body_style))
