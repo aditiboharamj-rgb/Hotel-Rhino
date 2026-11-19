@@ -4,108 +4,108 @@
 
 {% block content %}
 <!-- Full-Width Panoramic Hero Section: Authentic Himalayan Thakali Dining Experience -->
-<section class="relative min-h-[90vh] lg:min-h-[92vh] flex items-center justify-end overflow-hidden bg-creamBg">
+<section class="relative min-h-[85vh] sm:min-h-[90vh] lg:min-h-[92vh] flex items-center justify-end overflow-hidden bg-creamBg">
   
   <!-- Left-to-Right Full Atmospheric Thakali Feast Banner -->
   <div class="absolute inset-0 z-0">
     <img src="/static/images/hero_thakali_seamless_16_9.jpg" 
          alt="Authentic Himalayan Thakali Feast at Hotel Rhino" 
-         class="w-full h-full object-cover object-left lg:object-left-top">
+         class="w-full h-full object-cover object-center lg:object-left-top">
     
-    <!-- Mobile/Tablet contrast protection gradient so text is effortlessly readable on small screens -->
-    <div class="absolute inset-0 bg-gradient-to-t from-creamBg via-creamBg/80 to-transparent lg:hidden"></div>
+    <!-- Adaptive Responsive Overlay: Guarantees high contrast readability on mobile & tablets while leaving desktop thali completely crisp -->
+    <div class="absolute inset-0 bg-gradient-to-t from-creamBg via-creamBg/90 sm:via-creamBg/80 to-creamBg/40 lg:hidden"></div>
   </div>
 
   <!-- Content Column Framed Perfectly on the Clean Right Side -->
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 flex justify-end">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 flex justify-center lg:justify-end">
     
-    <div class="w-full lg:max-w-2xl xl:max-w-xl space-y-6 text-left">
+    <div class="w-full max-w-xl lg:max-w-2xl xl:max-w-xl space-y-5 sm:space-y-6 text-center lg:text-left">
       
       <!-- Top Pill Badge -->
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-terracotta/30 text-xs sm:text-sm font-bold text-terracotta shadow-md backdrop-blur-md">
+      <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 border border-terracotta/30 text-xs sm:text-sm font-bold text-terracotta shadow-md backdrop-blur-md">
         <span>✨</span>
         <span>AUTHENTIC MUSTANG THAKALI & HOSPITALITY</span>
       </div>
 
       <!-- Main Hero Headings -->
-      <div class="space-y-3">
-        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-deepBrown uppercase leading-[1.12]">
+      <div class="space-y-2.5 sm:space-y-3">
+        <h1 class="font-heading text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-deepBrown uppercase leading-[1.12]">
           WELCOME TO <br>
           <span class="text-terracotta font-heading">HOTEL RHINO</span>
         </h1>
-        <p class="text-base sm:text-lg text-deepBrown/90 font-normal leading-relaxed">
+        <p class="text-sm sm:text-base lg:text-lg text-deepBrown/90 font-normal leading-relaxed max-w-lg mx-auto lg:mx-0">
           Experience the true soul of Himalayan dining in Dhangadhi. Authentic brass thali sets, steaming mountain rice, slow-simmered black lentils tempered in wild Mustang Jimbu, and heartfelt Thakali warmth.
         </p>
       </div>
 
       <!-- Call to Action Buttons -->
-      <div class="flex flex-wrap items-center gap-3.5 pt-1">
-        <a href="{% url 'our_story' %}" class="bg-terracotta hover:bg-deepBrown text-white font-bold text-sm sm:text-base py-3.5 px-7 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2.5">
+      <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3.5 pt-1">
+        <a href="{% url 'our_story' %}" class="bg-terracotta hover:bg-deepBrown text-white font-bold text-xs sm:text-sm lg:text-base py-3 sm:py-3.5 px-5 sm:px-7 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2">
           <i data-lucide="compass" class="w-4 h-4 text-warmSand"></i> Discover Our Story
         </a>
-        <a href="{% url 'khana_sets' %}" class="bg-white hover:bg-creamBg text-deepBrown border border-terracotta/30 font-bold text-sm sm:text-base py-3.5 px-6 rounded-2xl shadow-md transition transform hover:-translate-y-0.5 flex items-center gap-2">
+        <a href="{% url 'khana_sets' %}" class="bg-white hover:bg-creamBg text-deepBrown border border-terracotta/30 font-bold text-xs sm:text-sm lg:text-base py-3 sm:py-3.5 px-5 sm:px-6 rounded-xl sm:rounded-2xl shadow-md transition transform hover:-translate-y-0.5 flex items-center gap-2">
           <i data-lucide="utensils" class="w-4 h-4 text-terracotta"></i> View Thali Menu
         </a>
-        <a href="{% url 'visit_us' %}" class="bg-deepBrown hover:bg-terracotta text-white font-bold text-sm sm:text-base py-3.5 px-6 rounded-2xl shadow-md transition flex items-center gap-2">
+        <a href="{% url 'visit_us' %}" class="bg-deepBrown hover:bg-terracotta text-white font-bold text-xs sm:text-sm lg:text-base py-3 sm:py-3.5 px-5 sm:px-6 rounded-xl sm:rounded-2xl shadow-md transition flex items-center gap-2">
           <i data-lucide="map-pin" class="w-4 h-4 text-warmSand"></i> Visit in Dhangadhi
         </a>
       </div>
 
       <!-- 2x2 Feature Grid (Nature / Food / Traditions / Hospitality) -->
-      <div class="grid grid-cols-2 gap-3 pt-2">
+      <div class="grid grid-cols-2 gap-2.5 sm:gap-3 pt-2">
         
-        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3.5 rounded-2xl flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3 sm:p-3.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-sm hover:border-terracotta transition group text-left">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="sparkles" class="w-4 h-4"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm text-deepBrown leading-tight">Mustang Jimbu</span>
-            <span class="text-xs text-deepBrown/70">Aromatic wild herb</span>
+            <span class="block font-bold text-xs sm:text-sm text-deepBrown leading-tight">Mustang Jimbu</span>
+            <span class="text-[11px] sm:text-xs text-deepBrown/70">Aromatic wild herb</span>
           </div>
         </div>
 
-        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3.5 rounded-2xl flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3 sm:p-3.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-sm hover:border-terracotta transition group text-left">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="utensils-crossed" class="w-4 h-4"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm text-deepBrown leading-tight">Brass Kansa Thali</span>
-            <span class="text-xs text-deepBrown/70">Ayurvedic metalware</span>
+            <span class="block font-bold text-xs sm:text-sm text-deepBrown leading-tight">Brass Kansa Thali</span>
+            <span class="text-[11px] sm:text-xs text-deepBrown/70">Ayurvedic metalware</span>
           </div>
         </div>
 
-        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3.5 rounded-2xl flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3 sm:p-3.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-sm hover:border-terracotta transition group text-left">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="infinity" class="w-4 h-4"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm text-deepBrown leading-tight">Unlimited Refills</span>
-            <span class="text-xs text-deepBrown/70">Bhat, Dal, Tarkari & Saag</span>
+            <span class="block font-bold text-xs sm:text-sm text-deepBrown leading-tight">Unlimited Refills</span>
+            <span class="text-[11px] sm:text-xs text-deepBrown/70">Bhat, Dal, Tarkari & Saag</span>
           </div>
         </div>
 
-        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3.5 rounded-2xl flex items-center gap-3 shadow-sm hover:border-terracotta transition group">
-          <div class="p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
+        <div class="bg-white/85 border border-terracotta/20 backdrop-blur-sm p-3 sm:p-3.5 rounded-xl sm:rounded-2xl flex items-center gap-2.5 sm:gap-3 shadow-sm hover:border-terracotta transition group text-left">
+          <div class="p-2 sm:p-2.5 rounded-xl bg-terracotta/10 text-terracotta group-hover:bg-terracotta group-hover:text-white transition shrink-0">
             <i data-lucide="heart-handshake" class="w-4 h-4"></i>
           </div>
           <div>
-            <span class="block font-bold text-sm text-deepBrown leading-tight">Pure Hospitality</span>
-            <span class="text-xs text-deepBrown/70">Atithi Devo Bhava</span>
+            <span class="block font-bold text-xs sm:text-sm text-deepBrown leading-tight">Pure Hospitality</span>
+            <span class="text-[11px] sm:text-xs text-deepBrown/70">Atithi Devo Bhava</span>
           </div>
         </div>
 
       </div>
 
       <!-- Diner Trust Review Rating -->
-      <div class="flex items-center gap-4 pt-1 border-t border-tradBeige/60">
+      <div class="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-1 border-t border-tradBeige/60">
         <div class="flex items-center gap-1 text-terracotta">
-          <i data-lucide="star" class="w-4 h-4 fill-terracotta"></i>
-          <i data-lucide="star" class="w-4 h-4 fill-terracotta"></i>
-          <i data-lucide="star" class="w-4 h-4 fill-terracotta"></i>
-          <i data-lucide="star" class="w-4 h-4 fill-terracotta"></i>
-          <i data-lucide="star" class="w-4 h-4 fill-terracotta"></i>
+          <i data-lucide="star" class="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-terracotta"></i>
+          <i data-lucide="star" class="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-terracotta"></i>
+          <i data-lucide="star" class="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-terracotta"></i>
+          <i data-lucide="star" class="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-terracotta"></i>
+          <i data-lucide="star" class="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-terracotta"></i>
         </div>
-        <span class="text-xs text-deepBrown/80 font-medium">Rated 4.9/5 by local & Himalayan food lovers</span>
+        <span class="text-[11px] sm:text-xs text-deepBrown/80 font-medium">Rated 4.9/5 by local & Himalayan food lovers</span>
       </div>
 
     </div>
@@ -234,128 +234,128 @@
 </section>
 
 <!-- Sliding Showcase Gallery Section -->
-<section class="py-24 bg-darkEspresso text-white relative overflow-hidden">
+<section class="py-16 sm:py-24 bg-darkEspresso text-white relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-      <div class="space-y-3">
-        <span class="text-sm uppercase tracking-widest font-semibold text-terracotta flex items-center gap-2">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-6">
+      <div class="space-y-2.5 sm:space-y-3 text-center md:text-left">
+        <span class="text-xs sm:text-sm uppercase tracking-widest font-semibold text-terracotta flex items-center justify-center md:justify-start gap-2">
           <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
           Visual Glimpse & Dining Ambiance
         </span>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-warmSand leading-tight">
           Hotel Rhino Himalayan Gallery
         </h2>
-        <p class="text-base sm:text-lg text-tradBeige/80 max-w-xl font-light">
+        <p class="text-sm sm:text-base lg:text-lg text-tradBeige/80 max-w-xl font-light mx-auto md:mx-0">
           Take a sensory tour through our authentic brass cookware, smoking Jimbu dal, and tranquil heritage dining spaces.
         </p>
       </div>
 
       <!-- Carousel Navigation Controls -->
-      <div class="flex items-center gap-3 shrink-0">
-        <button id="sliderPrevBtn" class="w-12 h-12 rounded-full border border-terracotta/50 bg-deepBrown/80 hover:bg-terracotta text-white flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" aria-label="Previous Slide">
-          <i data-lucide="chevron-left" class="w-6 h-6"></i>
+      <div class="flex items-center justify-center md:justify-end gap-3 shrink-0">
+        <button id="sliderPrevBtn" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-terracotta/50 bg-deepBrown/80 hover:bg-terracotta text-white flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" aria-label="Previous Slide">
+          <i data-lucide="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6"></i>
         </button>
-        <button id="sliderNextBtn" class="w-12 h-12 rounded-full border border-terracotta/50 bg-deepBrown/80 hover:bg-terracotta text-white flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" aria-label="Next Slide">
-          <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        <button id="sliderNextBtn" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-terracotta/50 bg-deepBrown/80 hover:bg-terracotta text-white flex items-center justify-center transition shadow-lg hover:scale-105 active:scale-95" aria-label="Next Slide">
+          <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
         </button>
       </div>
     </div>
 
     <!-- Sliding Carousel Track -->
-    <div class="relative overflow-hidden rounded-3xl">
-      <div id="gallerySliderTrack" class="flex gap-6 transition-transform duration-700 ease-out cursor-grab active:cursor-grabbing select-none">
+    <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl">
+      <div id="gallerySliderTrack" class="flex gap-4 sm:gap-6 transition-transform duration-700 ease-out cursor-grab active:cursor-grabbing select-none">
         
         <!-- Slide 1: Authentic Bell-Metal Brass Thali (The Star Feast) -->
-        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
-          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+        <div class="gallery-slide w-[280px] sm:w-[350px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
             <img src="/static/images/hero_thakali_bg.jpg" alt="Traditional Brass Thakali Thali" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/25 to-transparent"></div>
             <div class="absolute top-4 left-4 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
               Mustang Signature
             </div>
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+            <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 sm:p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
               <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Mustang Heritage</span>
-              <h3 class="font-heading font-bold text-xl text-white">Authentic Bell-Metal Thali</h3>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Authentic Bell-Metal Thali</h3>
               <p class="text-xs text-tradBeige/80 mt-1">Simmered in wild Jimbu with steaming hot Basmati rice & pure cow ghee.</p>
             </div>
           </div>
         </div>
 
         <!-- Slide 2: Steaming Buckwheat Dhido (Traditional Western Hill Special) -->
-        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
-          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+        <div class="gallery-slide w-[280px] sm:w-[350px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
             <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=1000&q=80" alt="Authentic Dhido and Hill Curry" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/25 to-transparent"></div>
             <div class="absolute top-4 left-4 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
               Hill Specialty
             </div>
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+            <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 sm:p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
               <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Western Hilly Vibes</span>
-              <h3 class="font-heading font-bold text-xl text-white">Buckwheat Dhido & Hill Gravy</h3>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Buckwheat Dhido & Hill Gravy</h3>
               <p class="text-xs text-tradBeige/80 mt-1">Slow-cooked mountain buckwheat served piping hot with country chicken jhol.</p>
             </div>
           </div>
         </div>
 
         <!-- Slide 3: Joyful Guests Dining & Praising Taste -->
-        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
-          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+        <div class="gallery-slide w-[280px] sm:w-[350px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
             <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1000&q=80" alt="Guests enjoying Thakali feast" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/25 to-transparent"></div>
             <div class="absolute top-4 left-4 bg-successGreen text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
               Joyful Moments
             </div>
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+            <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 sm:p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
               <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Diner Happiness</span>
-              <h3 class="font-heading font-bold text-xl text-white">Laughter, Friends & Big Smiles</h3>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Laughter, Friends & Big Smiles</h3>
               <p class="text-xs text-tradBeige/80 mt-1">Friends and travelers gathering over unlimited refills of hot rice and dal.</p>
             </div>
           </div>
         </div>
 
         <!-- Slide 4: Wild Mustang Spices & Jimbu -->
-        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
-          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+        <div class="gallery-slide w-[280px] sm:w-[350px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
             <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=1000&q=80" alt="Himalayan Jimbu and Spices" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/25 to-transparent"></div>
             <div class="absolute top-4 left-4 bg-warningAmber text-darkEspresso text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
               100% Organic Sourcing
             </div>
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+            <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 sm:p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
               <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Authentic Sourcing</span>
-              <h3 class="font-heading font-bold text-xl text-white">Wild Mustang Jimbu & Timur</h3>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Wild Mustang Jimbu & Timur</h3>
               <p class="text-xs text-tradBeige/80 mt-1">Sun-dried mountain allium and stone-crushed Sichuan pepper straight from the peaks.</p>
             </div>
           </div>
         </div>
 
         <!-- Slide 5: Mountain Timber Dining Ambiance -->
-        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
-          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+        <div class="gallery-slide w-[280px] sm:w-[350px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
             <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80" alt="Restaurant Ambiance" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/25 to-transparent"></div>
             <div class="absolute top-4 left-4 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
               Hilly Vibes
             </div>
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+            <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 sm:p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
               <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Dining Experience</span>
-              <h3 class="font-heading font-bold text-xl text-white">Warm Himalayan Ambiance</h3>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Warm Himalayan Ambiance</h3>
               <p class="text-xs text-tradBeige/80 mt-1">Cozy pine wood, terracotta lamps, and tranquil mountain retreat atmosphere in Dhangadhi.</p>
             </div>
           </div>
         </div>
 
         <!-- Slide 6: Praising The Taste & Table-Side Service -->
-        <div class="gallery-slide w-[320px] sm:w-[380px] lg:w-[420px] shrink-0 group">
-          <div class="relative h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
+        <div class="gallery-slide w-[280px] sm:w-[350px] lg:w-[420px] shrink-0 group">
+          <div class="relative h-[380px] sm:h-[440px] rounded-2xl overflow-hidden border-2 border-terracotta/30 bg-deepBrown shadow-xl">
             <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80" alt="Diners admiring hot ghee and dal" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-darkEspresso via-darkEspresso/25 to-transparent"></div>
             <div class="absolute top-4 left-4 bg-terracotta/90 text-white text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
               Praising The Taste
             </div>
-            <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
+            <div class="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 p-4 sm:p-5 rounded-2xl bg-darkEspresso/85 backdrop-blur-md border border-terracotta/40">
               <span class="text-xs font-bold text-terracotta uppercase tracking-wider block mb-1">Gracious Refills</span>
-              <h3 class="font-heading font-bold text-xl text-white">Table-Side Hot Ghee Pour</h3>
+              <h3 class="font-heading font-bold text-lg sm:text-xl text-white">Table-Side Hot Ghee Pour</h3>
               <p class="text-xs text-tradBeige/80 mt-1">Guests appraising the rich aromas of pure Shingati ghee and crackling Jimbu lentils.</p>
             </div>
           </div>
