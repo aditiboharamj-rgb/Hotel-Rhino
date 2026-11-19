@@ -169,7 +169,7 @@ print(f"Ensured {KhanaSet.objects.count()} authentic Thakali Khana Sets initiali
 # 4. Seed Approved Real Customer Reviews
 reviews_data = [
     ("Prabhat Bhattarai", 5, "Without doubt the finest authentic Thakali Thali in the country. The Jimbu dal tempered in hot ghee transported me straight to Mustang. Exceptional service and gracious refills!", "Kathmandu"),
-    ("Elena Rostova", 5, "The Mutton Thakali set here is extraordinary. The tender meat infused with mountain timur pepper is something I have never tasted before. The traditional brass plates are breathtaking.", "Geneva, Switzerland"),
+    ("Dipendra Thapa Magar", 5, "The Mutton Thakali set here is extraordinary. The tender meat infused with mountain timur pepper is something I have never tasted before. The traditional brass plates are breathtaking.", "Dhangadhi, Kailali"),
     ("Binita Shrestha", 5, "I love how pure the food is. No fast food nonsense, no fake flavors — pure traditional Nepali cooking with unlimited hot rice and saag. Hotel Rhino is a true gem.", "Pokhara"),
 ]
 for name, rating, comment, city in reviews_data:
