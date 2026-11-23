@@ -60,47 +60,47 @@
         </div>
       </a>
 
-      <!-- Desktop Links - Refined Interactive Modern Pills -->
-      <nav class="hidden lg:flex items-center gap-1 xl:gap-2 text-[15px] xl:text-[16px] font-medium text-deepBrown">
-        <a href="/" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'home' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+      <!-- Desktop & Tablet Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 xl:gap-2 text-[14px] lg:text-[15px] xl:text-[16px] font-medium text-deepBrown">
+        <a href="/" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'home' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Home
         </a>
-        <a href="{% url 'our_story' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'our_story' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+        <a href="{% url 'our_story' %}" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'our_story' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Heritage
         </a>
-        <a href="{% url 'khana_sets' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'khana_sets' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+        <a href="{% url 'khana_sets' %}" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'khana_sets' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Menu
         </a>
-        <a href="{% url 'whats_inside_thali' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'whats_inside_thali' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+        <a href="{% url 'whats_inside_thali' %}" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'whats_inside_thali' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Ingredients
         </a>
-        <a href="{% url 'gallery' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'gallery' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+        <a href="{% url 'gallery' %}" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'gallery' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Gallery
         </a>
-        <a href="{% url 'guest_experiences' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'guest_experiences' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+        <a href="{% url 'guest_experiences' %}" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'guest_experiences' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Reviews
         </a>
-        <a href="{% url 'visit_us' %}" class="px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'visit_us' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
+        <a href="{% url 'visit_us' %}" class="px-3 lg:px-4 py-2 rounded-full transition-all duration-200 {% if request.resolver_match.url_name == 'visit_us' %}bg-terracotta text-white font-semibold shadow-sm{% else %}hover:bg-tradBeige/40 hover:text-terracotta{% endif %}">
           Visit Us
         </a>
       </nav>
 
       <!-- Action Button - Glowing Editorial Pill -->
-      <div class="hidden sm:flex items-center gap-3 shrink-0">
-        <a href="{% url 'visit_us' %}" class="relative inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-terracotta to-deepBrown shadow-md hover:shadow-lg hover:scale-102 active:scale-98 transition-all duration-200">
+      <div class="hidden xl:flex items-center gap-3 shrink-0">
+        <a href="{% url 'visit_us' %}" class="relative inline-flex items-center gap-2 px-5 lg:px-6 py-2.5 lg:py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-terracotta to-deepBrown shadow-md hover:shadow-lg hover:scale-102 active:scale-98 transition-all duration-200">
           <i data-lucide="compass" class="w-4 h-4 text-warmSand"></i>
           <span>Plan Your Visit</span>
         </a>
       </div>
 
-      <!-- Mobile Menu Toggle -->
-      <button id="mobileMenuBtn" class="lg:hidden p-2.5 rounded-2xl bg-tradBeige/30 text-deepBrown hover:bg-terracotta hover:text-white transition" aria-label="Toggle menu">
+      <!-- Mobile/Tablet Menu Toggle -->
+      <button id="mobileMenuBtn" class="md:hidden p-2.5 rounded-2xl bg-tradBeige/30 text-deepBrown hover:bg-terracotta hover:text-white transition" aria-label="Toggle menu">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
     </div>
 
     <!-- Mobile Dropdown with Glassmorphic Card Style -->
-    <div id="mobileMenu" class="hidden lg:hidden mt-2 max-w-7xl mx-auto bg-white/95 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl px-6 py-5 space-y-1">
+    <div id="mobileMenu" class="hidden md:hidden mt-2 max-w-7xl mx-auto bg-white/95 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl px-6 py-5 space-y-1">
       <a href="/" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Home</a>
       <a href="{% url 'our_story' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">About Hotel & Heritage</a>
       <a href="{% url 'khana_sets' %}" class="block py-2.5 px-4 rounded-xl text-base font-medium text-darkEspresso hover:bg-tradBeige/40 hover:text-terracotta transition">Menu</a>
