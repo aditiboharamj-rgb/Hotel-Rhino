@@ -671,15 +671,18 @@
       <!-- Interactive Regional Selector Tabs -->
       <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-10">
         <button onclick="switchSanctuary(0)" id="sanctuaryTab0" class="sanctuary-tab px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-[#482C20] text-white shadow-md transition duration-300">
-          🏔️ Khaptad Plateau
+          🍲 Authentic Pahadi Culinary Heritage
         </button>
         <button onclick="switchSanctuary(1)" id="sanctuaryTab1" class="sanctuary-tab px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-[#482C20] border border-[#D7C39B] hover:bg-[#B88B46]/10 transition duration-300">
-          🌸 Badimalika Ridge
+          🏔️ Khaptad Plateau
         </button>
         <button onclick="switchSanctuary(2)" id="sanctuaryTab2" class="sanctuary-tab px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-[#482C20] border border-[#D7C39B] hover:bg-[#B88B46]/10 transition duration-300">
-          🦌 Shuklaphanta Wilds
+          🌸 Badimalika Ridge
         </button>
         <button onclick="switchSanctuary(3)" id="sanctuaryTab3" class="sanctuary-tab px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-[#482C20] border border-[#D7C39B] hover:bg-[#B88B46]/10 transition duration-300">
+          🦌 Shuklaphanta Wilds
+        </button>
+        <button onclick="switchSanctuary(4)" id="sanctuaryTab4" class="sanctuary-tab px-5 sm:px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white text-[#482C20] border border-[#D7C39B] hover:bg-[#B88B46]/10 transition duration-300">
           👑 Mount Api Nampa
         </button>
       </div>
@@ -777,30 +780,30 @@
             <!-- Image with Zoom & Badge -->
             <div class="relative h-64 sm:h-72 rounded-2xl overflow-hidden border border-[#D7C39B]/80 shadow-md group">
               <img id="sanctuaryImg" 
-                   src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80" 
-                   alt="Khaptad National Park Plateau" 
+                   src="/static/images/thakali_khana_brass_thali.jpg" 
+                   alt="Pahadi Thakali Khana Set and Cultural Heritage Food" 
                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
               <div class="absolute inset-0 bg-gradient-to-t from-[#482C20]/80 via-transparent to-transparent"></div>
               
               <div class="absolute top-4 left-4">
-                <span id="sanctuaryBadge" class="px-3 py-1 rounded-full bg-[#344638] text-white text-xs font-bold uppercase tracking-wider shadow">
-                  Spiritual High Plateau
+                <span id="sanctuaryBadge" class="px-3 py-1 rounded-full bg-[#B88B46] text-[#2c1a12] text-xs font-bold uppercase tracking-wider shadow">
+                  Authentic Pahadi Gastronomy
                 </span>
               </div>
 
               <div class="absolute bottom-4 left-4 right-4 text-white">
-                <span id="sanctuaryElevation" class="text-xs uppercase tracking-widest text-[#D7C39B] font-semibold block">Elevation: 3,000m • Bajhang / Doti</span>
-                <h4 id="sanctuaryNepali" class="font-cormorant text-2xl font-bold mt-0.5">खप्तड राष्ट्रिय निकुञ्ज (Khaptad)</h4>
+                <span id="sanctuaryElevation" class="text-xs uppercase tracking-widest text-[#D7C39B] font-semibold block">Himalayan Salt Route • Far-Western Hearth</span>
+                <h4 id="sanctuaryNepali" class="font-cormorant text-2xl font-bold mt-0.5">सुदूरपश्चिम तथा पहाडी खानाको इतिहास (Pahadi Khana)</h4>
               </div>
             </div>
 
             <!-- Content Details -->
             <div class="space-y-3">
               <h3 id="sanctuaryTitle" class="font-cormorant text-2xl sm:text-3xl font-bold text-[#482C20]">
-                Khaptad: The Emerald Plateau of Solitude
+                Authentic Pahadi Khana: History, Wisdom & Sacred Spices
               </h3>
               <p id="sanctuaryDesc" class="text-sm text-[#482C20]/85 leading-relaxed font-normal">
-                Rolling emerald moorlands spanning across Doti, Bajhang, Bajura, and Achham. It is the sacred meditation sanctuary of the revered hermit philosopher Khaptad Baba, blanketed in 22 sprawling Patans (open grasslands), 567 species of alpine flowers, and pristine medicinal rhododendron groves.
+                Pahadi food was born out of seasonal endurance and deep Ayurvedic harmony along the ancient Trans-Himalayan trade routes. Mountain communities used bell-metal bronze (Kansa) cookware, slow simmering over dry pine fire, sun-dried fermented mustard greens (Gundruk), and wild Mustang Jimbu to restore physical vitality after treacherous high-pass journeys.
               </p>
             </div>
           </div>
@@ -814,7 +817,7 @@
               <div>
                 <strong class="text-xs uppercase tracking-wider text-[#482C20] font-bold block">Cultural & Spiritual Significance</strong>
                 <p id="sanctuarySignificance" class="text-xs text-[#482C20]/80 mt-0.5 leading-relaxed">
-                  Home to the sacred Khaptad Daha lake, Nagdhunga (serpent stone), and Tribeni confluence where thousands of devotees gather during Ganga Dussehra for sacred cleansing.
+                  Every element—from hand-crushed wild Timur chutney on granite Silauto to smoking cow ghee poured table-side—naturally warms the body, aids high-altitude digestion, and embodies the sacred Nepali hospitality tradition of "Atithi Devo Bhava".
                 </p>
               </div>
             </div>
@@ -832,6 +835,18 @@
     const sanctuariesData = [
       {
         tabId: "sanctuaryTab0",
+        pinId: null,
+        badge: "Authentic Pahadi Gastronomy",
+        badgeBg: "bg-[#B88B46]",
+        elevation: "Himalayan Salt Route • Far-Western Hearth",
+        nepali: "सुदूरपश्चिम तथा पहाडी खानाको इतिहास (Pahadi Khana)",
+        title: "Authentic Pahadi Khana: History, Wisdom & Sacred Spices",
+        img: "/static/images/thakali_khana_brass_thali.jpg",
+        desc: "Pahadi cuisine was forged over centuries by mountain caravans and village mothers along the ancient Salt Route between Tibet and the southern plains. Because cold alpine climates required sustained energy and digestive warmth, ancestral cooking focused on iron-rich mountain grains, black lentils tempered in smoking Jimbu (wild mountain chives), Rayo ko Saag cooked in cold-pressed mustard oil, and naturally sun-cured fermented Gundruk.",
+        significance: "Served exclusively in solid hand-beaten bronze and brassware (Kansa) crafted by heritage metalsmiths. Vedic Ayurveda honors bronze for naturally balancing bodily acidity, preserving nutrient heat, and sanctifying each meal with unlimited table-side refills of dal and fragrant ghee."
+      },
+      {
+        tabId: "sanctuaryTab1",
         pinId: "pin0",
         badge: "Spiritual High Plateau",
         badgeBg: "bg-[#344638]",
@@ -843,7 +858,7 @@
         significance: "Home to the sacred Khaptad Daha lake, Nagdhunga (serpent stone), and Tribeni confluence where thousands of pilgrims gather during Ganga Dussehra for sacred cleansing."
       },
       {
-        tabId: "sanctuaryTab1",
+        tabId: "sanctuaryTab2",
         pinId: "pin1",
         badge: "Sacred Goddess Ridge",
         badgeBg: "bg-[#9A4D30]",
@@ -855,7 +870,7 @@
         significance: "Every August on Janai Purnima, pilgrims undertake an arduous three-day high-altitude trek across 87 undulating meadows, barefoot across the sacred flower-carpeted slopes."
       },
       {
-        tabId: "sanctuaryTab2",
+        tabId: "sanctuaryTab3",
         pinId: "pin2",
         badge: "The Great Grasslands",
         badgeBg: "bg-[#B88B46]",
@@ -867,7 +882,7 @@
         significance: "A vibrant biodiversity refuge sheltering Bengal tigers, one-horned rhinos, marsh muggers, and over 424 species of migratory Himalayan waterfowl along Rani Tal."
       },
       {
-        tabId: "sanctuaryTab3",
+        tabId: "sanctuaryTab4",
         pinId: "pin3",
         badge: "The Western Crown",
         badgeBg: "bg-[#482C20]",
@@ -885,14 +900,16 @@
       const card = document.getElementById('sanctuaryCard');
       
       // Update Tab Styles
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < sanctuariesData.length; i++) {
         const tab = document.getElementById('sanctuaryTab' + i);
-        if (i === index) {
-          tab.classList.remove('bg-white', 'text-[#482C20]', 'border', 'border-[#D7C39B]');
-          tab.classList.add('bg-[#482C20]', 'text-white', 'shadow-md');
-        } else {
-          tab.classList.remove('bg-[#482C20]', 'text-white', 'shadow-md');
-          tab.classList.add('bg-white', 'text-[#482C20]', 'border', 'border-[#D7C39B]');
+        if (tab) {
+          if (i === index) {
+            tab.classList.remove('bg-white', 'text-[#482C20]', 'border', 'border-[#D7C39B]');
+            tab.classList.add('bg-[#482C20]', 'text-white', 'shadow-md');
+          } else {
+            tab.classList.remove('bg-[#482C20]', 'text-white', 'shadow-md');
+            tab.classList.add('bg-white', 'text-[#482C20]', 'border', 'border-[#D7C39B]');
+          }
         }
       }
 
