@@ -149,29 +149,16 @@
             <div class="absolute inset-0 bg-gradient-to-t from-[#2c1a12] via-[#2c1a12]/30 to-transparent pointer-events-none"></div>
 
             <!-- Top Floating Badge -->
-            <div class="absolute top-4 left-4 z-20 flex items-center gap-2">
-              <span id="heroCardBadge" class="px-3 py-1 rounded-full bg-[#B88B46] text-[#2c1a12] text-xs font-bold uppercase tracking-wider shadow-md backdrop-blur-md">
+            <div class="absolute top-4 left-4 z-20">
+              <span id="heroCardBadge" class="px-3.5 py-1.5 rounded-full bg-[#B88B46] text-[#2c1a12] text-xs font-bold uppercase tracking-wider shadow-md backdrop-blur-md">
                 Culinary & Cultural Hearth
               </span>
-              <span class="px-2 py-0.5 rounded-full bg-black/40 text-[#D7C39B] text-[10px] font-semibold border border-[#B88B46]/40 backdrop-blur-md">
-                3D Interactive
-              </span>
-            </div>
-
-            <!-- Image Switcher Pill Controls -->
-            <div class="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-black/50 p-1.5 rounded-full border border-white/20 backdrop-blur-md">
-              <button onclick="switchHeroImage(0, event)" class="hero-dot w-2.5 h-2.5 rounded-full bg-[#B88B46] transition-all hover:scale-125 focus:outline-none" title="Authentic Thakali Feast"></button>
-              <button onclick="switchHeroImage(1, event)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/50 transition-all hover:scale-125 focus:outline-none" title="Rana Tharu Artisans"></button>
-              <button onclick="switchHeroImage(2, event)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/50 transition-all hover:scale-125 focus:outline-none" title="Sacred Mountain Passes"></button>
             </div>
 
             <!-- Bottom Content Overlay with 3D Depth Elevation -->
             <div class="absolute bottom-5 left-5 right-5 text-white z-20 transition-transform duration-300" style="transform: translateZ(30px);">
               <span id="heroCardSub" class="text-xs uppercase tracking-widest text-[#D7C39B] font-medium block">The Gateway of Mahakali & Seti</span>
               <p id="heroCardTitle" class="font-cormorant text-xl sm:text-2xl font-bold mt-0.5">Authentic Hand-Beaten Brassware & Mountain Ghee</p>
-              <p class="text-[11px] text-[#D7C39B]/80 mt-1 flex items-center gap-1.5 font-light">
-                <i data-lucide="rotate-3d" class="w-3.5 h-3.5 text-[#B88B46]"></i> Move your mouse to explore 3D tilt perspective • Tap dots to switch view
-              </p>
             </div>
 
             <!-- Dynamic Glare Highlight Element -->
@@ -1095,34 +1082,32 @@
     }
   ];
 
-  function switchHeroImage(index, event) {
-    if (event) event.stopPropagation();
+  let currentHeroSlide = 0;
+  function switchHeroImage(index) {
+    currentHeroSlide = index;
     const data = heroCardSlides[index];
     const imgEl = document.getElementById('heroCardImage');
     const badgeEl = document.getElementById('heroCardBadge');
     const subEl = document.getElementById('heroCardSub');
     const titleEl = document.getElementById('heroCardTitle');
-    const dots = document.querySelectorAll('.hero-dot');
 
-    dots.forEach((dot, idx) => {
-      if (idx === index) {
-        dot.classList.remove('bg-white/50');
-        dot.classList.add('bg-[#B88B46]', 'scale-125');
-      } else {
-        dot.classList.remove('bg-[#B88B46]', 'scale-125');
-        dot.classList.add('bg-white/50');
-      }
-    });
+    if (!imgEl) return;
 
-    imgEl.style.opacity = '0.3';
+    imgEl.style.opacity = '0.4';
     setTimeout(() => {
       imgEl.src = data.img;
-      badgeEl.textContent = data.badge;
-      subEl.textContent = data.sub;
-      titleEl.textContent = data.title;
+      if (badgeEl) badgeEl.textContent = data.badge;
+      if (subEl) subEl.textContent = data.sub;
+      if (titleEl) titleEl.textContent = data.title;
       imgEl.style.opacity = '1';
     }, 200);
   }
+
+  // Continuous 2-Second Infinite Loop Carousel
+  setInterval(() => {
+    currentHeroSlide = (currentHeroSlide + 1) % heroCardSlides.length;
+    switchHeroImage(currentHeroSlide);
+  }, 2000);
 
   // Golden Floating Particles Canvas in Food Section
   (function initGoldenParticles() {
