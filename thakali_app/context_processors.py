@@ -1,6 +1,10 @@
 import os
+from .models import PushNotification
 
 def restaurant_settings(request):
+    active_notifications = PushNotification.objects.filter(is_active=True)
+    pinned_notification = active_notifications.filter(is_pinned_banner=True).first()
+
     return {
         'RESTAURANT_NAME': os.getenv('RESTAURANT_NAME', 'Hotel Rhino - Authentic Thakali Kitchen'),
         'RESTAURANT_LOCATION': os.getenv('RESTAURANT_LOCATION', 'Main Road, Dhangadhi, Sudurpaschim Province, Nepal'),
@@ -13,5 +17,7 @@ def restaurant_settings(request):
         'VAPID_PUBLIC_KEY': os.getenv('VAPID_PUBLIC_KEY', ''),
         'STAFF_USER': request.user if request.user.is_authenticated else None,
         'STAFF_ROLE': getattr(getattr(request.user, 'staff_profile', None), 'role', None) if request.user.is_authenticated else None,
+        'ACTIVE_NOTIFICATIONS': active_notifications,
+        'PINNED_NOTIFICATION': pinned_notification,
     }
 

@@ -332,6 +332,39 @@ class CustomerReview(models.Model):
         return f"{self.name} ({self.rating} stars)"
 
 
+# Push Announcement / Notification System
+class PushNotification(models.Model):
+    TYPE_CHOICES = [
+        ('SPECIAL_OFFER', 'Special Thakali Offer / Festive Discount'),
+        ('NEW_DISH', 'New Himalayan Dish / Seasonal Arrival'),
+        ('EVENT', 'Cultural Event / Deuda Evening'),
+        ('ANNOUNCEMENT', 'General Hotel Announcement'),
+        ('URGENT', 'Important / Holiday Notice'),
+    ]
+
+    title = models.CharField(max_length=150, help_text="e.g. Fresh Himalayan Chyang & Jimbu Feast Today!")
+    message = models.TextField(help_text="Detailed notification announcement for website visitors & diners.")
+    notification_type = models.CharField(max_length=30, choices=TYPE_CHOICES, default='SPECIAL_OFFER')
+    badge_text = models.CharField(max_length=50, default="Special Announcement", help_text="Pill tag shown on notification banner")
+    image = models.ImageField(upload_to='notifications/', blank=True, null=True, help_text="Upload notification photo")
+    image_url = models.URLField(blank=True, help_text="Or external image URL")
+    action_url = models.CharField(max_length=200, default="/khana-sets/", blank=True, help_text="Where clicking notification navigates")
+    action_button_text = models.CharField(max_length=50, default="View Details", blank=True)
+    is_active = models.BooleanField(default=True, help_text="Toggle ON to push live across the website")
+    is_pinned_banner = models.BooleanField(default=True, help_text="Show as a top floating announcement banner")
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(blank=True, null=True, help_text="Optional expiry date/time")
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Push Notification"
+        verbose_name_plural = "Push Notifications"
+
+    def __str__(self):
+        status = "🟢 ACTIVE" if self.is_active else "⚪ INACTIVE"
+        return f"[{status}] {self.title} ({self.get_notification_type_display()})"
+
+
 # Audit Logs
 class AuditLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)

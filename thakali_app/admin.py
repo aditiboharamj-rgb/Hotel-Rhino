@@ -3,7 +3,7 @@ from unfold.admin import ModelAdmin
 from .models import (
     StaffProfile, RestaurantTable, TableSession, KhanaSet,
     Customer, Order, OrderItem, Bill, Payment,
-    CustomerServiceRequest, TableReservation, CustomerReview, AuditLog
+    CustomerServiceRequest, TableReservation, CustomerReview, PushNotification, AuditLog
 )
 
 @admin.register(StaffProfile)
@@ -59,6 +59,23 @@ class TableReservationAdmin(ModelAdmin):
     list_display = ('name', 'phone', 'guest_count', 'reservation_date', 'reservation_time', 'table', 'status')
     list_filter = ('status', 'reservation_date')
     search_fields = ('name', 'phone')
+
+@admin.register(PushNotification)
+class PushNotificationAdmin(ModelAdmin):
+    list_display = ('title', 'notification_type', 'badge_text', 'is_active', 'is_pinned_banner', 'created_at', 'expires_at')
+    list_filter = ('is_active', 'notification_type', 'is_pinned_banner')
+    search_fields = ('title', 'message', 'badge_text')
+    actions = ['activate_notifications', 'deactivate_notifications']
+
+    @admin.action(description="Push Live (Activate selected notifications)")
+    def activate_notifications(self, request, queryset):
+        queryset.update(is_active=True)
+        self.message_user(request, "Selected push notifications are now active across the website!")
+
+    @admin.action(description="Deactivate selected notifications")
+    def deactivate_notifications(self, request, queryset):
+        queryset.update(is_active=False)
+        self.message_user(request, "Selected push notifications deactivated.")
 
 @admin.register(CustomerReview)
 class CustomerReviewAdmin(ModelAdmin):
