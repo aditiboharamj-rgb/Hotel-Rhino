@@ -278,81 +278,163 @@
       </div>
 
       <!-- Interactive Traditional Thali Hotspot Exhibit -->
-      <div class="bg-[#2c1a12] p-6 sm:p-10 rounded-3xl border border-[#B88B46]/40 shadow-2xl mb-16">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="bg-[#2c1a12] p-6 sm:p-10 lg:p-12 rounded-3xl border border-[#B88B46]/40 shadow-2xl mb-16 relative">
+        
+        <!-- Header Selector Pills for Fast Exploration -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-[#B88B46]/20">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#B88B46] text-[#2c1a12] text-xs font-bold">✦</span>
+            <span class="text-xs uppercase tracking-widest text-[#B88B46] font-bold">Interactive Culinary Anatomy</span>
+          </div>
+
+          <!-- Quick dish buttons -->
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <button onclick="selectHotspot(0)" id="pillBtn0" class="thali-pill px-3 py-1.5 rounded-full border border-[#B88B46] bg-[#B88B46] text-[#2c1a12] font-semibold transition hover:scale-105">1. Steamed Rice</button>
+            <button onclick="selectHotspot(1)" id="pillBtn1" class="thali-pill px-3 py-1.5 rounded-full border border-[#B88B46]/40 bg-[#482C20] text-[#D7C39B] font-semibold transition hover:border-[#B88B46] hover:text-white hover:scale-105">2. Himalayan Khasi</button>
+            <button onclick="selectHotspot(2)" id="pillBtn2" class="thali-pill px-3 py-1.5 rounded-full border border-[#B88B46]/40 bg-[#482C20] text-[#D7C39B] font-semibold transition hover:border-[#B88B46] hover:text-white hover:scale-105">3. Jimbu Dal</button>
+            <button onclick="selectHotspot(3)" id="pillBtn3" class="thali-pill px-3 py-1.5 rounded-full border border-[#B88B46]/40 bg-[#482C20] text-[#D7C39B] font-semibold transition hover:border-[#B88B46] hover:text-white hover:scale-105">4. Cow Ghee</button>
+            <button onclick="selectHotspot(4)" id="pillBtn4" class="thali-pill px-3 py-1.5 rounded-full border border-[#B88B46]/40 bg-[#482C20] text-[#D7C39B] font-semibold transition hover:border-[#B88B46] hover:text-white hover:scale-105">5. Saag & Gundruk</button>
+            <button onclick="selectHotspot(5)" id="pillBtn5" class="thali-pill px-3 py-1.5 rounded-full border border-[#B88B46]/40 bg-[#482C20] text-[#D7C39B] font-semibold transition hover:border-[#B88B46] hover:text-white hover:scale-105">6. Timur Achar</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          <!-- Left: Clickable Thali Image with Glowing Interactive Pins -->
-          <div class="lg:col-span-7 relative flex justify-center items-center">
-            <div class="relative w-full max-w-[520px] aspect-square rounded-full overflow-hidden border-4 border-[#B88B46]/60 shadow-[0_0_50px_rgba(184,139,70,0.25)]">
-              <img src="/static/images/thakali_khana_brass_thali.jpg" 
-                   alt="Authentic Sudurpaschim Heritage Thali Exhibit" 
-                   class="w-full h-full object-cover">
+          <!-- Left: High-Definition Brass Thali with Real-time 3D Tilt & Pulsing Pin Rings -->
+          <div class="lg:col-span-7 relative flex justify-center items-center perspective-1000">
+            <!-- Decorative Glow Halo -->
+            <div class="absolute -inset-4 rounded-full bg-gradient-to-tr from-[#B88B46]/20 via-[#9A4D30]/15 to-transparent blur-2xl pointer-events-none"></div>
+
+            <div id="interactiveThaliWrapper" 
+                 class="relative w-full max-w-[500px] aspect-square rounded-full overflow-hidden border-4 border-[#B88B46]/70 shadow-[0_0_60px_rgba(184,139,70,0.35)] transition-transform duration-300 ease-out cursor-crosshair group"
+                 style="transform-style: preserve-3d;">
               
+              <img id="thaliPlatterImg"
+                   src="/static/images/thali_overhead_interactive.jpg" 
+                   alt="Authentic Sudurpaschim Heritage Thali Platter" 
+                   class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+              
+              <!-- Subtle vignette overlay for depth -->
+              <div class="absolute inset-0 rounded-full bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none"></div>
+
               <!-- Hotspot 1: Steaming Mountain Rice -->
-              <button onclick="selectHotspot(0)" 
-                      class="absolute top-[52%] left-[32%] w-8 h-8 -ml-4 -mt-4 rounded-full bg-[#B88B46] text-[#2c1a12] flex items-center justify-center font-bold text-xs hotspot-glow cursor-pointer transition transform hover:scale-125 focus:outline-none"
-                      title="Steamed Mountain Rice (Bhat)" aria-label="Steamed Rice Hotspot">
-                1
-              </button>
+              <div class="absolute top-[52%] left-[34%] -ml-5 -mt-5 z-20">
+                <span class="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-[#B88B46] opacity-60"></span>
+                <button onclick="selectHotspot(0)" 
+                        id="pinBtn0"
+                        class="hotspot-pin relative w-10 h-10 rounded-full bg-[#B88B46] text-[#2c1a12] flex items-center justify-center font-bold text-sm shadow-xl ring-2 ring-white/50 cursor-pointer transition transform hover:scale-125 focus:outline-none"
+                        title="Steamed Mountain Rice (Bhat)" aria-label="Steamed Rice Hotspot">
+                  1
+                </button>
+              </div>
 
               <!-- Hotspot 2: Local Goat / Mutton Curry -->
-              <button onclick="selectHotspot(1)" 
-                      class="absolute top-[48%] right-[28%] w-8 h-8 -ml-4 -mt-4 rounded-full bg-[#9A4D30] text-white flex items-center justify-center font-bold text-xs hotspot-glow cursor-pointer transition transform hover:scale-125 focus:outline-none"
-                      title="Slow Braised Himalayan Khasi" aria-label="Meat Hotspot">
-                2
-              </button>
+              <div class="absolute top-[48%] right-[28%] -ml-5 -mt-5 z-20">
+                <span class="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-[#9A4D30] opacity-60"></span>
+                <button onclick="selectHotspot(1)" 
+                        id="pinBtn1"
+                        class="hotspot-pin relative w-10 h-10 rounded-full bg-[#9A4D30] text-white flex items-center justify-center font-bold text-sm shadow-xl ring-2 ring-white/50 cursor-pointer transition transform hover:scale-125 focus:outline-none"
+                        title="Slow Braised Himalayan Khasi" aria-label="Meat Hotspot">
+                  2
+                </button>
+              </div>
 
               <!-- Hotspot 3: Jimbu Tempered Lentil Soup (Dal) -->
-              <button onclick="selectHotspot(2)" 
-                      class="absolute top-[38%] right-[12%] w-8 h-8 -ml-4 -mt-4 rounded-full bg-[#B88B46] text-[#2c1a12] flex items-center justify-center font-bold text-xs hotspot-glow cursor-pointer transition transform hover:scale-125 focus:outline-none"
-                      title="Mustang Jimbu Dal" aria-label="Dal Hotspot">
-                3
-              </button>
+              <div class="absolute top-[38%] right-[12%] -ml-5 -mt-5 z-20">
+                <span class="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-[#B88B46] opacity-60"></span>
+                <button onclick="selectHotspot(2)" 
+                        id="pinBtn2"
+                        class="hotspot-pin relative w-10 h-10 rounded-full bg-[#B88B46] text-[#2c1a12] flex items-center justify-center font-bold text-sm shadow-xl ring-2 ring-white/50 cursor-pointer transition transform hover:scale-125 focus:outline-none"
+                        title="Mustang Jimbu Dal" aria-label="Dal Hotspot">
+                  3
+                </button>
+              </div>
 
               <!-- Hotspot 4: Pure Mountain Ghee (Ghyu) -->
-              <button onclick="selectHotspot(3)" 
-                      class="absolute top-[28%] right-[38%] w-8 h-8 -ml-4 -mt-4 rounded-full bg-amber-400 text-[#2c1a12] flex items-center justify-center font-bold text-xs hotspot-glow cursor-pointer transition transform hover:scale-125 focus:outline-none"
-                      title="Pure Shingati Cow Ghee" aria-label="Ghee Hotspot">
-                4
-              </button>
+              <div class="absolute top-[28%] right-[38%] -ml-5 -mt-5 z-20">
+                <span class="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-amber-400 opacity-60"></span>
+                <button onclick="selectHotspot(3)" 
+                        id="pinBtn3"
+                        class="hotspot-pin relative w-10 h-10 rounded-full bg-amber-400 text-[#2c1a12] flex items-center justify-center font-bold text-sm shadow-xl ring-2 ring-white/50 cursor-pointer transition transform hover:scale-125 focus:outline-none"
+                        title="Pure Shingati Cow Ghee" aria-label="Ghee Hotspot">
+                  4
+                </button>
+              </div>
 
               <!-- Hotspot 5: Rayo ko Saag & Fermented Gundruk -->
-              <button onclick="selectHotspot(4)" 
-                      class="absolute bottom-[20%] right-[32%] w-8 h-8 -ml-4 -mt-4 rounded-full bg-[#344638] text-white flex items-center justify-center font-bold text-xs hotspot-glow cursor-pointer transition transform hover:scale-125 focus:outline-none"
-                      title="Mustard Greens & Gundruk Sadeko" aria-label="Saag Hotspot">
-                5
-              </button>
+              <div class="absolute bottom-[20%] right-[32%] -ml-5 -mt-5 z-20">
+                <span class="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-[#344638] opacity-60"></span>
+                <button onclick="selectHotspot(4)" 
+                        id="pinBtn4"
+                        class="hotspot-pin relative w-10 h-10 rounded-full bg-[#344638] text-white flex items-center justify-center font-bold text-sm shadow-xl ring-2 ring-white/50 cursor-pointer transition transform hover:scale-125 focus:outline-none"
+                        title="Mustard Greens & Gundruk Sadeko" aria-label="Saag Hotspot">
+                  5
+                </button>
+              </div>
 
               <!-- Hotspot 6: Stone-Ground Timur Chutney -->
-              <button onclick="selectHotspot(5)" 
-                      class="absolute top-[16%] right-[32%] w-8 h-8 -ml-4 -mt-4 rounded-full bg-[#9A4D30] text-white flex items-center justify-center font-bold text-xs hotspot-glow cursor-pointer transition transform hover:scale-125 focus:outline-none"
-                      title="Wild Timur Achar" aria-label="Timur Hotspot">
-                6
-              </button>
+              <div class="absolute top-[16%] right-[32%] -ml-5 -mt-5 z-20">
+                <span class="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-[#9A4D30] opacity-60"></span>
+                <button onclick="selectHotspot(5)" 
+                        id="pinBtn5"
+                        class="hotspot-pin relative w-10 h-10 rounded-full bg-[#9A4D30] text-white flex items-center justify-center font-bold text-sm shadow-xl ring-2 ring-white/50 cursor-pointer transition transform hover:scale-125 focus:outline-none"
+                        title="Wild Timur Achar" aria-label="Timur Hotspot">
+                  6
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Right: Interactive Dynamic Detail Card -->
+          <!-- Right: Interactive Dynamic Detail Glass-Card with Dish Specs -->
           <div class="lg:col-span-5 space-y-6">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B88B46]/20 border border-[#B88B46]/40 text-[#B88B46] text-xs font-bold uppercase tracking-wider">
-              <span>Interactive Thali Exploration</span>
-            </div>
+            <div id="hotspotDisplayCard" class="space-y-5 p-7 sm:p-9 rounded-2xl bg-[#482C20]/90 border border-[#B88B46]/40 backdrop-blur-md shadow-2xl transition-all duration-300">
+              
+              <div class="flex items-center justify-between border-b border-[#B88B46]/20 pb-3">
+                <span id="hotspotCategory" class="text-xs font-bold text-[#B88B46] uppercase tracking-widest block">Main Staple • Grain Foundation</span>
+                <span id="hotspotIndexBadge" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-[#B88B46]/20 text-[#B88B46]">Item 1 of 6</span>
+              </div>
 
-            <div id="hotspotDisplayCard" class="space-y-4 p-6 sm:p-8 rounded-2xl bg-[#482C20]/80 border border-[#B88B46]/30 backdrop-blur-md transition-all duration-300">
-              <span id="hotspotCategory" class="text-xs font-semibold text-[#B88B46] uppercase tracking-widest block">Main Staple</span>
-              <h3 id="hotspotTitle" class="font-cormorant text-2xl sm:text-3xl font-bold text-white">Steaming Fluffy Mountain Rice</h3>
-              <p id="hotspotDescription" class="text-sm text-[#D7C39B] leading-relaxed">
+              <div class="space-y-1">
+                <span id="hotspotNepali" class="text-xs font-devanagari text-[#D7C39B] tracking-wider block">बासमती भात (Steamed Rice)</span>
+                <h3 id="hotspotTitle" class="font-cormorant text-2xl sm:text-3xl font-bold text-white leading-tight">Steaming Fluffy Mountain Rice</h3>
+              </div>
+
+              <p id="hotspotDescription" class="text-sm text-[#D7C39B] leading-relaxed font-light">
                 Piping hot long-grain Basmati steamed to airy perfection in traditional heavy brass vessels. Forms the wholesome foundation upon which golden Jimbu lentils and clarifying ghee are poured.
               </p>
               
-              <div class="pt-3 border-t border-[#B88B46]/30 flex flex-wrap gap-2 text-xs">
-                <span class="text-[#D7C39B]/70">Key Ingredients:</span>
-                <span id="hotspotIngredients" class="font-semibold text-white">Aromatic Mountain Rice, Pure Spring Water</span>
+              <!-- Flavor Profile & Health Benefit Badges -->
+              <div class="grid grid-cols-2 gap-3 pt-2">
+                <div class="p-3 rounded-xl bg-[#2c1a12]/70 border border-[#B88B46]/20 space-y-1">
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-[#B88B46] block">Aroma & Taste</span>
+                  <p id="hotspotTaste" class="text-xs text-white font-medium">Warm, fragrant, subtle sweet</p>
+                </div>
+                <div class="p-3 rounded-xl bg-[#2c1a12]/70 border border-[#B88B46]/20 space-y-1">
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-[#D7C39B] block">Ayurvedic Action</span>
+                  <p id="hotspotAyurveda" class="text-xs text-white font-medium">Sustains digestive Agni</p>
+                </div>
               </div>
+
+              <div class="pt-3 border-t border-[#B88B46]/20 space-y-1 text-xs">
+                <span class="text-[#D7C39B]/70 block font-semibold uppercase tracking-wider text-[10px]">Pristine Ingredients:</span>
+                <p id="hotspotIngredients" class="font-medium text-white">Aromatic Mountain Basmati Rice, Pure Spring Water</p>
+              </div>
+
+              <!-- Navigation Controls -->
+              <div class="flex items-center justify-between pt-4 border-t border-[#B88B46]/20 text-xs text-[#D7C39B]">
+                <button onclick="navigateHotspot(-1)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2c1a12] border border-[#B88B46]/30 text-[#D7C39B] hover:text-white hover:border-[#B88B46] transition">
+                  <span>← Previous Dish</span>
+                </button>
+                <button onclick="navigateHotspot(1)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#B88B46] text-[#2c1a12] font-semibold hover:bg-amber-400 transition">
+                  <span>Next Dish →</span>
+                </button>
+              </div>
+
             </div>
 
-            <p class="text-xs text-[#D7C39B]/70 italic text-center lg:text-left">
-              * Tap any numbered pin on the brass thali to reveal its ingredients and cultural roots.
+            <p class="text-xs text-[#D7C39B]/70 italic text-center lg:text-left flex items-center justify-center lg:justify-start gap-2">
+              <span class="inline-block w-2 h-2 rounded-full bg-[#B88B46]"></span>
+              Tap any numbered pulse on the brass thali or use the dishes above to inspect each authentic recipe.
             </p>
           </div>
 
@@ -967,64 +1049,135 @@
 
 <!-- Interactive Thali Script & Particle Animation -->
 <script>
-  // Hotspot Knowledge Base
+  // Hotspot Knowledge Base with Regional Authenticity
   const thaliHotspots = [
     {
-      category: "Main Staple",
+      category: "Main Staple • Grain Foundation",
+      nepali: "बासमती भात (Steamed Mountain Rice)",
       title: "Steaming Fluffy Mountain Rice (Bhat)",
+      taste: "Warm, fragrant, subtle sweet",
+      ayurveda: "Sustains digestive Agni & vitality",
       description: "Piping hot long-grain Basmati steamed to airy perfection in traditional heavy brass vessels. Forms the wholesome foundation upon which golden Jimbu lentils and clarifying ghee are poured.",
       ingredients: "Aromatic Mountain Basmati Rice, Pure Spring Water"
     },
     {
       category: "Mountain Meat Specialty",
+      nepali: "हिमाली खसीको मासु (Slow-Braised Mutton)",
       title: "Royal Himalayan Khasi (Local Mutton)",
-      description: "Free-grazing mountain goat slow-simmered in thick copper deghs with whole cloves, black cardamom, stone-ground ginger, and roasted mustard oil until tender and deeply aromatic.",
+      taste: "Rich, aromatic, spiced & hearty",
+      ayurveda: "Strengthens bones, combats cold",
+      description: "Free-grazing mountain goat slow-simmered in thick copper and brass deghs with whole cloves, black cardamom, stone-ground ginger, and roasted mustard oil until tender and deeply aromatic.",
       ingredients: "Local Himalayan Mutton, Mustang Timur, Mustardy Broth, Whole Spices"
     },
     {
-      category: "Sacred Pulse",
+      category: "Sacred Mountain Pulse",
+      nepali: "जिम्बु झानेको दाल (Jimbu Tempered Dal)",
       title: "Mustang Jimbu Tempered Dal",
+      taste: "Garlicky, earthy, buttery crunch",
+      ayurveda: "Clears toxins & calms Vata",
       description: "Organic black and yellow mountain lentils simmered gently and tempered table-side with crackling Jimbu (wild mountain allium) sizzled in smoking pure ghee.",
       ingredients: "Himalayan Black Lentils, Wild Mustang Jimbu, Turmeric, Cumin"
     },
     {
-      category: "Liquid Gold",
-      title: "Pure Cow Ghee (Ghyu)",
+      category: "Vedic Liquid Gold",
+      nepali: "शुद्ध गाईको घ्यू (Pure Cow Ghee)",
+      title: "Pure Mountain Cow Ghee (Ghyu)",
+      taste: "Nutty, caramelized golden elixir",
+      ayurveda: "Boosts Ojas, absorbs fat-soluble herbs",
       description: "Clarified butter churned traditionally from grass-fed mountain cow milk. Poured generously over the hot rice to stimulate digestive fire and enhance spice assimilation.",
       ingredients: "Pure Clarified Mountain Butter (Cow Ghee)"
     },
     {
       category: "Fermented & Seasonal Greens",
+      nepali: "रायोकॊ साग र गुन्द्रुक (Saag & Gundruk)",
       title: "Rayo ko Saag & Gundruk Sadeko",
+      taste: "Pungent mustard bite, tangy crunch",
+      ayurveda: "Natural probiotic & prebiotic gut health",
       description: "Freshly harvested mountain mustard greens wok-tossed in mustard oil alongside sun-dried, naturally fermented Gundruk seasoned with chopped green chilies, coriander, and lemon.",
       ingredients: "Mountain Mustard Greens, Fermented Gundruk, Cold-Pressed Mustard Oil, Green Chili"
     },
     {
       category: "Wild Mountain Chutney",
+      nepali: "सिलौटोमा पिसेको टिमुर अचार (Timur Achar)",
       title: "Stone-Ground Timur Chutney",
+      taste: "Tingly citrus buzz, fiery & zesty",
+      ayurveda: "Ignites deep gastric secretions",
       description: "Wild Sichuan pepper (Timur) hand-crushed on granite Silauto stones with roasted mountain tomatoes, garlic cloves, and Himalayan rock salt, imparting a tingling, citrusy warmth.",
       ingredients: "Wild Timur Pepper, Roasted Tomatoes, Garlic, Rock Salt"
     }
   ];
 
+  let currentHotspotIndex = 0;
+
   function selectHotspot(index) {
+    currentHotspotIndex = index;
     const data = thaliHotspots[index];
     const card = document.getElementById('hotspotDisplayCard');
     
+    // Update pills styling
+    document.querySelectorAll('.thali-pill').forEach((btn, i) => {
+      if (i === index) {
+        btn.classList.remove('bg-[#482C20]', 'text-[#D7C39B]', 'border-[#B88B46]/40');
+        btn.classList.add('bg-[#B88B46]', 'text-[#2c1a12]', 'border-[#B88B46]');
+      } else {
+        btn.classList.remove('bg-[#B88B46]', 'text-[#2c1a12]', 'border-[#B88B46]');
+        btn.classList.add('bg-[#482C20]', 'text-[#D7C39B]', 'border-[#B88B46]/40');
+      }
+    });
+
+    // Update pin buttons styling
+    document.querySelectorAll('.hotspot-pin').forEach((pin, i) => {
+      if (i === index) {
+        pin.classList.add('scale-125', 'ring-4', 'ring-[#B88B46]');
+      } else {
+        pin.classList.remove('scale-125', 'ring-4', 'ring-[#B88B46]');
+      }
+    });
+
     // Smooth transition
     card.style.opacity = '0';
     card.style.transform = 'translateY(8px)';
     
     setTimeout(() => {
       document.getElementById('hotspotCategory').textContent = data.category;
+      document.getElementById('hotspotIndexBadge').textContent = `Item ${index + 1} of 6`;
+      document.getElementById('hotspotNepali').textContent = data.nepali;
       document.getElementById('hotspotTitle').textContent = data.title;
       document.getElementById('hotspotDescription').textContent = data.description;
+      document.getElementById('hotspotTaste').textContent = data.taste;
+      document.getElementById('hotspotAyurveda').textContent = data.ayurveda;
       document.getElementById('hotspotIngredients').textContent = data.ingredients;
       
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
-    }, 200);
+    }, 180);
   }
+
+  function navigateHotspot(direction) {
+    let nextIndex = (currentHotspotIndex + direction + thaliHotspots.length) % thaliHotspots.length;
+    selectHotspot(nextIndex);
+  }
+
+  // 3D Perspective Tilt for the Interactive Thali Platter
+  (function initThaliTilt() {
+    const platter = document.getElementById('interactiveThaliWrapper');
+    if (!platter) return;
+
+    platter.addEventListener('mousemove', (e) => {
+      const rect = platter.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 12;
+      platter.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+    });
+
+    platter.addEventListener('mouseleave', () => {
+      platter.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    });
+  })();
 
   // 3D Perspective Tilt on Mouse Movement for Hero Card
   (function initHero3dTilt() {
