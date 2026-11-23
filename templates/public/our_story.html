@@ -123,20 +123,52 @@
           </div>
         </div>
 
-        <!-- Right: Offset Curated Photograph with Regional Border Motif -->
-        <div class="lg:col-span-5 relative">
-          <!-- Offset Background Decorative Frame -->
-          <div class="absolute -inset-3 rounded-3xl border-2 border-[#B88B46]/40 transform translate-x-3 translate-y-3 pointer-events-none"></div>
+        <!-- Right: Offset Curated Photograph with Interactive 3D Perspective Tilt & Carousel -->
+        <div class="lg:col-span-5 relative perspective-1000">
+          <!-- Offset Background Decorative Frame with Subtle Gold Glow -->
+          <div class="absolute -inset-3 rounded-3xl border-2 border-[#B88B46]/40 transform translate-x-3 translate-y-3 pointer-events-none transition duration-500 group-hover:translate-x-4 group-hover:translate-y-4"></div>
           
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl organic-mask-1 bg-[#482C20]">
-            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80" 
-                 alt="High Himalayan passes and hills of Far-Western Nepal" 
-                 class="w-full h-[360px] sm:h-[420px] object-cover hover:scale-105 transition-transform duration-700">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#482C20]/80 via-transparent to-transparent"></div>
-            <div class="absolute bottom-5 left-5 right-5 text-white">
-              <span class="text-xs uppercase tracking-widest text-[#D7C39B] font-medium block">The Gateway of Mahakali & Seti</span>
-              <p class="font-cormorant text-lg sm:text-xl font-bold mt-0.5">Where Mountain Valleys Meet the Terai</p>
+          <!-- 3D Tilt Card Container -->
+          <div id="hero3dCard" 
+               class="relative rounded-2xl overflow-hidden shadow-2xl bg-[#482C20] border-2 border-[#D7C39B] transition-transform duration-300 ease-out preserve-3d cursor-pointer group"
+               style="transform-style: preserve-3d;">
+            
+            <img id="heroCardImage"
+                 src="/static/images/thakali_khana_brass_thali.jpg" 
+                 alt="Authentic Sudurpaschim Heritage Feast and Landscape" 
+                 class="w-full h-[380px] sm:h-[440px] object-cover transition-all duration-700 ease-out group-hover:scale-105">
+            
+            <!-- Atmospheric Dark Earth Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#2c1a12] via-[#2c1a12]/30 to-transparent pointer-events-none"></div>
+
+            <!-- Top Floating Badge -->
+            <div class="absolute top-4 left-4 z-20 flex items-center gap-2">
+              <span id="heroCardBadge" class="px-3 py-1 rounded-full bg-[#B88B46] text-[#2c1a12] text-xs font-bold uppercase tracking-wider shadow-md backdrop-blur-md">
+                Culinary & Cultural Hearth
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-black/40 text-[#D7C39B] text-[10px] font-semibold border border-[#B88B46]/40 backdrop-blur-md">
+                3D Interactive
+              </span>
             </div>
+
+            <!-- Image Switcher Pill Controls -->
+            <div class="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-black/50 p-1.5 rounded-full border border-white/20 backdrop-blur-md">
+              <button onclick="switchHeroImage(0, event)" class="hero-dot w-2.5 h-2.5 rounded-full bg-[#B88B46] transition-all hover:scale-125 focus:outline-none" title="Authentic Thakali Feast"></button>
+              <button onclick="switchHeroImage(1, event)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/50 transition-all hover:scale-125 focus:outline-none" title="Rana Tharu Artisans"></button>
+              <button onclick="switchHeroImage(2, event)" class="hero-dot w-2.5 h-2.5 rounded-full bg-white/50 transition-all hover:scale-125 focus:outline-none" title="Sacred Mountain Passes"></button>
+            </div>
+
+            <!-- Bottom Content Overlay with 3D Depth Elevation -->
+            <div class="absolute bottom-5 left-5 right-5 text-white z-20 transition-transform duration-300" style="transform: translateZ(30px);">
+              <span id="heroCardSub" class="text-xs uppercase tracking-widest text-[#D7C39B] font-medium block">The Gateway of Mahakali & Seti</span>
+              <p id="heroCardTitle" class="font-cormorant text-xl sm:text-2xl font-bold mt-0.5">Authentic Hand-Beaten Brassware & Mountain Ghee</p>
+              <p class="text-[11px] text-[#D7C39B]/80 mt-1 flex items-center gap-1.5 font-light">
+                <i data-lucide="rotate-3d" class="w-3.5 h-3.5 text-[#B88B46]"></i> Move your mouse to explore 3D tilt perspective • Tap dots to switch view
+              </p>
+            </div>
+
+            <!-- Dynamic Glare Highlight Element -->
+            <div id="cardGlare" class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none opacity-0 transition-opacity duration-300"></div>
           </div>
         </div>
 
@@ -980,6 +1012,91 @@
       
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
+    }, 200);
+  }
+
+  // 3D Perspective Tilt on Mouse Movement for Hero Card
+  (function initHero3dTilt() {
+    const card = document.getElementById('hero3dCard');
+    const glare = document.getElementById('cardGlare');
+    if (!card) return;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate tilt degrees (max 12 deg)
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      
+      if (glare) {
+        glare.style.opacity = '1';
+        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)`;
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      if (glare) {
+        glare.style.opacity = '0';
+      }
+    });
+  })();
+
+  // Hero Image Carousel Data
+  const heroCardSlides = [
+    {
+      img: "/static/images/thakali_khana_brass_thali.jpg",
+      badge: "Culinary & Cultural Hearth",
+      sub: "The Gateway of Mahakali & Seti",
+      title: "Authentic Hand-Beaten Brassware & Mountain Ghee"
+    },
+    {
+      img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=1000&q=80",
+      badge: "Heritage Artisanship",
+      sub: "Rana Tharu Traditions",
+      title: "Sacred Loom & Generational Metalwork"
+    },
+    {
+      img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80",
+      badge: "Western Himalayan Apex",
+      sub: "High Alpine Sanctuaries",
+      title: "Where Sacred Peaks Meet Pristine Meadows"
+    }
+  ];
+
+  function switchHeroImage(index, event) {
+    if (event) event.stopPropagation();
+    const data = heroCardSlides[index];
+    const imgEl = document.getElementById('heroCardImage');
+    const badgeEl = document.getElementById('heroCardBadge');
+    const subEl = document.getElementById('heroCardSub');
+    const titleEl = document.getElementById('heroCardTitle');
+    const dots = document.querySelectorAll('.hero-dot');
+
+    dots.forEach((dot, idx) => {
+      if (idx === index) {
+        dot.classList.remove('bg-white/50');
+        dot.classList.add('bg-[#B88B46]', 'scale-125');
+      } else {
+        dot.classList.remove('bg-[#B88B46]', 'scale-125');
+        dot.classList.add('bg-white/50');
+      }
+    });
+
+    imgEl.style.opacity = '0.3';
+    setTimeout(() => {
+      imgEl.src = data.img;
+      badgeEl.textContent = data.badge;
+      subEl.textContent = data.sub;
+      titleEl.textContent = data.title;
+      imgEl.style.opacity = '1';
     }, 200);
   }
 
