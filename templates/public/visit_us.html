@@ -93,16 +93,16 @@
           <p class="text-sm sm:text-base text-darkEspresso/75 mt-1.5">Book ahead to ensure immediate seating for your family or gathering.</p>
         </div>
 
-        <form method="POST" action="{% url 'visit_us' %}" class="space-y-5 text-sm">
+        <form method="POST" action="{% url 'visit_us' %}" autocomplete="off" class="space-y-5 text-sm">
           {% csrf_token %}
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label class="block font-semibold text-deepBrown mb-1.5">Full Name *</label>
-              <input type="text" name="name" required placeholder="Aayush Shrestha" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+              <input type="text" name="name" required autocomplete="off" placeholder="Aayush Shrestha" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
             </div>
             <div>
               <label class="block font-semibold text-deepBrown mb-1.5">Contact Phone (Nepal) *</label>
-              <input type="tel" name="phone" required placeholder="98XXXXXXXX" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+              <input type="tel" name="phone" required autocomplete="off" placeholder="98XXXXXXXX" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
             </div>
           </div>
 
@@ -119,22 +119,22 @@
             </div>
             <div>
               <label class="block font-semibold text-deepBrown mb-1.5">Date *</label>
-              <input type="date" name="date" required class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+              <input type="date" name="date" required autocomplete="off" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
             </div>
             <div>
               <label class="block font-semibold text-deepBrown mb-1.5">Preferred Time *</label>
-              <input type="time" name="time" required value="19:00" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+              <input type="time" name="time" required autocomplete="off" value="19:00" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
             </div>
           </div>
 
           <div>
             <label class="block font-semibold text-deepBrown mb-1.5">Email Address (Optional)</label>
-            <input type="email" name="email" placeholder="guest@example.com" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+            <input type="email" name="email" autocomplete="off" placeholder="guest@example.com" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
           </div>
 
           <div>
             <label class="block font-semibold text-deepBrown mb-1.5">Special Dietary / Seating Requests</label>
-            <textarea name="special_requests" rows="4" placeholder="High chair required, spice level preferences, celebration..." class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta"></textarea>
+            <textarea name="special_requests" rows="4" autocomplete="off" placeholder="High chair required, spice level preferences, celebration..." class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta"></textarea>
           </div>
 
           <button type="submit" class="btn-primary w-full py-4 justify-center text-base font-semibold shadow-md">

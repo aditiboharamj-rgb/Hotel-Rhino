@@ -620,7 +620,7 @@
       <button onclick="closeKhanaModal()" class="text-darkEspresso/60 hover:text-deepBrown p-1">✕</button>
     </div>
     
-    <form id="khanaForm" onsubmit="submitKhanaSet(event)" class="space-y-4 text-xs" enctype="multipart/form-data">
+    <form id="khanaForm" onsubmit="submitKhanaSet(event)" autocomplete="off" class="space-y-4 text-xs" enctype="multipart/form-data">
       {% csrf_token %}
       <div>
         <label class="font-bold text-deepBrown block mb-1">Set Name *</label>
@@ -684,7 +684,7 @@
       <button onclick="closeNotificationModal()" class="text-darkEspresso/60 hover:text-deepBrown p-1">✕</button>
     </div>
     
-    <form id="notificationForm" onsubmit="submitNotification(event)" class="space-y-4 text-xs" enctype="multipart/form-data">
+    <form id="notificationForm" onsubmit="submitNotification(event)" autocomplete="off" class="space-y-4 text-xs" enctype="multipart/form-data">
       {% csrf_token %}
       <div>
         <label class="font-bold text-deepBrown block mb-1">Headline Title *</label>

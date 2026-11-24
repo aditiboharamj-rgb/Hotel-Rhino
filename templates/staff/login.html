@@ -49,12 +49,12 @@
     </div>
     {% endif %}
 
-    <form method="POST" action="{% url 'staff_login' %}" class="space-y-4 text-xs">
+    <form method="POST" action="{% url 'staff_login' %}" autocomplete="off" class="space-y-4 text-xs">
       {% csrf_token %}
       <div>
         <label class="block font-semibold text-deepBrown mb-1">Username / Staff ID</label>
         <div class="relative">
-          <input type="text" name="username" required autofocus placeholder="admin / cashier / waiter" class="w-full pl-10 pr-4 py-3 rounded-xl border border-tradBeige bg-creamBg/40 focus:outline-none focus:border-terracotta">
+          <input type="text" name="username" required autofocus autocomplete="off" placeholder="admin / cashier / waiter" class="w-full pl-10 pr-4 py-3 rounded-xl border border-tradBeige bg-creamBg/40 focus:outline-none focus:border-terracotta">
           <i data-lucide="user" class="w-4 h-4 text-darkEspresso/40 absolute left-3.5 top-3.5"></i>
         </div>
       </div>
