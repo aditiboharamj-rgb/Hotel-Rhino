@@ -151,11 +151,11 @@ def gallery_view(request):
 def guest_experiences_view(request):
     reviews = CustomerReview.objects.filter(is_approved=True)
     if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        phone = request.POST.get('phone', '').strip()
+        name = (request.POST.get('guest_fullname') or request.POST.get('name') or '').strip()
+        phone = (request.POST.get('guest_contact_phone') or request.POST.get('phone') or '').strip()
         rating = int(request.POST.get('rating', 3))
-        comment = request.POST.get('comment', '').strip()
-        city = request.POST.get('city', 'Dhangadhi').strip()
+        comment = (request.POST.get('guest_comment') or request.POST.get('comment') or '').strip()
+        city = (request.POST.get('city') or 'Dhangadhi').strip()
         if name and comment:
             CustomerReview.objects.create(
                 name=name, 
@@ -171,13 +171,13 @@ def guest_experiences_view(request):
 
 def visit_us_view(request):
     if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        phone = request.POST.get('phone', '').strip()
-        email = request.POST.get('email', '').strip()
+        name = (request.POST.get('guest_fullname') or request.POST.get('name') or '').strip()
+        phone = (request.POST.get('guest_contact_phone') or request.POST.get('phone') or '').strip()
+        email = (request.POST.get('guest_email_address') or request.POST.get('email') or '').strip()
         guests = int(request.POST.get('guests', 2))
         res_date = request.POST.get('date')
         res_time = request.POST.get('time')
-        special = request.POST.get('special_requests', '').strip()
+        special = (request.POST.get('special_requests') or '').strip()
 
         if name and phone and res_date and res_time:
             TableReservation.objects.create(

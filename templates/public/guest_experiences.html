@@ -126,21 +126,52 @@
 
           <form method="POST" action="{% url 'guest_experiences' %}" autocomplete="off" class="space-y-3.5 text-xs">
             {% csrf_token %}
+            <!-- Anti-autofill decoy inputs -->
+            <input type="text" style="display:none" name="fakeusernameremembered"/>
+            <input type="password" style="display:none" name="fakepasswordremembered"/>
+
             <input type="hidden" name="rating" id="hiddenRatingInput" value="3">
 
             <div>
               <label class="block font-medium text-deepBrown mb-1">Your Full Name *</label>
-              <input type="text" name="name" required autocomplete="off" placeholder="e.g. Ramesh Thapa" class="w-full px-3.5 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta">
+              <input type="text" 
+                     name="guest_fullname" 
+                     id="review_guest_fullname"
+                     required 
+                     autocomplete="one-time-code" 
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"
+                     placeholder="e.g. Ramesh Thapa" 
+                     class="w-full px-3.5 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta">
             </div>
 
             <div>
               <label class="block font-medium text-deepBrown mb-1">Phone Number *</label>
-              <input type="tel" name="phone" required autocomplete="off" placeholder="e.g. 98XXXXXXXX" class="w-full px-3.5 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta">
+              <input type="tel" 
+                     name="guest_contact_phone" 
+                     id="review_guest_contact_phone"
+                     required 
+                     autocomplete="one-time-code" 
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"
+                     placeholder="e.g. 98XXXXXXXX" 
+                     class="w-full px-3.5 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta">
             </div>
 
             <div>
               <label class="block font-medium text-deepBrown mb-1">Your Feedback / Review *</label>
-              <textarea name="comment" rows="3" required autocomplete="off" placeholder="Describe what we could do better..." class="w-full px-3.5 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta"></textarea>
+              <textarea name="guest_comment" 
+                        id="review_guest_comment"
+                        rows="3" 
+                        required 
+                        autocomplete="one-time-code" 
+                        autocorrect="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        placeholder="Describe what we could do better..." 
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-tradBeige bg-creamBg/50 text-xs focus:outline-none focus:border-terracotta"></textarea>
             </div>
 
             <button type="submit" class="btn-primary w-full py-3 justify-center text-xs font-semibold shadow-md">

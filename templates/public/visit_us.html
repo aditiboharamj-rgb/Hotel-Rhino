@@ -95,14 +95,36 @@
 
         <form method="POST" action="{% url 'visit_us' %}" autocomplete="off" class="space-y-5 text-sm">
           {% csrf_token %}
+          <!-- Anti-autofill decoy inputs -->
+          <input type="text" style="display:none" name="fakeusernameremembered"/>
+          <input type="password" style="display:none" name="fakepasswordremembered"/>
+
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label class="block font-semibold text-deepBrown mb-1.5">Full Name *</label>
-              <input type="text" name="name" required autocomplete="off" placeholder="Aayush Shrestha" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+              <input type="text" 
+                     name="guest_fullname" 
+                     id="guest_fullname"
+                     required 
+                     autocomplete="one-time-code" 
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"
+                     placeholder="Aayush Shrestha" 
+                     class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
             </div>
             <div>
               <label class="block font-semibold text-deepBrown mb-1.5">Contact Phone (Nepal) *</label>
-              <input type="tel" name="phone" required autocomplete="off" placeholder="98XXXXXXXX" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+              <input type="tel" 
+                     name="guest_contact_phone" 
+                     id="guest_contact_phone"
+                     required 
+                     autocomplete="one-time-code" 
+                     autocorrect="off"
+                     autocapitalize="off"
+                     spellcheck="false"
+                     placeholder="98XXXXXXXX" 
+                     class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
             </div>
           </div>
 
@@ -129,12 +151,27 @@
 
           <div>
             <label class="block font-semibold text-deepBrown mb-1.5">Email Address (Optional)</label>
-            <input type="email" name="email" autocomplete="off" placeholder="guest@example.com" class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
+            <input type="email" 
+                   name="guest_email_address" 
+                   id="guest_email_address"
+                   autocomplete="one-time-code" 
+                   autocorrect="off"
+                   autocapitalize="off"
+                   spellcheck="false"
+                   placeholder="guest@example.com" 
+                   class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta">
           </div>
 
           <div>
             <label class="block font-semibold text-deepBrown mb-1.5">Special Dietary / Seating Requests</label>
-            <textarea name="special_requests" rows="4" autocomplete="off" placeholder="High chair required, spice level preferences, celebration..." class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta"></textarea>
+            <textarea name="special_requests" 
+                      rows="4" 
+                      autocomplete="one-time-code" 
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      placeholder="High chair required, spice level preferences, celebration..." 
+                      class="w-full px-4 py-3 rounded-xl border border-tradBeige bg-creamBg/50 text-sm focus:outline-none focus:border-terracotta"></textarea>
           </div>
 
           <button type="submit" class="btn-primary w-full py-4 justify-center text-base font-semibold shadow-md">
