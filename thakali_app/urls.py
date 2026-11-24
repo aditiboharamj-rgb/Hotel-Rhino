@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/dashboard/quick-update/', views.dashboard_quick_update_api, name='dashboard_quick_update_api'),
     path('api/dashboard/khana-set/save/', views.dashboard_save_khana_set_api, name='dashboard_save_khana_set_api'),
     path('api/dashboard/notification/save/', views.dashboard_save_notification_api, name='dashboard_save_notification_api'),
+    path('api/dashboard/logo/upload/', views.dashboard_upload_logo_api, name='dashboard_upload_logo_api'),
 
     # APIs & POS Actions
     path('api/table/<int:table_id>/open-session/', views.open_table_session_api, name='open_table_session_api'),

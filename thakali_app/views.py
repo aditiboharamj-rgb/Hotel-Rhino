@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from django.db.models import Sum, Count, Q
-from django.db import transaction
+from django.db.models import Sum, Count, Q, Avg
+from django.db import models, transaction
 from django.contrib import messages
 from django.conf import settings
 from reportlab.lib.pagesizes import letter
@@ -992,3 +992,60 @@ def live_sync_api(request):
         'service_requests': service_requests,
         'timestamp': timezone.now().isoformat()
     })
+
+# LOGO MANAGEMENT UPLOAD API FOR DASHBOARD
+@login_required
+@require_POST
+def dashboard_upload_logo_api(request):
+    """
+    Secure endpoint allowing dashboard managers to upload a new brand logo.
+    Saves to media/brand_logo.png and also syncs static/images/hotel_rhino_logo.png
+    so that both static and dynamic rendering resolve smoothly without breaking admin routes.
+    """
+    logo_file = request.FILES.get('logo')
+    if not logo_file:
+        return JsonResponse({'status': 'error', 'message': 'No file provided.'}, status=400)
+
+    # Validate file extension
+    ext = os.path.splitext(logo_file.name)[1].lower()
+    if ext not in ['.png', '.jpg', '.jpeg', '.webp', '.svg']:
+        return JsonResponse({'status': 'error', 'message': 'Invalid format. Please upload PNG, JPG, WEBP, or SVG.'}, status=400)
+
+    # Size check (max 5MB)
+    if logo_file.size > 5 * 1024 * 1024:
+        return JsonResponse({'status': 'error', 'message': 'File too large. Maximum allowed size is 5MB.'}, status=400)
+
+    try:
+        # Read content
+        content = logo_file.read()
+
+        # Destination paths
+        media_logo = os.path.join(settings.MEDIA_ROOT, 'brand_logo.png')
+        static_logo = os.path.join(settings.BASE_DIR, 'static', 'images', 'hotel_rhino_logo.png')
+        raino_logo = os.path.join(settings.BASE_DIR, 'static', 'images', 'hotel_raino_logo.png')
+
+        os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
+        os.makedirs(os.path.dirname(static_logo), exist_ok=True)
+
+        # Write to media root
+        with open(media_logo, 'wb') as f:
+            f.write(content)
+
+        # Also write to static directories
+        with open(static_logo, 'wb') as f:
+            f.write(content)
+        with open(raino_logo, 'wb') as f:
+            f.write(content)
+
+        # Audit log
+        log_audit(request.user, 'LOGO_UPLOAD', 'Updated brand logo from dashboard', request)
+
+        logo_url = f"/media/brand_logo.png?v={int(timezone.now().timestamp())}"
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Brand logo updated successfully!',
+            'logo_url': logo_url
+        })
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': f'Failed to save logo: {str(e)}'}, status=500)
+
