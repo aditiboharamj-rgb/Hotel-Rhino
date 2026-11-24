@@ -6,71 +6,267 @@
 {% block content %}
 <div class="space-y-6">
 
-  <!-- Info Notice -->
-  <div class="bg-white p-4 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between text-xs">
+  <!-- Info Notice & Top Actions -->
+  <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
-      <h3 class="font-heading font-bold text-base text-deepBrown">Authentic Himalayan Thakali Sets Catalog</h3>
-      <p class="text-darkEspresso/70">Update prices, toggle instant availability, or manage kitchen portions.</p>
+      <div class="flex items-center gap-2">
+        <span class="p-2 bg-terracotta/10 text-terracotta rounded-xl">
+          <i data-lucide="utensils" class="w-5 h-5"></i>
+        </span>
+        <h3 class="font-heading font-bold text-lg text-deepBrown">Authentic Himalayan Thakali Sets Catalog</h3>
+      </div>
+      <p class="text-xs text-darkEspresso/70 mt-1">Add several items simultaneously, adjust prices, or toggle live kitchen availability.</p>
     </div>
-    <span class="px-3 py-1 bg-terracotta/20 text-terracotta rounded-full font-bold">
-      Thakali Cuisine Only
-    </span>
+    
+    <div class="flex items-center gap-2.5">
+      <button onclick="toggleSection('batchAddCard')" class="px-3.5 py-2 rounded-xl bg-warmSand/30 text-deepBrown font-bold text-xs hover:bg-warmSand/50 border border-warmSand/50 flex items-center gap-1.5 transition">
+        <i data-lucide="layers" class="w-4 h-4 text-terracotta"></i> Bulk Add Several Items
+      </button>
+      <button onclick="toggleSection('singleAddCard')" class="btn-primary text-xs flex items-center gap-1.5 py-2 px-4 rounded-xl shadow-sm">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i> Add Single Item
+      </button>
+    </div>
   </div>
 
-  <!-- Items Table -->
+  <!-- Messages Alert -->
+  {% if messages %}
+    <div class="space-y-2">
+      {% for msg in messages %}
+        <div class="p-3.5 rounded-xl text-xs font-semibold flex items-center justify-between {% if msg.tags == 'error' %}bg-errorRed/15 text-errorRed border border-errorRed/30{% else %}bg-successGreen/15 text-successGreen border border-successGreen/30{% endif %}">
+          <span>{{ msg }}</span>
+          <button onclick="this.parentElement.remove()" class="text-darkEspresso/40 hover:text-darkEspresso">✕</button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- ==========================================
+       SECTION 1: BULK ADD SEVERAL ITEMS (QUICK MULTI-ADD)
+       ========================================== -->
+  <div id="batchAddCard" class="bg-white p-6 rounded-2xl border-2 border-terracotta/30 shadow-md space-y-4 transition-all duration-300">
+    <div class="flex items-center justify-between border-b border-tradBeige/60 pb-3">
+      <div class="flex items-center gap-2.5">
+        <div class="p-2 bg-terracotta text-white rounded-xl">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-base text-deepBrown">Add Several Items at Once (Bulk Paste / Enter)</h4>
+          <p class="text-[11px] text-darkEspresso/60">Type or paste multiple Thakali sets — one item per line: <code class="bg-creamBg px-1.5 py-0.5 rounded border border-tradBeige font-mono text-terracotta">Name | Price | Category</code></p>
+        </div>
+      </div>
+      <button type="button" onclick="toggleSection('batchAddCard')" class="text-xs text-darkEspresso/50 hover:text-deepBrown p-1">✕ Close</button>
+    </div>
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="batch_create">
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="md:col-span-2 space-y-2">
+          <label class="text-xs font-bold text-deepBrown block">Items List (One per line) *</label>
+          <textarea name="batch_items" rows="5" required 
+                    placeholder="Mustang Thakali Veg Special Set | 320 | VEG&#10;Himalayan Sukuti Thakali Thali | 780 | MUTTON&#10;Local Free-Range Duck Thakali Set | 620 | CHICKEN&#10;Trisuli River Trout Thakali Set | 680 | FISH" 
+                    class="w-full font-mono text-xs p-3.5 bg-creamBg/60 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none"></textarea>
+          <div class="flex items-center justify-between text-[11px] text-darkEspresso/60">
+            <span>Example: <strong>Royal Khasi Thali | 750 | MUTTON</strong></span>
+            <span>Category options: <strong class="text-deepBrown">VEG, CHICKEN, MUTTON, FISH</strong></span>
+          </div>
+        </div>
+
+        <div class="space-y-4 bg-creamBg/40 p-4 rounded-xl border border-tradBeige flex flex-col justify-between">
+          <div class="space-y-3">
+            <span class="text-xs font-bold text-deepBrown block">Batch Defaults</span>
+            <div>
+              <label class="text-[11px] text-darkEspresso/70 block mb-1">Fallback Category:</label>
+              <select name="default_category" class="w-full text-xs px-3 py-2 rounded-xl bg-white border border-tradBeige focus:border-terracotta focus:outline-none">
+                <option value="VEG">Vegetarian Thakali Khana Set</option>
+                <option value="CHICKEN">Chicken Thakali Khana Set</option>
+                <option value="MUTTON">Mutton Thakali Khana Set</option>
+                <option value="FISH">Fish Thakali Khana Set</option>
+              </select>
+            </div>
+            <p class="text-[10px] text-darkEspresso/60 leading-relaxed">
+              All parsed items will be automatically marked available and configured with traditional refillable brass thali garnishes.
+            </p>
+          </div>
+
+          <button type="submit" class="btn-primary text-xs w-full py-2.5 rounded-xl flex items-center justify-center gap-2 shadow-sm">
+            <i data-lucide="check-check" class="w-4 h-4"></i> Create All Items Now
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- ==========================================
+       SECTION 2: ADD SINGLE ITEM (WITH PHOTO & DETAILS)
+       ========================================== -->
+  <div id="singleAddCard" class="hidden bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4 transition-all duration-300">
+    <div class="flex items-center justify-between border-b border-tradBeige/60 pb-3">
+      <div class="flex items-center gap-2.5">
+        <div class="p-2 bg-deepBrown text-white rounded-xl">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h4 class="font-heading font-bold text-base text-deepBrown">Add Single Khana Set with Photo</h4>
+          <p class="text-[11px] text-darkEspresso/60">Create a specific menu item with custom description, image, and spice level.</p>
+        </div>
+      </div>
+      <button type="button" onclick="toggleSection('singleAddCard')" class="text-xs text-darkEspresso/50 hover:text-deepBrown p-1">✕ Close</button>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4 text-xs">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="create_single">
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Set Name *</label>
+          <input type="text" name="name" required placeholder="e.g. Royal Mustang Khasi Thali Set" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none bg-creamBg/40">
+        </div>
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Category *</label>
+          <select name="category" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none bg-creamBg/40">
+            <option value="VEG">Vegetarian Thakali Khana Set</option>
+            <option value="CHICKEN">Chicken Thakali Khana Set (Local Kukhura)</option>
+            <option value="MUTTON">Mutton Thakali Khana Set (Himalayan Khasi)</option>
+            <option value="FISH">Fish Thakali Khana Set (Fresh River Fish)</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Price (NPR) *</label>
+          <input type="number" step="10" name="price_npr" required placeholder="e.g. 550" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none bg-creamBg/40">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Portion & Refill Guarantee</label>
+          <input type="text" name="portion_info" value="Complete Himalayan Thali with Unlimited Rice, Dal & Tarkari Refills" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none bg-creamBg/40">
+        </div>
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Dish Photo (Optional)</label>
+          <input type="file" name="image" accept="image/*" class="w-full p-1.5 rounded-xl border border-tradBeige bg-creamBg/40 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-terracotta file:text-white file:text-xs">
+        </div>
+      </div>
+
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Items Included in this Thali Set</label>
+        <textarea name="traditional_items" rows="2" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none bg-creamBg/40">Jimbu-tempered Mustang Dal, Aromatic Steamed Rice (Bhat), Seasonal Himalayan Tarkari, Rayo ko Saag, Gundruk Sadeko, Timur Achar, Crispy Papad, Pure Shingati Chyangra Ghee</textarea>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button type="submit" class="btn-primary text-xs py-2.5 px-6 rounded-xl flex items-center gap-2 shadow-sm">
+          <i data-lucide="plus" class="w-4 h-4"></i> Save & Add to Menu
+        </button>
+        <button type="button" onclick="toggleSection('singleAddCard')" class="px-4 py-2 text-darkEspresso/60 hover:text-deepBrown">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ==========================================
+       CURRENT MENU ITEMS TABLE
+       ========================================== -->
   <div class="bg-white rounded-2xl border border-tradBeige shadow-sm overflow-hidden">
-    <table class="w-full text-left text-xs">
-      <thead class="bg-creamBg border-b border-tradBeige text-deepBrown font-heading">
-        <tr>
-          <th class="p-4">Khana Set</th>
-          <th class="p-4">Category</th>
-          <th class="p-4">Price (NPR)</th>
-          <th class="p-4">Status</th>
-          <th class="p-4 text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-creamBg">
-        {% for ks in khana_sets %}
-        <tr class="hover:bg-creamBg/50 transition">
-          <td class="p-4">
-            <span class="font-bold text-deepBrown block text-sm">{{ ks.name }}</span>
-            <span class="text-[11px] text-darkEspresso/60 line-clamp-1">{{ ks.portion_info }}</span>
-          </td>
-          <td class="p-4 font-semibold text-mutedOlive">
-            {{ ks.get_category_display }}
-          </td>
-          <td class="p-4">
-            <form method="POST" class="flex items-center gap-2">
-              {% csrf_token %}
-              <input type="hidden" name="action" value="update_price">
-              <input type="hidden" name="set_id" value="{{ ks.id }}">
-              <input type="number" step="10" name="price" value="{{ ks.price_npr }}" class="w-24 px-2 py-1 rounded-lg border border-tradBeige text-xs font-bold text-deepBrown">
-              <button type="submit" class="px-2.5 py-1 bg-deepBrown text-white rounded-lg text-[10px] font-semibold hover:bg-terracotta transition">Update</button>
-            </form>
-          </td>
-          <td class="p-4">
-            {% if ks.is_available %}
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-successGreen/20 text-successGreen">Available</span>
-            {% else %}
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-errorRed/20 text-errorRed">Sold Out</span>
-            {% endif %}
-          </td>
-          <td class="p-4 text-right">
-            <form method="POST" class="inline">
-              {% csrf_token %}
-              <input type="hidden" name="action" value="toggle_availability">
-              <input type="hidden" name="set_id" value="{{ ks.id }}">
-              <button type="submit" class="btn-outline text-[11px] py-1 px-3">
-                {% if ks.is_available %}Mark Unavailable{% else %}Mark Available{% endif %}
-              </button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="p-4 border-b border-tradBeige/60 bg-creamBg/40 flex items-center justify-between">
+      <span class="font-bold text-xs text-deepBrown">Active Catalog ({{ khana_sets|length }} Items)</span>
+      <span class="text-[11px] text-darkEspresso/60">Manage direct price updates, kitchen status, or deletion</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-creamBg border-b border-tradBeige text-deepBrown font-heading">
+          <tr>
+            <th class="p-4">Khana Set Item</th>
+            <th class="p-4">Category</th>
+            <th class="p-4">Price (NPR)</th>
+            <th class="p-4">Kitchen Availability</th>
+            <th class="p-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-creamBg">
+          {% for ks in khana_sets %}
+          <tr class="hover:bg-creamBg/50 transition">
+            <td class="p-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl overflow-hidden bg-warmSand/30 flex-shrink-0 border border-tradBeige">
+                  {% if ks.image %}
+                    <img src="{{ ks.image.url }}" alt="{{ ks.name }}" class="w-full h-full object-cover">
+                  {% else %}
+                    <img src="/static/images/thakali_khana_brass_thali.jpg" alt="{{ ks.name }}" class="w-full h-full object-cover">
+                  {% endif %}
+                </div>
+                <div>
+                  <span class="font-bold text-deepBrown block text-sm">{{ ks.name }}</span>
+                  <span class="text-[11px] text-darkEspresso/60 line-clamp-1">{{ ks.portion_info }}</span>
+                </div>
+              </div>
+            </td>
+            <td class="p-4 font-semibold text-mutedOlive">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold {% if ks.category == 'VEG' %}bg-successGreen/15 text-successGreen{% else %}bg-terracotta/15 text-terracotta{% endif %}">
+                {{ ks.get_category_display }}
+              </span>
+            </td>
+            <td class="p-4">
+              <form method="POST" class="flex items-center gap-2">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update_price">
+                <input type="hidden" name="set_id" value="{{ ks.id }}">
+                <input type="number" step="10" name="price" value="{{ ks.price_npr|floatformat:0 }}" class="w-24 px-2 py-1 rounded-lg border border-tradBeige text-xs font-bold text-deepBrown bg-creamBg text-right">
+                <button type="submit" class="px-2.5 py-1 bg-deepBrown text-white rounded-lg text-[10px] font-semibold hover:bg-terracotta transition">Update</button>
+              </form>
+            </td>
+            <td class="p-4">
+              <form method="POST" class="inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="toggle_availability">
+                <input type="hidden" name="set_id" value="{{ ks.id }}">
+                {% if ks.is_available %}
+                  <button type="submit" class="px-3 py-1 rounded-full text-[10px] font-bold bg-successGreen/20 text-successGreen hover:bg-errorRed/20 hover:text-errorRed transition">
+                    ● Available (Click to Pause)
+                  </button>
+                {% else %}
+                  <button type="submit" class="px-3 py-1 rounded-full text-[10px] font-bold bg-errorRed/20 text-errorRed hover:bg-successGreen/20 hover:text-successGreen transition">
+                    ○ Sold Out (Click to Activate)
+                  </button>
+                {% endif %}
+              </form>
+            </td>
+            <td class="p-4 text-right space-x-2">
+              <form method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete {{ ks.name|escapejs }}?');">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete_set">
+                <input type="hidden" name="set_id" value="{{ ks.id }}">
+                <button type="submit" class="text-errorRed/70 hover:text-errorRed p-1 rounded hover:bg-errorRed/10 transition" title="Delete Item">
+                  <i data-lucide="trash-2" class="w-4 h-4 inline"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="p-8 text-center text-xs text-darkEspresso/50">
+              No menu items found. Use the buttons above to add items to your catalog.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
-{% endblock %}
 
+<script>
+  function toggleSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.toggle('hidden');
+      if (!el.classList.contains('hidden')) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  }
+</script>
+{% endblock %}

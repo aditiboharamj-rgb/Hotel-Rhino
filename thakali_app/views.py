@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.utils.text import slugify
 from django.db.models import Sum, Count, Q, Avg
 from django.db import models, transaction
 from django.contrib import messages
@@ -918,8 +919,100 @@ def khana_set_management_view(request):
             ks.save()
             messages.success(request, f"Price updated for {ks.name}.")
             return redirect('staff_khana_sets')
+        elif action == 'create_single':
+            name = request.POST.get('name', '').strip()
+            category = request.POST.get('category', 'VEG')
+            price = request.POST.get('price_npr', 0)
+            portion_info = request.POST.get('portion_info', '').strip()
+            description = request.POST.get('description', '').strip()
+            traditional_items = request.POST.get('traditional_items', '').strip()
+            spice_level = request.POST.get('spice_level', 'Mild to Medium')
+            image_file = request.FILES.get('image')
 
-    sets = KhanaSet.objects.all().order_by('order_priority')
+            if name and price:
+                base_slug = slugify(name) or f"khana-set-{int(timezone.now().timestamp())}"
+                slug = base_slug
+                counter = 1
+                while KhanaSet.objects.filter(slug=slug).exists():
+                    slug = f"{base_slug}-{counter}"
+                    counter += 1
+
+                ks = KhanaSet.objects.create(
+                    name=name,
+                    slug=slug,
+                    category=category,
+                    price_npr=Decimal(price),
+                    portion_info=portion_info or "Complete Himalayan Thali with Unlimited Rice, Dal & Tarkari Refills",
+                    description=description or f"Authentic Thakali set: {name}",
+                    traditional_items=traditional_items or "Jimbu-tempered Mustang Dal, Steamed Rice, Himalayan Tarkari, Rayo ko Saag, Gundruk Sadeko, Timur Achar, Crispy Papad, Pure Mountain Ghee",
+                    spice_level=spice_level,
+                    is_available=True,
+                    is_featured=True,
+                    is_enabled_by_admin=True
+                )
+                if image_file:
+                    ks.image = image_file
+                    ks.save()
+                messages.success(request, f"Successfully created new item: {ks.name}!")
+            else:
+                messages.error(request, "Name and Price are required.")
+            return redirect('staff_khana_sets')
+
+        elif action == 'batch_create':
+            raw_text = request.POST.get('batch_items', '').strip()
+            category_default = request.POST.get('default_category', 'VEG')
+            created_count = 0
+
+            # Each line: Name | Price | Category (optional) | Portion Info (optional)
+            lines = [line.strip() for line in raw_text.splitlines() if line.strip()]
+            for line in lines:
+                parts = [p.strip() for p in line.split('|')]
+                if len(parts) >= 2:
+                    item_name = parts[0]
+                    try:
+                        item_price = Decimal(parts[1].replace('NPR', '').replace(',', '').strip())
+                    except Exception:
+                        continue
+
+                    item_category = parts[2].upper() if len(parts) > 2 and parts[2].upper() in ['VEG', 'CHICKEN', 'MUTTON', 'FISH'] else category_default
+                    item_portion = parts[3] if len(parts) > 3 else "Complete Himalayan Thali with Unlimited Rice, Dal & Tarkari Refills"
+
+                    base_slug = slugify(item_name) or f"item-{int(timezone.now().timestamp())}-{created_count}"
+                    slug = base_slug
+                    counter = 1
+                    while KhanaSet.objects.filter(slug=slug).exists():
+                        slug = f"{base_slug}-{counter}"
+                        counter += 1
+
+                    KhanaSet.objects.create(
+                        name=item_name,
+                        slug=slug,
+                        category=item_category,
+                        price_npr=item_price,
+                        portion_info=item_portion,
+                        description=f"Authentic Himalayan Thakali {item_name}",
+                        traditional_items="Mustang Dal, Steamed Rice, Seasonal Tarkari, Rayo ko Saag, Gundruk Sadeko, Timur Achar, Crispy Papad, Pure Mountain Ghee",
+                        is_available=True,
+                        is_featured=True,
+                        is_enabled_by_admin=True
+                    )
+                    created_count += 1
+
+            if created_count > 0:
+                messages.success(request, f"Successfully added {created_count} items in bulk!")
+            else:
+                messages.error(request, "No valid items could be parsed. Format each line as: Name | Price")
+            return redirect('staff_khana_sets')
+
+        elif action == 'delete_set':
+            set_id = request.POST.get('set_id')
+            ks = get_object_or_404(KhanaSet, id=set_id)
+            set_name = ks.name
+            ks.delete()
+            messages.success(request, f"Item '{set_name}' deleted successfully.")
+            return redirect('staff_khana_sets')
+
+    sets = KhanaSet.objects.all().order_by('order_priority', 'id')
     return render(request, 'staff/khana_sets_manage.html', {'khana_sets': sets})
 
 # SALES & REPORTS
