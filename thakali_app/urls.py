@@ -20,8 +20,9 @@ urlpatterns = [
     path('staff/login/', views.staff_login_view, name='staff_login'),
     path('staff/logout/', views.staff_logout_view, name='staff_logout'),
 
-    # Staff RMS & POS
-    path('staff/dashboard/', views.staff_dashboard_view, name='staff_dashboard'),
+    # Staff RMS & POS & Unified Dashboard
+    path('dashboard/', views.unified_dashboard_view, name='dashboard'),
+    path('staff/dashboard/', views.unified_dashboard_view, name='staff_dashboard'),
     path('staff/tables/', views.table_management_view, name='staff_tables'),
     path('staff/pos/', views.pos_view, name='staff_pos'),
     path('staff/kitchen/', views.kitchen_display_view, name='staff_kitchen'),
@@ -32,6 +33,11 @@ urlpatterns = [
     path('staff/reservations/', views.reservations_view, name='staff_reservations'),
     path('staff/customers/', views.customers_view, name='staff_customers'),
     path('staff/settings/', views.settings_view, name='staff_settings'),
+
+    # Dashboard In-Place Real-Time Update APIs
+    path('api/dashboard/quick-update/', views.dashboard_quick_update_api, name='dashboard_quick_update_api'),
+    path('api/dashboard/khana-set/save/', views.dashboard_save_khana_set_api, name='dashboard_save_khana_set_api'),
+    path('api/dashboard/notification/save/', views.dashboard_save_notification_api, name='dashboard_save_notification_api'),
 
     # APIs & POS Actions
     path('api/table/<int:table_id>/open-session/', views.open_table_session_api, name='open_table_session_api'),

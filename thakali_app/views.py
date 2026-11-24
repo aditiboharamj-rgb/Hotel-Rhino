@@ -22,8 +22,20 @@ from reportlab.lib import colors
 from .models import (
     StaffProfile, RestaurantTable, TableSession, KhanaSet,
     Customer, Order, OrderItem, Bill, Payment,
-    CustomerServiceRequest, TableReservation, CustomerReview, AuditLog
+    CustomerServiceRequest, TableReservation, CustomerReview, PushNotification, AuditLog
 )
+
+# Honeypot: Blocked /admin/ path
+def blocked_admin_honeypot_view(request, subpath=None):
+    ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
+    AuditLog.objects.create(
+        user=request.user if getattr(request.user, 'is_authenticated', False) else None,
+        action='BLOCKED_ADMIN_PROBE',
+        details=f"Unauthorized probe on /admin/{subpath or ''} from IP {ip}",
+        ip_address=ip
+    )
+    from django.http import Http404
+    raise Http404("Page not found. Admin has been relocated to secure credentials.")
 
 # Helper: Log user audit actions
 def log_audit(user, action, details, request=None):
@@ -323,17 +335,18 @@ def staff_logout_view(request):
 
 
 # ==========================================
-# RESTAURANT ADMIN DASHBOARD & RMS
+# RESTAURANT UNIFIED ALL-IN-ONE DASHBOARD & RMS
 # ==========================================
 
 @login_required
-def staff_dashboard_view(request):
+def unified_dashboard_view(request):
     today = timezone.localdate()
     today_start = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
 
     # Real-time metrics
     today_orders = Order.objects.filter(created_at__gte=today_start).exclude(status='CANCELLED')
     today_revenue = Payment.objects.filter(created_at__gte=today_start, status='SUCCESS').aggregate(s=Sum('amount'))['s'] or Decimal('0.00')
+    total_lifetime_revenue = Payment.objects.filter(status='SUCCESS').aggregate(s=Sum('amount'))['s'] or Decimal('0.00')
     
     total_tables = RestaurantTable.objects.count()
     active_tables = RestaurantTable.objects.filter(status='OCCUPIED').count()
@@ -341,34 +354,268 @@ def staff_dashboard_view(request):
     pending_bills = Bill.objects.filter(status='PENDING').count()
     cancelled_orders = Order.objects.filter(created_at__gte=today_start, status='CANCELLED').count()
 
-    # Active table sessions
+    # Active table sessions & floor tables
+    tables = RestaurantTable.objects.all().order_by('table_number')
     active_sessions = TableSession.objects.filter(is_active=True).select_related('table', 'assigned_waiter')
-    pending_requests = CustomerServiceRequest.objects.filter(status='PENDING')[:5]
+    pending_requests = CustomerServiceRequest.objects.filter(status='PENDING')[:6]
+
+    # Live Orders across all states
+    recent_orders = Order.objects.all().select_related('table_session__table', 'customer', 'staff_member').prefetch_related('items__khana_set').order_by('-created_at')[:25]
+    unserved_orders = Order.objects.exclude(status__in=['SERVED', 'CANCELLED']).count()
+
+    # Khana Sets (all items with categories)
+    khana_sets = KhanaSet.objects.all().order_by('order_priority', 'id')
+
+    # Reservations
+    reservations = TableReservation.objects.all().order_by('-reservation_date', '-reservation_time')[:20]
+
+    # Customer Reviews
+    reviews = CustomerReview.objects.all().order_by('-created_at')[:20]
+    avg_rating = CustomerReview.objects.filter(is_approved=True).aggregate(avg=models.Avg('rating'))['avg'] or 5.0
+
+    # Push Notifications
+    notifications = PushNotification.objects.all().order_by('-created_at')[:15]
+
+    # Recent Audit Activity
+    audit_logs = AuditLog.objects.all().order_by('-created_at')[:10]
 
     # Daily revenue past 7 days for chart
     sales_chart_labels = []
     sales_chart_data = []
+    order_chart_data = []
     for i in range(6, -1, -1):
         day = today - timedelta(days=i)
         day_sales = Payment.objects.filter(
             created_at__date=day, status='SUCCESS'
         ).aggregate(s=Sum('amount'))['s'] or 0
+        day_order_count = Order.objects.filter(
+            created_at__date=day
+        ).exclude(status='CANCELLED').count()
         sales_chart_labels.append(day.strftime('%b %d'))
         sales_chart_data.append(float(day_sales))
+        order_chart_data.append(day_order_count)
+
+    # Category popularity breakdown
+    category_counts = {
+        'VEG': OrderItem.objects.filter(khana_set__category='VEG').aggregate(s=Sum('quantity'))['s'] or 0,
+        'CHICKEN': OrderItem.objects.filter(khana_set__category='CHICKEN').aggregate(s=Sum('quantity'))['s'] or 0,
+        'MUTTON': OrderItem.objects.filter(khana_set__category='MUTTON').aggregate(s=Sum('quantity'))['s'] or 0,
+        'FISH': OrderItem.objects.filter(khana_set__category='FISH').aggregate(s=Sum('quantity'))['s'] or 0,
+    }
 
     return render(request, 'staff/dashboard.html', {
         'today_revenue': today_revenue,
+        'total_lifetime_revenue': total_lifetime_revenue,
         'today_order_count': today_orders.count(),
+        'unserved_orders': unserved_orders,
         'total_tables': total_tables,
         'active_tables': active_tables,
         'available_tables': available_tables,
         'pending_bills': pending_bills,
         'cancelled_orders': cancelled_orders,
+        'tables': tables,
         'active_sessions': active_sessions,
         'pending_requests': pending_requests,
+        'recent_orders': recent_orders,
+        'khana_sets': khana_sets,
+        'reservations': reservations,
+        'reviews': reviews,
+        'avg_rating': round(avg_rating, 1),
+        'notifications': notifications,
+        'audit_logs': audit_logs,
         'sales_chart_labels_json': json.dumps(sales_chart_labels),
         'sales_chart_data_json': json.dumps(sales_chart_data),
+        'order_chart_data_json': json.dumps(order_chart_data),
+        'category_chart_data_json': json.dumps([
+            category_counts['VEG'],
+            category_counts['CHICKEN'],
+            category_counts['MUTTON'],
+            category_counts['FISH'],
+        ]),
     })
+
+# Maintain staff_dashboard_view alias
+staff_dashboard_view = unified_dashboard_view
+
+# ==========================================
+# IN-PLACE REAL-TIME QUICK UPDATE APIS (FOR DASHBOARD)
+# ==========================================
+
+@login_required
+@require_POST
+def dashboard_quick_update_api(request):
+    try:
+        data = json.loads(request.body)
+        target = data.get('target')
+        item_id = data.get('id')
+        field = data.get('field')
+        value = data.get('value')
+
+        if target == 'khana_set':
+            ks = get_object_or_404(KhanaSet, id=item_id)
+            if field == 'price_npr':
+                ks.price_npr = Decimal(str(value))
+            elif field == 'is_available':
+                ks.is_available = bool(value)
+            elif field == 'is_featured':
+                ks.is_featured = bool(value)
+            elif field == 'is_enabled_by_admin':
+                ks.is_enabled_by_admin = bool(value)
+            elif field == 'name':
+                ks.name = str(value).strip()
+            ks.save()
+            log_audit(request.user, 'DASHBOARD_MENU_UPDATE', f"Updated {field} on KhanaSet #{ks.id} ({ks.name})", request)
+            return JsonResponse({'status': 'success', 'message': f'Updated {ks.name} {field}.'})
+
+        elif target == 'order_status':
+            order = get_object_or_404(Order, id=item_id)
+            if value in dict(Order.STATUS_CHOICES):
+                order.status = value
+                if value == 'CANCELLED':
+                    order.cancel_reason = data.get('cancel_reason', 'Cancelled via Dashboard')
+                order.save()
+                log_audit(request.user, 'DASHBOARD_ORDER_STATUS', f"Order #{order.order_number} status set to {value}", request)
+                return JsonResponse({'status': 'success', 'message': f'Order status updated to {value}.'})
+
+        elif target == 'table_status':
+            table = get_object_or_404(RestaurantTable, id=item_id)
+            if value in dict(RestaurantTable.STATUS_CHOICES):
+                table.status = value
+                table.save()
+                log_audit(request.user, 'DASHBOARD_TABLE_STATUS', f"Table {table.table_number} status set to {value}", request)
+                return JsonResponse({'status': 'success', 'message': f'Table {table.table_number} status updated to {value}.'})
+
+        elif target == 'reservation_status':
+            res = get_object_or_404(TableReservation, id=item_id)
+            if value in dict(TableReservation.STATUS_CHOICES):
+                res.status = value
+                res.save()
+                log_audit(request.user, 'DASHBOARD_RESERVATION_STATUS', f"Reservation #{res.id} for {res.name} set to {value}", request)
+                return JsonResponse({'status': 'success', 'message': f'Reservation status set to {value}.'})
+
+        elif target == 'review_toggle':
+            rev = get_object_or_404(CustomerReview, id=item_id)
+            rev.is_approved = not rev.is_approved
+            rev.save()
+            log_audit(request.user, 'DASHBOARD_REVIEW_TOGGLE', f"Review #{rev.id} is_approved={rev.is_approved}", request)
+            return JsonResponse({'status': 'success', 'is_approved': rev.is_approved, 'message': 'Review visibility updated.'})
+
+        elif target == 'notification_toggle':
+            notif = get_object_or_404(PushNotification, id=item_id)
+            if field == 'is_active':
+                notif.is_active = not notif.is_active
+            elif field == 'is_pinned_banner':
+                notif.is_pinned_banner = not notif.is_pinned_banner
+            notif.save()
+            log_audit(request.user, 'DASHBOARD_NOTIFICATION_TOGGLE', f"PushNotification #{notif.id} {field} toggled", request)
+            return JsonResponse({'status': 'success', 'message': 'Notification updated.'})
+
+        return JsonResponse({'status': 'error', 'message': 'Invalid target or field'}, status=400)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@login_required
+@require_POST
+def dashboard_save_khana_set_api(request):
+    try:
+        set_id = request.POST.get('id')
+        name = request.POST.get('name', '').strip()
+        category = request.POST.get('category', 'VEG')
+        price_npr = Decimal(request.POST.get('price_npr', '0'))
+        description = request.POST.get('description', '').strip()
+        traditional_items = request.POST.get('traditional_items', '').strip()
+        spice_level = request.POST.get('spice_level', 'Mild to Medium').strip()
+        is_available = request.POST.get('is_available') == 'on'
+        is_featured = request.POST.get('is_featured') == 'on'
+        is_enabled = request.POST.get('is_enabled_by_admin') == 'on'
+        image_file = request.FILES.get('image')
+
+        from django.utils.text import slugify
+        slug = slugify(name) or f"khana-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+
+        if set_id:
+            ks = get_object_or_404(KhanaSet, id=set_id)
+            ks.name = name
+            ks.category = category
+            ks.price_npr = price_npr
+            ks.description = description
+            ks.traditional_items = traditional_items
+            ks.spice_level = spice_level
+            ks.is_available = is_available
+            ks.is_featured = is_featured
+            ks.is_enabled_by_admin = is_enabled
+            if image_file:
+                ks.image = image_file
+            ks.save()
+            msg = f"Updated {ks.name}."
+        else:
+            ks = KhanaSet.objects.create(
+                name=name,
+                slug=slug,
+                category=category,
+                price_npr=price_npr,
+                description=description,
+                traditional_items=traditional_items or "Jimbu Dal, Bhat, Tarkari, Saag, Gundruk, Achar, Ghee, Papad",
+                spice_level=spice_level,
+                is_available=is_available,
+                is_featured=is_featured,
+                is_enabled_by_admin=is_enabled,
+                image=image_file
+            )
+            msg = f"Created new Khana Set: {ks.name}."
+
+        log_audit(request.user, 'DASHBOARD_SAVE_KHANA', msg, request)
+        return JsonResponse({'status': 'success', 'message': msg, 'id': ks.id})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+@login_required
+@require_POST
+def dashboard_save_notification_api(request):
+    try:
+        notif_id = request.POST.get('id')
+        title = request.POST.get('title', '').strip()
+        message = request.POST.get('message', '').strip()
+        notification_type = request.POST.get('notification_type', 'SPECIAL_OFFER')
+        badge_text = request.POST.get('badge_text', 'Special Announcement').strip()
+        action_url = request.POST.get('action_url', '/khana-sets/').strip()
+        action_button_text = request.POST.get('action_button_text', 'View Details').strip()
+        is_active = request.POST.get('is_active') == 'on'
+        is_pinned_banner = request.POST.get('is_pinned_banner') == 'on'
+        image_file = request.FILES.get('image')
+
+        if notif_id:
+            notif = get_object_or_404(PushNotification, id=notif_id)
+            notif.title = title
+            notif.message = message
+            notif.notification_type = notification_type
+            notif.badge_text = badge_text
+            notif.action_url = action_url
+            notif.action_button_text = action_button_text
+            notif.is_active = is_active
+            notif.is_pinned_banner = is_pinned_banner
+            if image_file:
+                notif.image = image_file
+            notif.save()
+            msg = f"Updated notification: {notif.title}."
+        else:
+            notif = PushNotification.objects.create(
+                title=title,
+                message=message,
+                notification_type=notification_type,
+                badge_text=badge_text,
+                action_url=action_url,
+                action_button_text=action_button_text,
+                is_active=is_active,
+                is_pinned_banner=is_pinned_banner,
+                image=image_file
+            )
+            msg = f"Created live notification: {notif.title}."
+
+        log_audit(request.user, 'DASHBOARD_SAVE_NOTIFICATION', msg, request)
+        return JsonResponse({'status': 'success', 'message': msg, 'id': notif.id})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 @login_required
 def table_management_view(request):

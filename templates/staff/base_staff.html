@@ -66,11 +66,11 @@
 
       <!-- Navigation Links -->
       <nav class="px-3 py-2 space-y-1 text-xs">
-        <a href="{% url 'staff_dashboard' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_dashboard' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
+        <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'dashboard' or request.resolver_match.url_name == 'staff_dashboard' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 text-warmSand"></i> Command Dashboard
         </a>
         <a href="{% url 'staff_tables' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_tables' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="grid" class="w-4 h-4"></i> Table Management
+          <i data-lucide="grid" class="w-4 h-4"></i> Tables & Floor
         </a>
         <a href="{% url 'staff_pos' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_pos' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
           <i data-lucide="clipboard-list" class="w-4 h-4"></i> Orders / POS
@@ -80,28 +80,25 @@
           <span id="badgeUnservedOrders" class="ml-auto bg-errorRed text-white text-[10px] px-2 py-0.5 rounded-full hidden">0</span>
         </a>
         <a href="{% url 'staff_billing' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_billing' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="credit-card" class="w-4 h-4"></i> Billing & Payments
-        </a>
-        <a href="{% url 'staff_customers' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_customers' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="users" class="w-4 h-4"></i> Customers
-        </a>
-        <a href="{% url 'staff_reports' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_reports' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Sales & Reports
+          <i data-lucide="credit-card" class="w-4 h-4"></i> Billing & Receipts
         </a>
         <a href="{% url 'staff_khana_sets' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_khana_sets' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
           <i data-lucide="utensils" class="w-4 h-4"></i> Khana Set Menu
         </a>
-        <a href="{% url 'staff_members' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_members' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="user-check" class="w-4 h-4"></i> Staff Management
-        </a>
         <a href="{% url 'staff_reservations' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_reservations' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
           <i data-lucide="calendar" class="w-4 h-4"></i> Reservations
         </a>
-        <a href="{% url 'staff_settings' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_settings' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
-          <i data-lucide="settings" class="w-4 h-4"></i> System Settings
+        <a href="{% url 'staff_customers' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_customers' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="users" class="w-4 h-4"></i> Guests & Reviews
         </a>
-        <a href="/admin/" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-deepBrown text-tradBeige/80 hover:text-white transition">
-          <i data-lucide="shield" class="w-4 h-4 text-warmSand"></i> Unfold Admin Panel
+        <a href="{% url 'staff_reports' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_reports' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Sales & Analytics
+        </a>
+        <a href="{% url 'staff_members' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_members' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="user-check" class="w-4 h-4"></i> Staff Team
+        </a>
+        <a href="{% url 'staff_settings' %}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition {% if request.resolver_match.url_name == 'staff_settings' %}bg-terracotta text-white font-bold{% else %}hover:bg-deepBrown text-tradBeige/80 hover:text-white{% endif %}">
+          <i data-lucide="settings" class="w-4 h-4"></i> Settings & Logs
         </a>
       </nav>
     </div>

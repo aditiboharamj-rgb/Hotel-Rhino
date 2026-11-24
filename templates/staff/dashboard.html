@@ -1,83 +1,138 @@
 {% extends 'staff/base_staff.html' %}
 
-{% block title %}Dashboard Overview - Hotel Rhino RMS{% endblock %}
-{% block header_title %}Operations Overview{% endblock %}
+{% block title %}Dashboard Overview | Hotel Rhino{% endblock %}
+{% block header_title %}Operations Dashboard{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
+<div class="space-y-8">
 
-  <!-- Metrics Cards Grid -->
+  <!-- ==========================================
+       TOP BAR & QUICK MODULE FILTER PILLS
+       ========================================== -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-tradBeige shadow-sm">
+    <div class="space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-successGreen animate-pulse"></span>
+        <h2 class="font-heading font-bold text-lg sm:text-xl text-deepBrown">Unified Management Center</h2>
+      </div>
+      <p class="text-xs text-darkEspresso/70">Update menu prices, table check-ins, orders, reviews, and website notifications in real-time on one page.</p>
+    </div>
+
+    <!-- Quick Filter Switcher Pills -->
+    <div class="flex flex-wrap items-center gap-1.5 text-xs">
+      <button onclick="filterSection('all')" id="pill-all" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-terracotta text-white font-semibold shadow-sm transition">
+        All Modules
+      </button>
+      <button onclick="filterSection('orders')" id="pill-orders" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-creamBg hover:bg-terracotta/20 text-deepBrown border border-tradBeige font-medium transition">
+        Orders & Kitchen ({{ unserved_orders }})
+      </button>
+      <button onclick="filterSection('menu')" id="pill-menu" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-creamBg hover:bg-terracotta/20 text-deepBrown border border-tradBeige font-medium transition">
+        Khana Menu ({{ khana_sets|length }})
+      </button>
+      <button onclick="filterSection('tables')" id="pill-tables" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-creamBg hover:bg-terracotta/20 text-deepBrown border border-tradBeige font-medium transition">
+        Tables & Floor ({{ active_tables }}/{{ total_tables }})
+      </button>
+      <button onclick="filterSection('reservations')" id="pill-reservations" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-creamBg hover:bg-terracotta/20 text-deepBrown border border-tradBeige font-medium transition">
+        Bookings ({{ reservations|length }})
+      </button>
+      <button onclick="filterSection('reviews')" id="pill-reviews" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-creamBg hover:bg-terracotta/20 text-deepBrown border border-tradBeige font-medium transition">
+        Reviews ({{ reviews|length }})
+      </button>
+      <button onclick="filterSection('notifications')" id="pill-notifications" class="dashboard-pill px-3.5 py-1.5 rounded-full bg-creamBg hover:bg-terracotta/20 text-deepBrown border border-tradBeige font-medium transition">
+        Notifications ({{ notifications|length }})
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       METRIC KPI CARDS STRIP
+       ========================================== -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
     
     <!-- Today Revenue -->
-    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
-      <div>
-        <span class="text-xs text-darkEspresso/60 font-medium block">Today's Total Revenue</span>
-        <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">NPR {{ today_revenue|floatformat:2 }}</h3>
-        <span class="text-[11px] text-successGreen font-semibold">Verified Receipts</span>
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm hover:shadow-md transition duration-300 flex items-center justify-between">
+      <div class="space-y-1">
+        <span class="text-xs text-darkEspresso/60 font-semibold tracking-wide uppercase">Today's Revenue</span>
+        <h3 class="text-2xl sm:text-3xl font-bold font-heading text-deepBrown">NPR {{ today_revenue|floatformat:2 }}</h3>
+        <div class="flex items-center gap-1.5 text-[11px] text-successGreen font-medium">
+          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+          <span>Lifetime: NPR {{ total_lifetime_revenue|floatformat:0 }}</span>
+        </div>
       </div>
-      <div class="p-3 bg-terracotta/10 text-terracotta rounded-2xl">
-        <i data-lucide="banknote" class="w-6 h-6"></i>
-      </div>
-    </div>
-
-    <!-- Total Orders -->
-    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
-      <div>
-        <span class="text-xs text-darkEspresso/60 font-medium block">Today's Orders</span>
-        <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">{{ today_order_count }}</h3>
-        <span class="text-[11px] text-mutedOlive font-semibold">{{ cancelled_orders }} Cancelled</span>
-      </div>
-      <div class="p-3 bg-mutedOlive/10 text-mutedOlive rounded-2xl">
-        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+      <div class="p-3.5 bg-terracotta/10 text-terracotta rounded-2xl border border-terracotta/20">
+        <i data-lucide="banknote" class="w-7 h-7"></i>
       </div>
     </div>
 
-    <!-- Table Status Summary -->
-    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
-      <div>
-        <span class="text-xs text-darkEspresso/60 font-medium block">Tables Occupancy</span>
-        <h3 class="text-2xl font-bold font-heading text-deepBrown mt-1">{{ active_tables }} / {{ total_tables }}</h3>
-        <span class="text-[11px] text-successGreen font-semibold">{{ available_tables }} Available Now</span>
+    <!-- Active Orders -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm hover:shadow-md transition duration-300 flex items-center justify-between">
+      <div class="space-y-1">
+        <span class="text-xs text-darkEspresso/60 font-semibold tracking-wide uppercase">Orders Today</span>
+        <h3 class="text-2xl sm:text-3xl font-bold font-heading text-deepBrown">{{ today_order_count }}</h3>
+        <div class="flex items-center gap-1.5 text-[11px] text-terracotta font-medium">
+          <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+          <span>{{ unserved_orders }} In Kitchen Pipeline</span>
+        </div>
       </div>
-      <div class="p-3 bg-warmSand/30 text-deepBrown rounded-2xl">
-        <i data-lucide="layout-grid" class="w-6 h-6"></i>
+      <div class="p-3.5 bg-mutedOlive/10 text-mutedOlive rounded-2xl border border-mutedOlive/20">
+        <i data-lucide="shopping-bag" class="w-7 h-7"></i>
       </div>
     </div>
 
-    <!-- Pending Bills -->
-    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm flex items-center justify-between">
-      <div>
-        <span class="text-xs text-darkEspresso/60 font-medium block">Pending Checkout Bills</span>
-        <h3 class="text-2xl font-bold font-heading text-warningAmber mt-1">{{ pending_bills }}</h3>
-        <a href="{% url 'staff_billing' %}" class="text-[11px] text-terracotta font-semibold hover:underline">Process Bills &rarr;</a>
+    <!-- Tables Occupancy -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm hover:shadow-md transition duration-300 flex items-center justify-between">
+      <div class="space-y-1">
+        <span class="text-xs text-darkEspresso/60 font-semibold tracking-wide uppercase">Table Occupancy</span>
+        <h3 class="text-2xl sm:text-3xl font-bold font-heading text-deepBrown">{{ active_tables }} / {{ total_tables }}</h3>
+        <div class="flex items-center gap-1.5 text-[11px] text-successGreen font-medium">
+          <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+          <span>{{ available_tables }} Ready to Seat</span>
+        </div>
       </div>
-      <div class="p-3 bg-warningAmber/10 text-warningAmber rounded-2xl">
-        <i data-lucide="receipt" class="w-6 h-6"></i>
+      <div class="p-3.5 bg-warmSand/30 text-deepBrown rounded-2xl border border-warmSand/40">
+        <i data-lucide="layout-grid" class="w-7 h-7"></i>
+      </div>
+    </div>
+
+    <!-- Guest Satisfaction Score -->
+    <div class="bg-white p-5 rounded-2xl border border-tradBeige shadow-sm hover:shadow-md transition duration-300 flex items-center justify-between">
+      <div class="space-y-1">
+        <span class="text-xs text-darkEspresso/60 font-semibold tracking-wide uppercase">Guest Satisfaction</span>
+        <h3 class="text-2xl sm:text-3xl font-bold font-heading text-warningAmber flex items-center gap-1.5">
+          <span>{{ avg_rating }}</span>
+          <span class="text-sm font-normal text-darkEspresso/60">/ 5.0</span>
+        </h3>
+        <div class="flex items-center gap-1 text-[11px] text-warningAmber font-medium">
+          <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+          <span>Based on {{ reviews|length }} guest reviews</span>
+        </div>
+      </div>
+      <div class="p-3.5 bg-warningAmber/10 text-warningAmber rounded-2xl border border-warningAmber/20">
+        <i data-lucide="heart" class="w-7 h-7"></i>
       </div>
     </div>
 
   </div>
 
-  <!-- Real-Time Customer Service Alerts -->
+  <!-- Customer Service Callouts if active -->
   {% if pending_requests %}
-  <div class="bg-warningAmber/10 border-2 border-warningAmber/40 p-4 rounded-2xl">
-    <div class="flex items-center justify-between mb-2">
-      <span class="font-bold text-xs text-warningAmber uppercase tracking-wider flex items-center gap-1.5">
-        <i data-lucide="bell" class="w-4 h-4"></i> Active Customer Service Requests
+  <div class="bg-warningAmber/10 border-2 border-warningAmber/40 p-5 rounded-2xl shadow-sm">
+    <div class="flex items-center justify-between mb-3">
+      <span class="font-bold text-xs text-warningAmber uppercase tracking-wider flex items-center gap-2">
+        <i data-lucide="bell-ring" class="w-4 h-4 animate-bounce"></i> Immediate Customer Service Requests
       </span>
-      <span class="text-xs font-semibold text-deepBrown">{{ pending_requests|length }} Pending</span>
+      <span class="text-xs font-bold text-deepBrown px-2.5 py-0.5 rounded-full bg-white border border-warningAmber/30">{{ pending_requests|length }} Action Required</span>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
       {% for req in pending_requests %}
-      <div class="bg-white p-3 rounded-xl border border-tradBeige shadow-sm flex justify-between items-center text-xs">
+      <div class="bg-white p-3.5 rounded-xl border border-tradBeige shadow-sm flex justify-between items-center text-xs">
         <div>
-          <span class="font-bold text-deepBrown block">Table {{ req.table.table_number }}</span>
-          <span class="text-terracotta font-medium">{{ req.get_request_type_display }}</span>
+          <span class="font-bold text-deepBrown text-sm block">Table {{ req.table.table_number }}</span>
+          <span class="text-terracotta font-semibold">{{ req.get_request_type_display }}</span>
           <span class="text-[10px] text-darkEspresso/60 block">{{ req.created_at|date:"h:i A" }}</span>
         </div>
-        <button onclick="resolveRequest({{ req.id }})" class="btn-primary text-[11px] py-1.5 px-3">
-          Attended
+        <button onclick="resolveRequest({{ req.id }})" class="btn-primary text-xs py-1.5 px-3 rounded-lg shadow-sm">
+          Attended ✓
         </button>
       </div>
       {% endfor %}
@@ -85,86 +140,678 @@
   </div>
   {% endif %}
 
-  <!-- Active Floor Status & Weekly Chart -->
+  <!-- ==========================================
+       INTERACTIVE ANALYTICS: 7-DAY TREND & CATEGORIES
+       ========================================== -->
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
     
-    <!-- Sales Chart -->
-    <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="font-heading font-bold text-base text-deepBrown">7-Day Revenue Trend (NPR)</h3>
-        <span class="text-xs text-mutedOlive font-medium">Actual Settled Payments</span>
+    <!-- 7-Day Revenue & Volume Trend Chart -->
+    <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
+      <div class="flex items-center justify-between border-b border-tradBeige/60 pb-3">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="line-chart" class="w-5 h-5 text-terracotta"></i>
+          <div>
+            <h3 class="font-heading font-bold text-base text-deepBrown">7-Day Revenue & Order Velocity</h3>
+            <span class="text-xs text-mutedOlive">Real-time settled receipts & order frequency</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 text-xs">
+          <span class="flex items-center gap-1 text-terracotta font-semibold"><span class="w-2.5 h-2.5 rounded-full bg-terracotta inline-block"></span> Revenue (NPR)</span>
+          <span class="flex items-center gap-1 text-mutedOlive font-semibold"><span class="w-2.5 h-2.5 rounded-full bg-mutedOlive inline-block"></span> Orders</span>
+        </div>
       </div>
-      <div class="h-64">
-        <canvas id="salesChart"></canvas>
+      <div class="h-64 sm:h-72">
+        <canvas id="salesDualChart"></canvas>
       </div>
     </div>
 
-    <!-- Active Table Sessions -->
-    <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="font-heading font-bold text-base text-deepBrown">Active Dining Sessions</h3>
-        <a href="{% url 'staff_tables' %}" class="text-xs text-terracotta font-semibold hover:underline">Manage Tables</a>
+    <!-- Category Popularity Doughnut -->
+    <div class="lg:col-span-4 bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-4 flex flex-col justify-between">
+      <div class="border-b border-tradBeige/60 pb-3">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="pie-chart" class="w-5 h-5 text-terracotta"></i>
+          <div>
+            <h3 class="font-heading font-bold text-base text-deepBrown">Menu Preference</h3>
+            <span class="text-xs text-darkEspresso/60">Veg vs Non-Veg Khana Set Ratio</span>
+          </div>
+        </div>
       </div>
 
-      <div class="space-y-3 max-h-64 overflow-y-auto pr-1 text-xs">
-        {% for session in active_sessions %}
-        <div class="p-3 bg-creamBg rounded-xl border border-tradBeige flex justify-between items-center">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-deepBrown">Table {{ session.table.table_number }}</span>
-              <span class="text-[10px] bg-terracotta/20 text-terracotta px-2 py-0.5 rounded-full font-semibold">{{ session.customer_count }} Guests</span>
-            </div>
-            <p class="text-[11px] text-darkEspresso/70 mt-0.5">
-              Waiter: {{ session.assigned_waiter.username|default:"Unassigned" }} • {{ session.opened_at|date:"h:i A" }}
-            </p>
-          </div>
-          <div class="text-right">
-            <span class="font-bold text-terracotta block">NPR {{ session.total_bill_amount|floatformat:2 }}</span>
-            <a href="{% url 'staff_pos' %}" class="text-[10px] text-deepBrown hover:underline">+ Add Orders</a>
-          </div>
+      <div class="h-52 relative flex items-center justify-center">
+        <canvas id="categoryChart"></canvas>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-tradBeige/60 text-center">
+        <div class="p-2 bg-creamBg rounded-xl border border-tradBeige">
+          <span class="text-[10px] text-darkEspresso/60 block">Vegetarian</span>
+          <strong class="text-mutedOlive">Mustang Veg Thali</strong>
         </div>
-        {% empty %}
-        <div class="p-6 text-center text-xs text-darkEspresso/50">
-          No dining sessions currently active. Open a table in Table Management to begin.
+        <div class="p-2 bg-creamBg rounded-xl border border-tradBeige">
+          <span class="text-[10px] text-darkEspresso/60 block">Non-Vegetarian</span>
+          <strong class="text-terracotta">Khasi / Kukhura / Fish</strong>
         </div>
-        {% endfor %}
       </div>
     </div>
 
   </div>
 
+  <!-- ==========================================
+       MODULE 1: KHANA SET MENU (IN-PLACE PRICE & VISIBILITY EDITING)
+       ========================================== -->
+  <section id="module-menu" class="dashboard-module bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-tradBeige/60 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-terracotta/10 text-terracotta rounded-xl">
+          <i data-lucide="utensils" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-deepBrown">Khana Set Menu Manager</h3>
+          <p class="text-xs text-darkEspresso/60">Edit prices, toggle availability, or manage featured sets directly in-place without page reloads.</p>
+        </div>
+      </div>
+      <button onclick="openKhanaModal()" class="btn-primary text-xs flex items-center gap-2 py-2 px-4 rounded-xl shadow-sm self-start sm:self-auto">
+        <i data-lucide="plus" class="w-4 h-4"></i> Add New Khana Set
+      </button>
+    </div>
+
+    <!-- Khana Set Grid Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for item in khana_sets %}
+      <div class="bg-creamBg/60 rounded-2xl border border-tradBeige p-4.5 space-y-3.5 hover:border-terracotta/50 transition">
+        
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl overflow-hidden bg-warmSand/30 flex-shrink-0 border border-tradBeige">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-full h-full object-cover">
+              {% else %}
+                <img src="/static/images/thakali_khana_brass_thali.jpg" alt="{{ item.name }}" class="w-full h-full object-cover">
+              {% endif %}
+            </div>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-terracotta block">{{ item.get_category_display }}</span>
+              <h4 class="font-bold text-deepBrown text-sm leading-snug">{{ item.name }}</h4>
+            </div>
+          </div>
+          
+          <!-- Category Badge -->
+          <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold {% if item.category == 'VEG' %}bg-successGreen/20 text-successGreen{% else %}bg-terracotta/20 text-terracotta{% endif %}">
+            {{ item.category }}
+          </span>
+        </div>
+
+        <!-- In-Place Price Input -->
+        <div class="bg-white p-3 rounded-xl border border-tradBeige flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-darkEspresso/70">Price (NPR):</span>
+          <div class="flex items-center gap-1.5">
+            <input type="number" 
+                   id="price-input-{{ item.id }}" 
+                   value="{{ item.price_npr|floatformat:0 }}" 
+                   class="w-24 px-2.5 py-1 text-sm font-bold text-deepBrown bg-creamBg rounded-lg border border-tradBeige focus:border-terracotta focus:outline-none text-right">
+            <button onclick="updateKhanaField({{ item.id }}, 'price_npr')" 
+                    class="p-1.5 rounded-lg bg-terracotta text-white hover:bg-deepBrown transition" 
+                    title="Save Price">
+              <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline Toggles: Available, Featured, Enabled -->
+        <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+          <!-- Available Toggle -->
+          <button onclick="toggleKhanaBool({{ item.id }}, 'is_available', this)" 
+                  data-val="{{ item.is_available|lower }}"
+                  class="p-2 rounded-xl border transition {% if item.is_available %}bg-successGreen/15 border-successGreen text-successGreen font-bold{% else %}bg-white border-tradBeige text-darkEspresso/40{% endif %}">
+            <span class="block text-[9px] uppercase">Orderable</span>
+            <span>{% if item.is_available %}Available{% else %}Sold Out{% endif %}</span>
+          </button>
+
+          <!-- Featured Toggle -->
+          <button onclick="toggleKhanaBool({{ item.id }}, 'is_featured', this)" 
+                  data-val="{{ item.is_featured|lower }}"
+                  class="p-2 rounded-xl border transition {% if item.is_featured %}bg-warningAmber/15 border-warningAmber text-warningAmber font-bold{% else %}bg-white border-tradBeige text-darkEspresso/40{% endif %}">
+            <span class="block text-[9px] uppercase">Badge</span>
+            <span>{% if item.is_featured %}Featured ★{% else %}Standard{% endif %}</span>
+          </button>
+
+          <!-- Website Visibility Toggle -->
+          <button onclick="toggleKhanaBool({{ item.id }}, 'is_enabled_by_admin', this)" 
+                  data-val="{{ item.is_enabled_by_admin|lower }}"
+                  class="p-2 rounded-xl border transition {% if item.is_enabled_by_admin %}bg-mutedOlive/15 border-mutedOlive text-mutedOlive font-bold{% else %}bg-white border-tradBeige text-darkEspresso/40{% endif %}">
+            <span class="block text-[9px] uppercase">Public</span>
+            <span>{% if item.is_enabled_by_admin %}Live{% else %}Hidden{% endif %}</span>
+          </button>
+        </div>
+
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MODULE 2: LIVE ORDERS & KITCHEN PIPELINE
+       ========================================== -->
+  <section id="module-orders" class="dashboard-module bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-tradBeige/60 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-mutedOlive/10 text-mutedOlive rounded-xl">
+          <i data-lucide="chef-hat" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-deepBrown">Live Orders & Kitchen Status</h3>
+          <p class="text-xs text-darkEspresso/60">Switch order statuses instantly from New → Preparing → Ready → Served or Cancel.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="{% url 'staff_pos' %}" class="btn-primary text-xs py-2 px-3.5 rounded-xl shadow-sm flex items-center gap-1.5">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i> New POS Order
+        </a>
+        <a href="{% url 'staff_kitchen' %}" class="btn-secondary text-xs py-2 px-3.5 rounded-xl border border-tradBeige flex items-center gap-1.5">
+          <i data-lucide="monitor" class="w-4 h-4"></i> Full Screen KDS
+        </a>
+      </div>
+    </div>
+
+    <!-- Orders Table with Instant Status Droplist -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-creamBg text-darkEspresso/70 uppercase tracking-wider text-[10px] border-b border-tradBeige">
+          <tr>
+            <th class="p-3.5">Order #</th>
+            <th class="p-3.5">Table</th>
+            <th class="p-3.5">Items Ordered</th>
+            <th class="p-3.5">Total (NPR)</th>
+            <th class="p-3.5">Source</th>
+            <th class="p-3.5">Placed At</th>
+            <th class="p-3.5">Kitchen Action Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-tradBeige/60">
+          {% for ord in recent_orders %}
+          <tr id="order-row-{{ ord.id }}" class="hover:bg-creamBg/40 transition">
+            <td class="p-3.5 font-bold text-deepBrown font-mono">{{ ord.order_number }}</td>
+            <td class="p-3.5 font-bold text-terracotta">Table {{ ord.table_session.table.table_number }}</td>
+            <td class="p-3.5 space-y-1">
+              {% for it in ord.items.all %}
+              <div class="text-[11px] text-darkEspresso/80 font-medium">
+                <span class="font-bold text-deepBrown">{{ it.quantity }}x</span> {{ it.khana_set.name }}
+              </div>
+              {% endfor %}
+            </td>
+            <td class="p-3.5 font-bold text-deepBrown">NPR {{ ord.final_amount|floatformat:2 }}</td>
+            <td class="p-3.5">
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold {% if ord.source == 'QR_CUSTOMER' %}bg-terracotta/20 text-terracotta{% else %}bg-mutedOlive/20 text-mutedOlive{% endif %}">
+                {{ ord.get_source_display }}
+              </span>
+            </td>
+            <td class="p-3.5 text-darkEspresso/60">{{ ord.created_at|date:"h:i A" }}</td>
+            <td class="p-3.5">
+              <select onchange="updateOrderStatus({{ ord.id }}, this.value)" 
+                      class="px-2.5 py-1.5 rounded-lg border text-xs font-bold focus:outline-none transition
+                             {% if ord.status == 'NEW' %}bg-terracotta/15 text-terracotta border-terracotta/40
+                             {% elif ord.status == 'PREPARING' %}bg-warningAmber/15 text-warningAmber border-warningAmber/40
+                             {% elif ord.status == 'READY' %}bg-successGreen/15 text-successGreen border-successGreen/40
+                             {% elif ord.status == 'SERVED' %}bg-creamBg text-darkEspresso/60 border-tradBeige
+                             {% else %}bg-errorRed/15 text-errorRed border-errorRed/40{% endif %}">
+                <option value="NEW" {% if ord.status == 'NEW' %}selected{% endif %}>New Order</option>
+                <option value="PREPARING" {% if ord.status == 'PREPARING' %}selected{% endif %}>Preparing</option>
+                <option value="READY" {% if ord.status == 'READY' %}selected{% endif %}>Ready to Serve</option>
+                <option value="SERVED" {% if ord.status == 'SERVED' %}selected{% endif %}>Served</option>
+                <option value="CANCELLED" {% if ord.status == 'CANCELLED' %}selected{% endif %}>Cancelled</option>
+              </select>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="p-8 text-center text-xs text-darkEspresso/50">
+              No recent orders found. Open Table POS or place QR orders to see them stream here.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MODULE 3: TABLE FLOOR & CHECK-IN CONTROLS
+       ========================================== -->
+  <section id="module-tables" class="dashboard-module bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-tradBeige/60 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-warmSand/30 text-deepBrown rounded-xl">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-deepBrown">Tables & Check-In Floor Status</h3>
+          <p class="text-xs text-darkEspresso/60">Switch table status (Available, Occupied, Bill Requested, Cleaning) with 1 click.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs">
+        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-successGreen"></span> Available</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-terracotta"></span> Occupied</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-warningAmber"></span> Bill Requested</span>
+        <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-darkEspresso/40"></span> Cleaning</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      {% for tbl in tables %}
+      <div class="p-4 rounded-2xl border text-center space-y-2.5 transition duration-300
+                  {% if tbl.status == 'AVAILABLE' %}bg-successGreen/5 border-successGreen/30 hover:border-successGreen
+                  {% elif tbl.status == 'OCCUPIED' %}bg-terracotta/10 border-terracotta/40 hover:border-terracotta
+                  {% elif tbl.status == 'BILL_REQUESTED' %}bg-warningAmber/10 border-warningAmber/40 hover:border-warningAmber
+                  {% else %}bg-creamBg border-tradBeige{% endif %}">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] text-darkEspresso/60 font-semibold">{{ tbl.capacity }} Seats</span>
+          <span class="w-2.5 h-2.5 rounded-full 
+                      {% if tbl.status == 'AVAILABLE' %}bg-successGreen
+                      {% elif tbl.status == 'OCCUPIED' %}bg-terracotta animate-pulse
+                      {% elif tbl.status == 'BILL_REQUESTED' %}bg-warningAmber animate-ping
+                      {% else %}bg-darkEspresso/40{% endif %}"></span>
+        </div>
+
+        <div>
+          <h4 class="font-heading font-bold text-lg text-deepBrown">Table {{ tbl.table_number }}</h4>
+          <span class="text-[10px] text-darkEspresso/70 truncate block">{{ tbl.name|default:"Heritage Dining" }}</span>
+        </div>
+
+        <!-- In-Place Status Selector -->
+        <select onchange="updateTableStatus({{ tbl.id }}, this.value)" 
+                class="w-full text-[11px] font-semibold py-1 px-1.5 rounded-lg border bg-white focus:outline-none">
+          <option value="AVAILABLE" {% if tbl.status == 'AVAILABLE' %}selected{% endif %}>Available</option>
+          <option value="OCCUPIED" {% if tbl.status == 'OCCUPIED' %}selected{% endif %}>Occupied</option>
+          <option value="BILL_REQUESTED" {% if tbl.status == 'BILL_REQUESTED' %}selected{% endif %}>Bill Requested</option>
+          <option value="CLEANING_REQUIRED" {% if tbl.status == 'CLEANING_REQUIRED' %}selected{% endif %}>Cleaning</option>
+        </select>
+        
+        <a href="{% url 'qr_table_order' tbl.qr_code_token %}" target="_blank" class="text-[10px] text-terracotta font-medium hover:underline inline-flex items-center gap-1">
+          <i data-lucide="qr-code" class="w-3 h-3"></i> QR Link
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MODULE 4: TABLE RESERVATIONS & BOOKINGS
+       ========================================== -->
+  <section id="module-reservations" class="dashboard-module bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-tradBeige/60 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-warningAmber/10 text-warningAmber rounded-xl">
+          <i data-lucide="calendar" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-deepBrown">Table Bookings & Reservations</h3>
+          <p class="text-xs text-darkEspresso/60">Manage guest bookings, confirm seatings, and track arrival status in-place.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-creamBg text-darkEspresso/70 uppercase tracking-wider text-[10px] border-b border-tradBeige">
+          <tr>
+            <th class="p-3.5">Guest Name</th>
+            <th class="p-3.5">Contact Phone</th>
+            <th class="p-3.5">Date & Time</th>
+            <th class="p-3.5">Guests</th>
+            <th class="p-3.5">Special Requests</th>
+            <th class="p-3.5">Booking Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-tradBeige/60">
+          {% for res in reservations %}
+          <tr class="hover:bg-creamBg/40 transition">
+            <td class="p-3.5 font-bold text-deepBrown">{{ res.name }}</td>
+            <td class="p-3.5 font-medium text-terracotta">{{ res.phone }}</td>
+            <td class="p-3.5">{{ res.reservation_date }} at {{ res.reservation_time }}</td>
+            <td class="p-3.5 font-bold">{{ res.guest_count }} Guests</td>
+            <td class="p-3.5 text-darkEspresso/70 max-w-xs truncate">{{ res.special_requests|default:"—" }}</td>
+            <td class="p-3.5">
+              <select onchange="updateReservationStatus({{ res.id }}, this.value)" 
+                      class="px-2.5 py-1 rounded-lg border text-xs font-bold focus:outline-none
+                             {% if res.status == 'CONFIRMED' %}bg-successGreen/15 text-successGreen border-successGreen/40
+                             {% elif res.status == 'PENDING' %}bg-warningAmber/15 text-warningAmber border-warningAmber/40
+                             {% elif res.status == 'COMPLETED' %}bg-creamBg text-darkEspresso/60 border-tradBeige
+                             {% else %}bg-errorRed/15 text-errorRed border-errorRed/40{% endif %}">
+                <option value="PENDING" {% if res.status == 'PENDING' %}selected{% endif %}>Pending</option>
+                <option value="CONFIRMED" {% if res.status == 'CONFIRMED' %}selected{% endif %}>Confirmed</option>
+                <option value="COMPLETED" {% if res.status == 'COMPLETED' %}selected{% endif %}>Arrived / Completed</option>
+                <option value="CANCELLED" {% if res.status == 'CANCELLED' %}selected{% endif %}>Cancelled</option>
+              </select>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="p-8 text-center text-xs text-darkEspresso/50">
+              No customer reservations recorded yet.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MODULE 5: CUSTOMER REVIEWS & MODERATION
+       ========================================== -->
+  <section id="module-reviews" class="dashboard-module bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-tradBeige/60 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-warningAmber/10 text-warningAmber rounded-xl">
+          <i data-lucide="message-square" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-deepBrown">Customer Reviews & Testimonials</h3>
+          <p class="text-xs text-darkEspresso/60">Toggle reviews Approved or Hidden instantly to control what shows on the public website.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 text-xs text-warningAmber font-bold bg-warningAmber/10 px-3.5 py-1.5 rounded-full border border-warningAmber/20">
+        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+        <span>Average Score: {{ avg_rating }} / 5.0</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for rev in reviews %}
+      <div class="bg-creamBg/60 p-4.5 rounded-2xl border border-tradBeige space-y-3 flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="font-bold text-deepBrown text-sm">{{ rev.name }}</h4>
+              <span class="text-[10px] text-darkEspresso/60">{{ rev.city|default:"Dhangadhi / Nepal" }} • {{ rev.created_at|date:"M d, Y" }}</span>
+            </div>
+            <div class="flex items-center text-warningAmber text-xs">
+              {% for i in "12345" %}
+                <i data-lucide="star" class="w-3.5 h-3.5 {% if forloop.counter <= rev.rating %}fill-current{% else %}opacity-30{% endif %}"></i>
+              {% endfor %}
+            </div>
+          </div>
+          <p class="text-xs text-darkEspresso/80 italic leading-relaxed line-clamp-3">"{{ rev.comment }}"</p>
+        </div>
+
+        <div class="pt-3 border-t border-tradBeige/60 flex items-center justify-between">
+          <span class="text-[11px] font-semibold text-darkEspresso/70">Website Visibility:</span>
+          <button onclick="toggleReview({{ rev.id }}, this)" 
+                  class="text-xs px-3 py-1 rounded-full border font-bold transition {% if rev.is_approved %}bg-successGreen/15 border-successGreen text-successGreen{% else %}bg-errorRed/15 border-errorRed text-errorRed{% endif %}">
+            {% if rev.is_approved %}Visible ✓{% else %}Hidden ✕{% endif %}
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MODULE 6: PUSH NOTIFICATION BROADCASTER
+       ========================================== -->
+  <section id="module-notifications" class="dashboard-module bg-white p-6 rounded-2xl border border-tradBeige shadow-sm space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-tradBeige/60 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-2.5 bg-terracotta/10 text-terracotta rounded-xl">
+          <i data-lucide="radio" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-lg text-deepBrown">Website Push Announcements</h3>
+          <p class="text-xs text-darkEspresso/60">Broadcast instant banner notifications & specials across the public website with photos.</p>
+        </div>
+      </div>
+      <button onclick="openNotificationModal()" class="btn-primary text-xs flex items-center gap-2 py-2 px-4 rounded-xl shadow-sm self-start sm:self-auto">
+        <i data-lucide="plus" class="w-4 h-4"></i> Create Announcement
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for notif in notifications %}
+      <div class="bg-creamBg/60 p-4.5 rounded-2xl border border-tradBeige space-y-3 flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-start justify-between gap-2">
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider bg-terracotta/20 text-terracotta">
+              {{ notif.badge_text }}
+            </span>
+            <span class="text-[10px] text-darkEspresso/50">{{ notif.created_at|date:"M d, Y" }}</span>
+          </div>
+
+          <h4 class="font-bold text-deepBrown text-sm">{{ notif.title }}</h4>
+          <p class="text-xs text-darkEspresso/70 line-clamp-2">{{ notif.message }}</p>
+          
+          {% if notif.image %}
+          <div class="h-28 rounded-xl overflow-hidden border border-tradBeige">
+            <img src="{{ notif.image.url }}" alt="{{ notif.title }}" class="w-full h-full object-cover">
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="pt-3 border-t border-tradBeige/60 flex items-center justify-between gap-2">
+          <button onclick="toggleNotification({{ notif.id }}, 'is_active', this)" 
+                  class="flex-1 text-[11px] py-1.5 rounded-lg border font-bold transition {% if notif.is_active %}bg-successGreen/15 border-successGreen text-successGreen{% else %}bg-white border-tradBeige text-darkEspresso/40{% endif %}">
+            {% if notif.is_active %}Broadcasting 🟢{% else %}Inactive ⚪{% endif %}
+          </button>
+          
+          <button onclick="toggleNotification({{ notif.id }}, 'is_pinned_banner', this)" 
+                  class="flex-1 text-[11px] py-1.5 rounded-lg border font-bold transition {% if notif.is_pinned_banner %}bg-warningAmber/15 border-warningAmber text-warningAmber{% else %}bg-white border-tradBeige text-darkEspresso/40{% endif %}">
+            {% if notif.is_pinned_banner %}Pinned Banner 📌{% else %}Standard{% endif %}
+          </button>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-3 p-8 text-center text-xs text-darkEspresso/50">
+        No active notifications. Click "Create Announcement" to broadcast to the website.
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
 </div>
+
+<!-- ==========================================
+     MODALS FOR IN-PLACE CREATION
+     ========================================== -->
+
+<!-- Khana Set Modal -->
+<div id="khanaModal" class="fixed inset-0 bg-darkEspresso/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 border border-tradBeige shadow-2xl">
+    <div class="flex items-center justify-between border-b border-tradBeige/60 pb-3">
+      <h3 class="font-heading font-bold text-lg text-deepBrown">New Authentic Thakali Khana Set</h3>
+      <button onclick="closeKhanaModal()" class="text-darkEspresso/60 hover:text-deepBrown p-1">✕</button>
+    </div>
+    
+    <form id="khanaForm" onsubmit="submitKhanaSet(event)" class="space-y-4 text-xs" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Set Name *</label>
+        <input type="text" name="name" required placeholder="e.g. Royal Mustang Khasi Thali Set" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none">
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Category *</label>
+          <select name="category" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none">
+            <option value="VEG">Vegetarian Thakali</option>
+            <option value="CHICKEN">Chicken Thakali</option>
+            <option value="MUTTON">Mutton Thakali</option>
+            <option value="FISH">Fish Thakali</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Price (NPR) *</label>
+          <input type="number" name="price_npr" required placeholder="850" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none">
+        </div>
+      </div>
+
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Description</label>
+        <textarea name="description" rows="2" placeholder="Authentic slow-simmered regional preparation..." class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none"></textarea>
+      </div>
+
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Upload Photo</label>
+        <input type="file" name="image" accept="image/*" class="w-full text-[11px] text-darkEspresso/70 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-terracotta/20 file:text-terracotta file:font-semibold">
+      </div>
+
+      <div class="flex items-center gap-4 pt-2">
+        <label class="flex items-center gap-2 cursor-pointer font-medium">
+          <input type="checkbox" name="is_available" checked class="rounded text-terracotta">
+          <span>Available Now</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer font-medium">
+          <input type="checkbox" name="is_featured" checked class="rounded text-terracotta">
+          <span>Feature on Home</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer font-medium">
+          <input type="checkbox" name="is_enabled_by_admin" checked class="rounded text-terracotta">
+          <span>Visible on Website</span>
+        </label>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-4 border-t border-tradBeige/60">
+        <button type="button" onclick="closeKhanaModal()" class="btn-secondary py-2 px-4 rounded-xl text-xs">Cancel</button>
+        <button type="submit" class="btn-primary py-2 px-5 rounded-xl text-xs">Save Khana Set</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Notification Modal -->
+<div id="notificationModal" class="fixed inset-0 bg-darkEspresso/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 border border-tradBeige shadow-2xl">
+    <div class="flex items-center justify-between border-b border-tradBeige/60 pb-3">
+      <h3 class="font-heading font-bold text-lg text-deepBrown">Broadcast Website Announcement</h3>
+      <button onclick="closeNotificationModal()" class="text-darkEspresso/60 hover:text-deepBrown p-1">✕</button>
+    </div>
+    
+    <form id="notificationForm" onsubmit="submitNotification(event)" class="space-y-4 text-xs" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Headline Title *</label>
+        <input type="text" name="title" required placeholder="e.g. Special Mustang Chyang & Timur Feast This Weekend!" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none">
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Type *</label>
+          <select name="notification_type" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none">
+            <option value="SPECIAL_OFFER">Special Thakali Offer</option>
+            <option value="NEW_DISH">New Himalayan Dish</option>
+            <option value="EVENT">Cultural Event / Deuda</option>
+            <option value="ANNOUNCEMENT">General Announcement</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-bold text-deepBrown block mb-1">Badge Tag</label>
+          <input type="text" name="badge_text" value="Special Announcement" class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none">
+        </div>
+      </div>
+
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Announcement Message *</label>
+        <textarea name="message" rows="3" required placeholder="Details displayed to website visitors..." class="w-full px-3 py-2 rounded-xl border border-tradBeige focus:border-terracotta focus:outline-none"></textarea>
+      </div>
+
+      <div>
+        <label class="font-bold text-deepBrown block mb-1">Upload Photo (Optional)</label>
+        <input type="file" name="image" accept="image/*" class="w-full text-[11px] text-darkEspresso/70 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-terracotta/20 file:text-terracotta file:font-semibold">
+      </div>
+
+      <div class="flex items-center gap-4 pt-2">
+        <label class="flex items-center gap-2 cursor-pointer font-medium">
+          <input type="checkbox" name="is_active" checked class="rounded text-terracotta">
+          <span>Broadcast Active</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer font-medium">
+          <input type="checkbox" name="is_pinned_banner" checked class="rounded text-terracotta">
+          <span>Top Floating Banner</span>
+        </label>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-4 border-t border-tradBeige/60">
+        <button type="button" onclick="closeNotificationModal()" class="btn-secondary py-2 px-4 rounded-xl text-xs">Cancel</button>
+        <button type="submit" class="btn-primary py-2 px-5 rounded-xl text-xs">Publish Broadcast</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-  const labels = {{ sales_chart_labels_json|safe }};
-  const dataValues = {{ sales_chart_data_json|safe }};
+  // Section Filter Switcher
+  function filterSection(sectionId) {
+    document.querySelectorAll('.dashboard-pill').forEach(btn => {
+      btn.classList.remove('bg-terracotta', 'text-white', 'shadow-sm');
+      btn.classList.add('bg-creamBg', 'text-deepBrown');
+    });
+    const activeBtn = document.getElementById(`pill-${sectionId}`);
+    if (activeBtn) {
+      activeBtn.classList.remove('bg-creamBg', 'text-deepBrown');
+      activeBtn.classList.add('bg-terracotta', 'text-white', 'shadow-sm');
+    }
 
-  const ctx = document.getElementById('salesChart').getContext('2d');
-  new Chart(ctx, {
+    if (sectionId === 'all') {
+      document.querySelectorAll('.dashboard-module').forEach(el => el.classList.remove('hidden'));
+    } else {
+      document.querySelectorAll('.dashboard-module').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(`module-${sectionId}`);
+      if (target) target.classList.remove('hidden');
+    }
+  }
+
+  // Chart 1: 7-Day Revenue & Volume Dual Chart
+  const salesLabels = {{ sales_chart_labels_json|safe }};
+  const salesData = {{ sales_chart_data_json|safe }};
+  const orderData = {{ order_chart_data_json|safe }};
+
+  const dualCtx = document.getElementById('salesDualChart').getContext('2d');
+  new Chart(dualCtx, {
     type: 'line',
     data: {
-      labels: labels,
-      datasets: [{
-        label: 'Revenue (NPR)',
-        data: dataValues,
-        borderColor: '#B66A36',
-        backgroundColor: 'rgba(182, 106, 54, 0.12)',
-        borderWidth: 2.5,
-        fill: true,
-        tension: 0.35,
-        pointBackgroundColor: '#3B2418',
-        pointRadius: 4,
-      }]
+      labels: salesLabels,
+      datasets: [
+        {
+          label: 'Revenue (NPR)',
+          data: salesData,
+          borderColor: '#B66A36',
+          backgroundColor: 'rgba(182, 106, 54, 0.15)',
+          borderWidth: 2.5,
+          fill: true,
+          tension: 0.35,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Orders Count',
+          data: orderData,
+          borderColor: '#68734A',
+          backgroundColor: 'rgba(104, 115, 74, 0.1)',
+          borderWidth: 2,
+          borderDash: [5, 5],
+          fill: false,
+          tension: 0.2,
+          yAxisID: 'y1'
+        }
+      ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
         y: {
+          type: 'linear',
+          display: true,
+          position: 'left',
           beginAtZero: true,
           grid: { color: '#E9D9BC' }
+        },
+        y1: {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          beginAtZero: true,
+          grid: { drawOnChartArea: false }
         },
         x: {
           grid: { display: false }
@@ -176,21 +823,158 @@
     }
   });
 
-  async function resolveRequest(reqId) {
+  // Chart 2: Category Preference Doughnut
+  const categoryData = {{ category_chart_data_json|safe }};
+  const catCtx = document.getElementById('categoryChart').getContext('2d');
+  new Chart(catCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Veg Thakali', 'Chicken', 'Mutton', 'Fish'],
+      datasets: [{
+        data: categoryData,
+        backgroundColor: ['#68734A', '#B66A36', '#3B2418', '#D8BD96'],
+        borderWidth: 2,
+        borderColor: '#ffffff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+      },
+      cutout: '65%'
+    }
+  });
+
+  // AJAX Quick Update Helper
+  async function sendQuickUpdate(payload) {
     try {
-      const res = await fetch(`/api/service-request/${reqId}/resolve/`, {
+      const res = await fetch('/api/dashboard/quick-update/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(payload)
       });
       const data = await res.json();
       if (data.status === 'success') {
-        showToast('Request resolved.');
-        setTimeout(() => window.location.reload(), 800);
+        showToast(data.message || 'Updated successfully.');
+        return true;
+      } else {
+        showToast('Error: ' + data.message);
+        return false;
       }
     } catch (e) {
-      showToast('Error updating status');
+      showToast('Network error updating item');
+      return false;
     }
+  }
+
+  // Khana Set Price Update
+  async function updateKhanaField(id, field) {
+    const input = document.getElementById(`price-input-${id}`);
+    const val = input.value;
+    await sendQuickUpdate({ target: 'khana_set', id: id, field: field, value: val });
+  }
+
+  // Khana Set Boolean Toggles
+  async function toggleKhanaBool(id, field, btn) {
+    const current = btn.getAttribute('data-val') === 'true';
+    const nextVal = !current;
+    const ok = await sendQuickUpdate({ target: 'khana_set', id: id, field: field, value: nextVal });
+    if (ok) {
+      btn.setAttribute('data-val', nextVal ? 'true' : 'false');
+      setTimeout(() => window.location.reload(), 400);
+    }
+  }
+
+  // Order Status Update
+  async function updateOrderStatus(id, val) {
+    await sendQuickUpdate({ target: 'order_status', id: id, value: val });
+    setTimeout(() => window.location.reload(), 500);
+  }
+
+  // Table Status Update
+  async function updateTableStatus(id, val) {
+    await sendQuickUpdate({ target: 'table_status', id: id, value: val });
+  }
+
+  // Reservation Status Update
+  async function updateReservationStatus(id, val) {
+    await sendQuickUpdate({ target: 'reservation_status', id: id, value: val });
+  }
+
+  // Review Toggle
+  async function toggleReview(id, btn) {
+    const ok = await sendQuickUpdate({ target: 'review_toggle', id: id });
+    if (ok) setTimeout(() => window.location.reload(), 400);
+  }
+
+  // Notification Toggle
+  async function toggleNotification(id, field, btn) {
+    const ok = await sendQuickUpdate({ target: 'notification_toggle', id: id, field: field });
+    if (ok) setTimeout(() => window.location.reload(), 400);
+  }
+
+  // Modal Open/Close
+  function openKhanaModal() { document.getElementById('khanaModal').classList.remove('hidden'); }
+  function closeKhanaModal() { document.getElementById('khanaModal').classList.add('hidden'); }
+  function openNotificationModal() { document.getElementById('notificationModal').classList.remove('hidden'); }
+  function closeNotificationModal() { document.getElementById('notificationModal').classList.add('hidden'); }
+
+  // Khana Form Submit
+  async function submitKhanaSet(e) {
+    e.preventDefault();
+    const form = document.getElementById('khanaForm');
+    const formData = new FormData(form);
+    const res = await fetch('/api/dashboard/khana-set/save/', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message);
+      closeKhanaModal();
+      setTimeout(() => window.location.reload(), 600);
+    } else {
+      showToast('Error: ' + data.message);
+    }
+  }
+
+  // Notification Form Submit
+  async function submitNotification(e) {
+    e.preventDefault();
+    const form = document.getElementById('notificationForm');
+    const formData = new FormData(form);
+    const res = await fetch('/api/dashboard/notification/save/', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showToast(data.message);
+      closeNotificationModal();
+      setTimeout(() => window.location.reload(), 600);
+    } else {
+      showToast('Error: ' + data.message);
+    }
+  }
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
   }
 </script>
 {% endblock %}
-

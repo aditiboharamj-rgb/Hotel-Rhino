@@ -107,8 +107,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/staff/login/'
-LOGIN_REDIRECT_URL = '/staff/dashboard/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/staff/login/'
+
+# Secret Admin Vault Route
+SECRET_ADMIN_VAULT_URL = os.getenv('SECRET_ADMIN_VAULT_URL', 'rhino-vault-9x7k/').strip('/') + '/'
 
 # Security headers
 X_FRAME_OPTIONS = os.getenv('X_FRAME_OPTIONS', 'DENY')
