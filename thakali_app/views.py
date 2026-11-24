@@ -165,7 +165,7 @@ def guest_experiences_view(request):
                 city=city, 
                 is_approved=True
             )
-            messages.success(request, "Dhanyabad! Thank you for sharing your feedback with Hotel Rhino.")
+            messages.success(request, "Dhanyabad! Thank you for sharing your feedback with Hotel Raino.")
             return redirect('guest_experiences')
     return render(request, 'public/guest_experiences.html', {'reviews': reviews})
 
@@ -860,7 +860,7 @@ def receipt_pdf_view(request, bill_id):
     bold_style = ParagraphStyle('Bold', parent=styles['Normal'], fontSize=8, fontName='Helvetica-Bold')
 
     elements = []
-    elements.append(Paragraph("HOTEL RHINO", title_style))
+    elements.append(Paragraph("HOTEL RAINO", title_style))
     elements.append(Paragraph("Authentic Himalayan Thakali Kitchen", sub_style))
     elements.append(Paragraph("Sauraha, Chitwan / Kathmandu, Nepal", sub_style))
     elements.append(Paragraph("Tel: +977-9715003003 | PAN: 601234589", sub_style))

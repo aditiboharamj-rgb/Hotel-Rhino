@@ -6,7 +6,7 @@ def restaurant_settings(request):
     pinned_notification = active_notifications.filter(is_pinned_banner=True).first()
 
     return {
-        'RESTAURANT_NAME': os.getenv('RESTAURANT_NAME', 'Hotel Rhino - Authentic Thakali Kitchen'),
+        'RESTAURANT_NAME': os.getenv('RESTAURANT_NAME', 'Hotel Raino - Authentic Thakali Kitchen'),
         'RESTAURANT_LOCATION': os.getenv('RESTAURANT_LOCATION', 'Main Road, Dhangadhi, Sudurpaschim Province, Nepal'),
         'RESTAURANT_PHONE': os.getenv('RESTAURANT_PHONE', '+977-9715003003'),
         'RESTAURANT_WHATSAPP': os.getenv('RESTAURANT_WHATSAPP', '+977-9715003003'),

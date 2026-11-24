@@ -125,8 +125,8 @@ VAPID_CLAIMS_EMAIL = os.getenv('VAPID_CLAIMS_EMAIL', 'mailto:admin@hotelrhinotha
 
 # Unfold theme configurations
 UNFOLD = {
-    "SITE_TITLE": "Hotel Rhino - Thakali RMS",
-    "SITE_HEADER": "Hotel Rhino Admin",
+    "SITE_TITLE": "Hotel Raino - Thakali RMS",
+    "SITE_HEADER": "Hotel Raino Dashboard",
     "SITE_SUBHEADER": "Authentic Himalayan Thakali RMS & Kitchen",
     "THEME": "light",
     "COLORS": {
